@@ -1,0 +1,11 @@
+version: '2'
+services:
+    tripplanning-postgresql:
+        image: postgres:10.4
+        # volumes:
+        #     - ~/volumes/jhipster/TripPlanning/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=TripPlanning
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
