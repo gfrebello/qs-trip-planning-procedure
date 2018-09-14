@@ -21,19 +21,11 @@ export class Home extends React.Component<IHomeProp> {
     return (
       <Row>
         <Col md="9">
-          <h2>
-            <Translate contentKey="home.title">Welcome, Java Hipster!</Translate>
-          </h2>
-          <p className="lead">
-            <Translate contentKey="home.subtitle">This is your homepage</Translate>
-          </p>
+          <h2>Welcome to the Trip Planner!</h2>
+          <p className="lead">Ready to plan a trip?</p>
           {account && account.login ? (
             <div>
-              <Alert color="success">
-                <Translate contentKey="home.logged.message" interpolate={{ username: account.login }}>
-                  You are logged in as user {account.login}.
-                </Translate>
-              </Alert>
+              <Alert color="success">You are logged in as user {account.login}.</Alert>
             </div>
           ) : (
             <div>
@@ -50,51 +42,25 @@ export class Home extends React.Component<IHomeProp> {
               </Alert>
 
               <Alert color="warning">
-                <Translate contentKey="global.messages.info.register.noaccount">You do not have an account yet?</Translate>&nbsp;
+                <Translate contentKey="global.messages.info.register.noaccount">You do not have an account yet?</Translate>
+                &nbsp;
                 <Link to="/register" className="alert-link">
                   <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
                 </Link>
               </Alert>
             </div>
           )}
-          <p>
-            <Translate contentKey="home.question">If you have any question on JHipster:</Translate>
-          </p>
+          <p>With our web app, you will be capable of:</p>
 
           <ul>
-            <li>
-              <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">
-                <Translate contentKey="home.link.homepage">JHipster homepage</Translate>
-              </a>
-            </li>
-            <li>
-              <a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">
-                <Translate contentKey="home.link.stackoverflow">JHipster on Stack Overflow</Translate>
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer">
-                <Translate contentKey="home.link.bugtracker">JHipster bug tracker</Translate>
-              </a>
-            </li>
-            <li>
-              <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-                <Translate contentKey="home.link.chat">JHipster public chat room</Translate>
-              </a>
-            </li>
-            <li>
-              <a href="https://twitter.com/java_hipster" target="_blank" rel="noopener noreferrer">
-                <Translate contentKey="home.link.follow">follow @java_hipster on Twitter</Translate>
-              </a>
-            </li>
+            <li>Booking flights to all the destinations in your itinerary.</li>
+            <li>Booking a hotel room (or other accommodation) throughout your trip.</li>
+            <li>Looking up attractions and, when possible, reserving tickets.</li>
+            <li>Renting a car.</li>
+            <li>Buying an insurance that will give you the security you need for a smooth trip.</li>
           </ul>
 
-          <p>
-            <Translate contentKey="home.like">If you like JHipster, do not forget to give us a star on</Translate>{' '}
-            <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">
-              Github
-            </a>!
-          </p>
+          <p>We hope you enjoy our services. Have a nice trip!</p>
         </Col>
         <Col md="3" className="pad">
           <span className="hipster rounded" />
