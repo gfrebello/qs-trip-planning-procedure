@@ -1,23 +1,42 @@
 import './home.scss';
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
 import { connect } from 'react-redux';
 import { Row, Col, Alert, Button } from 'reactstrap';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 
-import { IRootState } from 'app/shared/reducers';
+import { handleSubmit, handleRedirect } from './home.reducer';
 import { getSession } from 'app/shared/reducers/authentication';
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Home extends React.Component<IHomeProp> {
+  constructor(props) {
+    super(props);
+
+    this.handleValidSubmit = this.handleValidSubmit.bind(this);
+  }
+
   componentDidMount() {
     this.props.getSession();
   }
 
+  handleValidSubmit = (event, values) => {
+    //If the submit is valid, sets the trip information, and the 'redirect' variable to true in the Redux store
+    this.props.handleSubmit(values.origin, values.destination, values.departDate, values.returnDate, values.nPassengers);
+    this.props.handleRedirect();
+    event.preventDefault();
+  };
+
   render() {
-    const { account } = this.props;
+    const { account, redirect } = this.props;
+
+    if (redirect) {
+      return <Redirect to="/planner" />;
+    }
+
     return (
       <Row>
         <Col md="9">
@@ -60,11 +79,61 @@ export class Home extends React.Component<IHomeProp> {
             <li>Buying an insurance that will give you the security you need for a smooth trip.</li>
           </ul>
 
-          <p>We hope you enjoy our services. Have a nice trip!</p>
+          <p>We hope you enjoy our services. To start a new trip, fill in the information below and click the "Start planning" button!</p>
 
-          <Button tag={Link} to="/planner">
-            Start planning!
-          </Button>
+          <AvForm id="trip-form" onValidSubmit={this.handleValidSubmit}>
+            <AvField
+              name="origin"
+              label="Origin"
+              placeholder="Rio de Janeiro"
+              type="search"
+              validate={{
+                required: { value: true, errorMessage: 'Origin not provided!' },
+                minLength: { value: 3, errorMessage: 'Origin must have more than 3 characters.' },
+                maxLength: { value: 30, errorMessage: 'Origin name is too big!' }
+              }}
+            />
+            <AvField
+              name="destination"
+              label="Destination"
+              placeholder="Paris"
+              type="search"
+              validate={{
+                required: { value: true, errorMessage: 'Destination not provided!' },
+                minLength: { value: 3, errorMessage: 'Destination must have more than 3 characters.' },
+                maxLength: { value: 30, errorMessage: 'Destination name is too big!' }
+              }}
+            />
+            <AvField
+              name="departDate"
+              label="Departure Date"
+              placeholder="date placeholder"
+              type="date"
+              validate={{
+                required: { value: true, errorMessage: 'A departure date is required!' }
+              }}
+            />
+            <AvField
+              name="returnDate"
+              label="Return Date"
+              placeholder="date placeholder"
+              type="date"
+              validate={{
+                required: { value: true, errorMessage: 'A return date is required!' }
+              }}
+            />
+            <AvField
+              name="nPassengers"
+              label="Number of Passengers"
+              type="number"
+              validate={{
+                required: { value: true, errorMessage: 'Must provide number of passengers.' }
+              }}
+            />
+            <Button id="trip-submit" color="primary" type="submit">
+              Start planning!
+            </Button>
+          </AvForm>
         </Col>
         <Col md="3" className="pad">
           <span className="hipster rounded" />
@@ -76,10 +145,11 @@ export class Home extends React.Component<IHomeProp> {
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated
+  isAuthenticated: storeState.authentication.isAuthenticated,
+  redirect: storeState.home.redirect
 });
 
-const mapDispatchToProps = { getSession };
+const mapDispatchToProps = { getSession, handleSubmit, handleRedirect };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
