@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
 import { connect } from 'react-redux';
-import { Row, Col, Alert } from 'reactstrap';
+import { Row, Col, Alert, Button } from 'reactstrap';
 
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
@@ -61,6 +61,10 @@ export class Home extends React.Component<IHomeProp> {
           </ul>
 
           <p>We hope you enjoy our services. Have a nice trip!</p>
+
+          <Button tag={Link} to="/planner">
+            Start planning!
+          </Button>
         </Col>
         <Col md="3" className="pad">
           <span className="hipster rounded" />
