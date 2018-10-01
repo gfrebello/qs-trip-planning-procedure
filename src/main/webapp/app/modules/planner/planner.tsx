@@ -1,19 +1,44 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Translate } from 'react-jhipster';
 import { connect } from 'react-redux';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { resetRedirect } from '../home/home.reducer';
 
-export interface IPlannerProp extends StateProps, DispatchProps {}
+import PlannerEditModal from './planner-edit-modal';
 
-export class PlannerPage extends React.Component<IPlannerProp> {
+export interface IPlannerProps extends StateProps, DispatchProps {}
+
+export class PlannerPage extends React.Component<IPlannerProps> {
+  constructor(props) {
+    super(props);
+
+    this.handleClose = this.handleClose.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+  }
+
+  state = {
+    showModal: false
+  };
+
   componentDidMount() {
     this.props.getSession();
     this.props.resetRedirect();
   }
+
+  componentDidUpdate(prevProps: IPlannerProps, prevState) {
+    if (this.props !== prevProps) {
+      this.setState({ showModal: this.state.showModal });
+    }
+  }
+
+  handleClose = () => {
+    this.setState({ showModal: false });
+  };
+
+  handleOpen = () => {
+    this.setState({ showModal: true });
+  };
 
   render() {
     const { origin, destination, departDate, returnDate, nPassengers } = this.props;
@@ -40,6 +65,10 @@ export class PlannerPage extends React.Component<IPlannerProp> {
             <li>Return Date: {returnDate}</li>
             <li>Number of Passengers: {nPassengers}</li>
           </ul>
+
+          <Button onClick={this.handleOpen}>Edit Itinerary</Button>
+
+          <PlannerEditModal showModal={this.state.showModal} handleClose={this.handleClose} />
         </div>
       </div>
     );
