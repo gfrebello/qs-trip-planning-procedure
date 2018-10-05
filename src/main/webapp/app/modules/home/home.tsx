@@ -16,6 +16,12 @@ const returnAfterDepart = (value, ctx) => {
   }
   return 'Return date must be after departure date';
 };
+const originDestinationValidation = (value, ctx) => {
+  if (ctx.origin !== ctx.destination) {
+    return true;
+  }
+  return 'Origin and destination cannot be the same!';
+};
 
 export interface IHomeProp extends StateProps, DispatchProps {}
 
@@ -29,6 +35,8 @@ export class Home extends React.Component<IHomeProp> {
     this.handleValidSubmit = this.handleValidSubmit.bind(this);
     this.validateDeparture = this.validateDeparture.bind(this);
     this.validateReturn = this.validateReturn.bind(this);
+    this.validateOrigin = this.validateOrigin.bind(this);
+    this.validateDestination = this.validateDestination.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +55,12 @@ export class Home extends React.Component<IHomeProp> {
   };
   validateDeparture = () => {
     this.state.form.validateInput('departDate');
+  };
+  validateOrigin = () => {
+    this.state.form.validateInput('origin');
+  };
+  validateDestination = () => {
+    this.state.form.validateInput('destination');
   };
 
   render() {
@@ -109,8 +123,10 @@ export class Home extends React.Component<IHomeProp> {
               validate={{
                 required: { value: true, errorMessage: 'Origin not provided!' },
                 minLength: { value: 3, errorMessage: 'Origin must have more than 3 characters.' },
-                maxLength: { value: 30, errorMessage: 'Origin name is too big!' }
+                maxLength: { value: 30, errorMessage: 'Origin name is too big!' },
+                myValidation: originDestinationValidation
               }}
+              onChange={this.validateDestination}
             />
             <AvField
               name="destination"
@@ -120,8 +136,10 @@ export class Home extends React.Component<IHomeProp> {
               validate={{
                 required: { value: true, errorMessage: 'Destination not provided!' },
                 minLength: { value: 3, errorMessage: 'Destination must have more than 3 characters.' },
-                maxLength: { value: 30, errorMessage: 'Destination name is too big!' }
+                maxLength: { value: 30, errorMessage: 'Destination name is too big!' },
+                myValidation: originDestinationValidation
               }}
+              onChange={this.validateOrigin}
             />
             <AvField
               name="departDate"
