@@ -6,16 +6,28 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import { handleSubmit, handleRedirect } from '../home/home.reducer';
 
+const returnAfterDepart = (value, ctx) => {
+  if (ctx.returnDate > ctx.departDate) {
+    return true;
+  }
+  return 'Return date must be after departure date';
+};
+
 export interface IEditPlanModalProps extends StateProps, DispatchProps {
   showModal: boolean;
   handleClose: Function;
 }
 
 export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
+  state = {
+    form: null
+  };
   constructor(props) {
     super(props);
 
     this.handleValidSubmit = this.handleValidSubmit.bind(this);
+    this.validateDeparture = this.validateDeparture.bind(this);
+    this.validateReturn = this.validateReturn.bind(this);
   }
 
   handleValidSubmit = (event, values) => {
@@ -23,6 +35,13 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
     this.props.handleSubmit(values.origin, values.destination, values.departDate, values.returnDate, values.nPassengers);
     this.props.handleClose();
     event.preventDefault();
+  };
+
+  validateReturn = () => {
+    this.state.form.validateInput('returnDate');
+  };
+  validateDeparture = () => {
+    this.state.form.validateInput('departDate');
   };
 
   render() {
@@ -42,7 +61,7 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
 
     return (
       <Modal isOpen={this.props.showModal} toggle={this.props.handleClose} backdrop="static" id="edit-plan-page" autoFocus={false}>
-        <AvForm id="edit-form" onValidSubmit={this.handleValidSubmit} model={defaultValues}>
+        <AvForm ref={c => (this.state.form = c)} id="edit-form" onValidSubmit={this.handleValidSubmit} model={defaultValues}>
           <ModalHeader id="edit-title" toggle={this.props.handleClose}>
             Edit Itinerary
           </ModalHeader>
@@ -75,8 +94,11 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
               placeholder="date placeholder"
               type="date"
               validate={{
-                required: { value: true, errorMessage: 'A departure date is required!' }
+                required: { value: true, errorMessage: 'A departure date is required!' },
+                dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
+                myValidation: returnAfterDepart
               }}
+              onChange={this.validateReturn}
             />
             <AvField
               name="returnDate"
@@ -84,8 +106,11 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
               placeholder="date placeholder"
               type="date"
               validate={{
-                required: { value: true, errorMessage: 'A return date is required!' }
+                required: { value: true, errorMessage: 'A return date is required!' },
+                dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
+                myValidation: returnAfterDepart
               }}
+              onChange={this.validateDeparture}
             />
             <AvField
               name="nPassengers"
