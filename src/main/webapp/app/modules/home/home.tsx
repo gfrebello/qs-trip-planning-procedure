@@ -10,13 +10,25 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { handleSubmit, handleRedirect } from './home.reducer';
 import { getSession } from 'app/shared/reducers/authentication';
 
+const returnAfterDepart = (value, ctx) => {
+  if (ctx.returnDate > ctx.departDate) {
+    return true;
+  }
+  return 'Return date must be after departure date';
+};
+
 export interface IHomeProp extends StateProps, DispatchProps {}
 
 export class Home extends React.Component<IHomeProp> {
+  state = {
+    form: null
+  };
   constructor(props) {
     super(props);
 
     this.handleValidSubmit = this.handleValidSubmit.bind(this);
+    this.validateDeparture = this.validateDeparture.bind(this);
+    this.validateReturn = this.validateReturn.bind(this);
   }
 
   componentDidMount() {
@@ -24,10 +36,17 @@ export class Home extends React.Component<IHomeProp> {
   }
 
   handleValidSubmit = (event, values) => {
-    //If the submit is valid, sets the trip information, and the 'redirect' variable to true in the Redux store
+    // If the submit is valid, sets the trip information, and the 'redirect' variable to true in the Redux store
     this.props.handleSubmit(values.origin, values.destination, values.departDate, values.returnDate, values.nPassengers);
     this.props.handleRedirect();
     event.preventDefault();
+  };
+
+  validateReturn = () => {
+    this.state.form.validateInput('returnDate');
+  };
+  validateDeparture = () => {
+    this.state.form.validateInput('departDate');
   };
 
   render() {
@@ -81,7 +100,7 @@ export class Home extends React.Component<IHomeProp> {
 
           <p>We hope you enjoy our services. To start a new trip, fill in the information below and click the "Start planning" button!</p>
 
-          <AvForm id="trip-form" onValidSubmit={this.handleValidSubmit}>
+          <AvForm ref={c => (this.state.form = c)} id="trip-form" onValidSubmit={this.handleValidSubmit}>
             <AvField
               name="origin"
               label="Origin"
@@ -110,8 +129,11 @@ export class Home extends React.Component<IHomeProp> {
               placeholder="date placeholder"
               type="date"
               validate={{
-                required: { value: true, errorMessage: 'A departure date is required!' }
+                required: { value: true, errorMessage: 'A departure date is required!' },
+                dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
+                myValidation: returnAfterDepart
               }}
+              onChange={this.validateReturn}
             />
             <AvField
               name="returnDate"
@@ -119,8 +141,11 @@ export class Home extends React.Component<IHomeProp> {
               placeholder="date placeholder"
               type="date"
               validate={{
-                required: { value: true, errorMessage: 'A return date is required!' }
+                required: { value: true, errorMessage: 'A return date is required!' },
+                dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
+                myValidation: returnAfterDepart
               }}
+              onChange={this.validateDeparture}
             />
             <AvField
               name="nPassengers"

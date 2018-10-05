@@ -10,16 +10,15 @@ import PlannerEditModal from './planner-edit-modal';
 export interface IPlannerProps extends StateProps, DispatchProps {}
 
 export class PlannerPage extends React.Component<IPlannerProps> {
+  state = {
+    showModal: false
+  };
   constructor(props) {
     super(props);
 
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
   }
-
-  state = {
-    showModal: false
-  };
 
   componentDidMount() {
     this.props.getSession();
