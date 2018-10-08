@@ -1,0 +1,27 @@
+{
+    "name": "FlightReservation",
+    "fields": [
+        {
+            "fieldName": "reservationId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numberOfPeople",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "customerClass",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181008012917",
+    "entityTableName": "flight_reservation",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

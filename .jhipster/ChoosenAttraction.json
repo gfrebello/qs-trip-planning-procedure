@@ -1,0 +1,23 @@
+{
+    "name": "ChoosenAttraction",
+    "fields": [
+        {
+            "fieldName": "isReserved",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "reservationDate",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181008012922",
+    "entityTableName": "choosen_attraction",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

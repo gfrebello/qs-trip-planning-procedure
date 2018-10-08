@@ -1,0 +1,23 @@
+
+{
+    "tripPlanningApp": {
+        "choosenAttraction" : {
+            "home": {
+                "title": "Choosen Attractions",
+                "createLabel": "Create a new Choosen Attraction",
+                "createOrEditLabel": "Create or edit a Choosen Attraction"
+            },
+            "created": "A new Choosen Attraction is created with identifier {{ param }}",
+            "updated": "A Choosen Attraction is updated with identifier {{ param }}",
+            "deleted": "A Choosen Attraction is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Choosen Attraction {{ id }}?"
+            },
+            "detail": {
+                "title": "Choosen Attraction"
+            },
+            "isReserved": "Is Reserved",
+            "reservationDate": "Reservation Date"
+        }
+    }
+}

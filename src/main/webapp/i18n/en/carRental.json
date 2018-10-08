@@ -1,0 +1,28 @@
+
+{
+    "tripPlanningApp": {
+        "carRental" : {
+            "home": {
+                "title": "Car Rentals",
+                "createLabel": "Create a new Car Rental",
+                "createOrEditLabel": "Create or edit a Car Rental"
+            },
+            "created": "A new Car Rental is created with identifier {{ param }}",
+            "updated": "A Car Rental is updated with identifier {{ param }}",
+            "deleted": "A Car Rental is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Car Rental {{ id }}?"
+            },
+            "detail": {
+                "title": "Car Rental"
+            },
+            "carType": "Car Type",
+            "rentalDays": "Rental Days",
+            "startDate": "Start Date",
+            "price": "Price",
+            "pickupAddress": "Pickup Address",
+            "dropoffAddress": "Dropoff Address",
+            "color": "Color"
+        }
+    }
+}

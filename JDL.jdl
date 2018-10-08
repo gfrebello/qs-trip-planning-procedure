@@ -1,0 +1,106 @@
+entity Trip {
+	tripId String,
+    paymentDone Boolean,
+    numberOfPeople Integer,
+    departureDate Instant,
+    returnDate Instant,
+    origin String,
+    destination String
+}
+
+entity Ticket {
+	type String,
+    reservationId String
+}
+
+entity Payment {
+	amount Float
+}
+
+entity Paycheck {
+	name String,
+    bankId String
+}
+
+entity CreditCard {
+	name String,
+    cardNumber String,
+    safetyCode String,
+    expirationDate Instant,
+}
+
+entity FlightReservation {
+	reservationId String,
+    numberOfPeople Integer,
+    customerClass String
+}
+
+entity Flight {
+	company String,
+    origin String,
+    destination String,
+    avaibleSeats Integer,
+    departureDate Instant,
+    arrivalDate Instant,
+    flightCode String,
+    departAirport String,
+    arrivalAirport String
+}
+
+entity HotelReservation {
+	reservationId String,
+    numberOfPeople Integer,
+    onlinePaymentChoosen Boolean,
+    checkinDate Instant,
+    checkoutDate Instant,
+    price Float
+}
+
+entity Hotel {
+	name String,
+    city String,
+    address String,
+    type String
+}
+
+entity HotelRoom {
+	numberOfPeople Integer,
+    price Float,
+    available Boolean,
+    type String
+}
+
+entity ChoosenAttraction {
+	isReserved Boolean,
+    reservationDate Instant
+}
+
+entity Attraction {
+	name String,
+    type String,
+    city String,
+    price Float
+}
+
+entity Insurance {
+	type String,
+    price Float,
+    personName String,
+    startDate Instant,
+    endDate Instant
+}
+
+entity CarRental {
+	carType String,
+    rentalDays Integer,
+    startDate Instant,
+    price Float,
+    pickupAddress String,
+    dropoffAddress String,
+    color String
+}
+
+entity Region {
+	regionName String
+}
+
