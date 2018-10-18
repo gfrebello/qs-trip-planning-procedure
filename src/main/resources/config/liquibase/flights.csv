@@ -1,0 +1,6 @@
+id;company;origin;destination;avaible_seats;departure_date;arrival_date;flight_code;depart_airport;arrival_airport
+1;Air France;Rio de Janeiro;Paris;180;2018-11-29 13:50:00;2018-11-30 13:00:00;AF0001;GIG;CDG
+2;Delta Airlines;Rio de Janeiro;New York;210;2018-11-29 20:20:00;2018-11-30 13:00:00;DA0001;GIG;JFK
+3;Qatar Airways;Rio de Janeiro;Doha;190;2018-11-29 14:10:00;2018-11-30 13:00:00;QA0001;GIG;DIA
+4;Emirates;Rio de Janeiro;Dubai;200;2018-11-29 15:40:00;2018-11-30 13:00:00;EM0001;GIG;DXB
+5;Alitalia;Rio de Janeiro;Rome;195;2018-11-29 17:30:00;2018-11-30 13:00:00;AL0001;GIG;FCO

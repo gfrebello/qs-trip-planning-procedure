@@ -61,6 +61,12 @@
         </createTable>
         <dropDefaultValue tableName="flight" columnName="departure_date" columnDataType="datetime"/>
         <dropDefaultValue tableName="flight" columnName="arrival_date" columnDataType="datetime"/>
+
+        <!-- Changed by jvdavim -->
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/flights.csv"
+                  separator=";"
+                  tableName="flight"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
