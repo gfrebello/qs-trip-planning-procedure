@@ -8,7 +8,7 @@ import { NavDropdown } from '../header-components';
 export const EntitiesMenu = props => (
   // tslint:disable-next-line:jsx-self-close
   <NavDropdown icon="th-list" name={translate('global.menu.entities.main')} id="entity-menu">
-    <DropdownItem tag={Link} to="/entity/trip">
+    {/* <DropdownItem tag={Link} to="/entity/trip">
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.trip" />
@@ -32,23 +32,23 @@ export const EntitiesMenu = props => (
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.creditCard" />
-    </DropdownItem>
+    </DropdownItem> */}
     <DropdownItem tag={Link} to="/entity/flight-reservation">
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.flightReservation" />
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/flight">
+    {/* <DropdownItem tag={Link} to="/entity/flight">
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.flight" />
-    </DropdownItem>
+    </DropdownItem> */}
     <DropdownItem tag={Link} to="/entity/hotel-reservation">
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.hotelReservation" />
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/hotel">
+    {/* <DropdownItem tag={Link} to="/entity/hotel">
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.hotel" />
@@ -57,13 +57,13 @@ export const EntitiesMenu = props => (
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.hotelRoom" />
-    </DropdownItem>
+    </DropdownItem> */}
     <DropdownItem tag={Link} to="/entity/choosen-attraction">
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.choosenAttraction" />
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/attraction">
+    {/* <DropdownItem tag={Link} to="/entity/attraction">
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.attraction" />
@@ -82,7 +82,7 @@ export const EntitiesMenu = props => (
       <FontAwesomeIcon icon="asterisk" />
       &nbsp;
       <Translate contentKey="global.menu.entities.region" />
-    </DropdownItem>
+    </DropdownItem> */}
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );
