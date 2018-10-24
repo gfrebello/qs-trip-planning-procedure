@@ -38,21 +38,6 @@ public class CacheConfiguration {
             cm.createCache(com.mycompany.myapp.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.User.class.getName() + ".authorities", jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Trip.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Ticket.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Payment.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Paycheck.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.CreditCard.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.FlightReservation.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Flight.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.HotelReservation.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Hotel.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.HotelRoom.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.ChoosenAttraction.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Attraction.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Insurance.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.CarRental.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Region.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
