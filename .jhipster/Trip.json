@@ -1,0 +1,102 @@
+{
+    "name": "Trip",
+    "fields": [
+        {
+            "fieldName": "tripId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paymentDone",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "numberOfPeople",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "departureDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "returnDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "origin",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "destination",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "payment",
+            "otherEntityName": "payment",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "flightReservation",
+            "otherEntityName": "flightReservation",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "hotelReservation",
+            "otherEntityName": "hotelReservation",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "insurance",
+            "otherEntityName": "insurance",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "carRental",
+            "otherEntityName": "carRental",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "ticket",
+            "otherEntityName": "ticket",
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "chosenAttraction",
+            "otherEntityName": "chosenAttraction",
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181024154857",
+    "entityTableName": "trip",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

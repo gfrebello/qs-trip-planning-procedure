@@ -1,0 +1,59 @@
+{
+    "name": "Flight",
+    "fields": [
+        {
+            "fieldName": "company",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "origin",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "destination",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "avaibleSeats",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "departureDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "arrivalDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "flightCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "departAirport",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrivalAirport",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "flightReservation",
+            "otherEntityName": "flightReservation",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "flight"
+        }
+    ],
+    "changelogDate": "20181024154903",
+    "entityTableName": "flight",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

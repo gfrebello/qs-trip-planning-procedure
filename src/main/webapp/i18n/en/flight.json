@@ -1,0 +1,31 @@
+
+{
+    "tripPlanningApp": {
+        "flight" : {
+            "home": {
+                "title": "Flights",
+                "createLabel": "Create a new Flight",
+                "createOrEditLabel": "Create or edit a Flight"
+            },
+            "created": "A new Flight is created with identifier {{ param }}",
+            "updated": "A Flight is updated with identifier {{ param }}",
+            "deleted": "A Flight is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Flight {{ id }}?"
+            },
+            "detail": {
+                "title": "Flight"
+            },
+            "company": "Company",
+            "origin": "Origin",
+            "destination": "Destination",
+            "avaibleSeats": "Avaible Seats",
+            "departureDate": "Departure Date",
+            "arrivalDate": "Arrival Date",
+            "flightCode": "Flight Code",
+            "departAirport": "Depart Airport",
+            "arrivalAirport": "Arrival Airport",
+            "flightReservation": "Flight Reservation"
+        }
+    }
+}

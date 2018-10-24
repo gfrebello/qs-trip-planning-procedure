@@ -1,0 +1,53 @@
+{
+    "name": "HotelReservation",
+    "fields": [
+        {
+            "fieldName": "reservationId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numberOfPeople",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "onlinePaymentChoosen",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "checkinDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "checkoutDate",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Float"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "hotel",
+            "otherEntityName": "hotel",
+            "otherEntityRelationshipName": "hotelReservation"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "hotelReservation"
+        }
+    ],
+    "changelogDate": "20181024154904",
+    "entityTableName": "hotel_reservation",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

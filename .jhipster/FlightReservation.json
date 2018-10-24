@@ -1,0 +1,43 @@
+{
+    "name": "FlightReservation",
+    "fields": [
+        {
+            "fieldName": "reservationId",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numberOfPeople",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "customerClass",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "flightReservation",
+            "relationshipName": "flight",
+            "otherEntityName": "flight",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "flightReservation"
+        }
+    ],
+    "changelogDate": "20181024154902",
+    "entityTableName": "flight_reservation",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

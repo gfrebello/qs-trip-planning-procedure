@@ -1,0 +1,38 @@
+{
+    "name": "ChosenAttraction",
+    "fields": [
+        {
+            "fieldName": "isReserved",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "reservationDate",
+            "fieldType": "Instant"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "attraction",
+            "otherEntityName": "attraction",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "chosenAttraction"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181024154907",
+    "entityTableName": "chosen_attraction",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

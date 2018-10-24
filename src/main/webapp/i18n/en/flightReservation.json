@@ -1,0 +1,26 @@
+
+{
+    "tripPlanningApp": {
+        "flightReservation" : {
+            "home": {
+                "title": "Flight Reservations",
+                "createLabel": "Create a new Flight Reservation",
+                "createOrEditLabel": "Create or edit a Flight Reservation"
+            },
+            "created": "A new Flight Reservation is created with identifier {{ param }}",
+            "updated": "A Flight Reservation is updated with identifier {{ param }}",
+            "deleted": "A Flight Reservation is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Flight Reservation {{ id }}?"
+            },
+            "detail": {
+                "title": "Flight Reservation"
+            },
+            "reservationId": "Reservation Id",
+            "numberOfPeople": "Number Of People",
+            "customerClass": "Customer Class",
+            "flight": "Flight",
+            "trip": "Trip"
+        }
+    }
+}

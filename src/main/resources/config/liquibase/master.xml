@@ -5,6 +5,26 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154857_added_entity_Trip.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154858_added_entity_Ticket.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154859_added_entity_Payment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154900_added_entity_CheckPayment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154901_added_entity_CreditCard.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154902_added_entity_FlightReservation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154903_added_entity_Flight.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154904_added_entity_HotelReservation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154905_added_entity_Hotel.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154906_added_entity_HotelRoom.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154907_added_entity_ChosenAttraction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154908_added_entity_Attraction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154909_added_entity_Insurance.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154910_added_entity_CarRental.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20181024154857_added_entity_constraints_Trip.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154858_added_entity_constraints_Ticket.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154902_added_entity_constraints_FlightReservation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154905_added_entity_constraints_Hotel.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154906_added_entity_constraints_HotelRoom.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181024154907_added_entity_constraints_ChosenAttraction.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

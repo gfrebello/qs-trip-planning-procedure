@@ -1,0 +1,39 @@
+{
+    "name": "Attraction",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Float"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "chosenAttraction",
+            "otherEntityName": "chosenAttraction",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "attraction"
+        }
+    ],
+    "changelogDate": "20181024154908",
+    "entityTableName": "attraction",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

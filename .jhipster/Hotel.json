@@ -1,0 +1,44 @@
+{
+    "name": "Hotel",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "hotelRoom",
+            "otherEntityName": "hotelRoom",
+            "otherEntityRelationshipName": "hotel"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "hotelReservation",
+            "otherEntityName": "hotelReservation",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181024154905",
+    "entityTableName": "hotel",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

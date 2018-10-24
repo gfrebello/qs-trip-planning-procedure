@@ -1,0 +1,26 @@
+
+{
+    "tripPlanningApp": {
+        "attraction" : {
+            "home": {
+                "title": "Attractions",
+                "createLabel": "Create a new Attraction",
+                "createOrEditLabel": "Create or edit a Attraction"
+            },
+            "created": "A new Attraction is created with identifier {{ param }}",
+            "updated": "A Attraction is updated with identifier {{ param }}",
+            "deleted": "A Attraction is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Attraction {{ id }}?"
+            },
+            "detail": {
+                "title": "Attraction"
+            },
+            "name": "Name",
+            "type": "Type",
+            "city": "City",
+            "price": "Price",
+            "chosenAttraction": "Chosen Attraction"
+        }
+    }
+}

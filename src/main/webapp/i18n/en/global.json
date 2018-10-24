@@ -7,6 +7,20 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
+                "trip": "Trip",
+                "ticket": "Ticket",
+                "payment": "Payment",
+                "checkPayment": "Check Payment",
+                "creditCard": "Credit Card",
+                "flightReservation": "Flight Reservation",
+                "flight": "Flight",
+                "hotelReservation": "Hotel Reservation",
+                "hotel": "Hotel",
+                "hotelRoom": "Hotel Room",
+                "chosenAttraction": "Chosen Attraction",
+                "attraction": "Attraction",
+                "insurance": "Insurance",
+                "carRental": "Car Rental",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

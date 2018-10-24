@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Trip.
+    -->
+    <changeSet id="20181024154857-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="payment_id"
+                                 baseTableName="trip"
+                                 constraintName="fk_trip_payment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="payment"/>
+
+        <addForeignKeyConstraint baseColumnNames="flight_reservation_id"
+                                 baseTableName="trip"
+                                 constraintName="fk_trip_flight_reservation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="flight_reservation"/>
+
+        <addForeignKeyConstraint baseColumnNames="hotel_reservation_id"
+                                 baseTableName="trip"
+                                 constraintName="fk_trip_hotel_reservation_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hotel_reservation"/>
+
+        <addForeignKeyConstraint baseColumnNames="insurance_id"
+                                 baseTableName="trip"
+                                 constraintName="fk_trip_insurance_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="insurance"/>
+
+        <addForeignKeyConstraint baseColumnNames="car_rental_id"
+                                 baseTableName="trip"
+                                 constraintName="fk_trip_car_rental_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="car_rental"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="trip"
+                                 constraintName="fk_trip_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+    </changeSet>
+</databaseChangeLog>
