@@ -22,7 +22,15 @@
             "departureDate": "Departure Date",
             "returnDate": "Return Date",
             "origin": "Origin",
-            "destination": "Destination"
+            "destination": "Destination",
+            "payment": "Payment",
+            "flightReservation": "Flight Reservation",
+            "hotelReservation": "Hotel Reservation",
+            "insurance": "Insurance",
+            "carRental": "Car Rental",
+            "ticket": "Ticket",
+            "chosenAttraction": "Chosen Attraction",
+            "user": "User"
         }
     }
 }

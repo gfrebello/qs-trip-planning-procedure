@@ -26,8 +26,7 @@ export class Attraction extends React.Component<IAttractionProps> {
         <h2 id="attraction-heading">
           <Translate contentKey="tripPlanningApp.attraction.home.title">Attractions</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.attraction.home.createLabel">Create new Attraction</Translate>
           </Link>
         </h2>

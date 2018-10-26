@@ -6,8 +6,16 @@
             "fieldType": "Float"
         }
     ],
-    "relationships": [],
-    "changelogDate": "20181008012914",
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "payment"
+        }
+    ],
+    "changelogDate": "20181024154859",
     "entityTableName": "payment",
     "dto": "no",
     "pagination": "no",

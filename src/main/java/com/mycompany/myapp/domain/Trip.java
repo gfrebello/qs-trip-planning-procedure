@@ -1,5 +1,7 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,6 +9,8 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -44,6 +48,38 @@ public class Trip implements Serializable {
 
     @Column(name = "destination")
     private String destination;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Payment payment;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private FlightReservation flightReservation;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private HotelReservation hotelReservation;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private Insurance insurance;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private CarRental carRental;
+
+    @OneToMany(mappedBy = "trip")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Ticket> tickets = new HashSet<>();
+
+    @OneToMany(mappedBy = "trip")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<ChosenAttraction> chosenAttractions = new HashSet<>();
+
+    @ManyToOne
+    @JsonIgnoreProperties("")
+    private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -143,6 +179,134 @@ public class Trip implements Serializable {
 
     public void setDestination(String destination) {
         this.destination = destination;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public Trip payment(Payment payment) {
+        this.payment = payment;
+        return this;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public FlightReservation getFlightReservation() {
+        return flightReservation;
+    }
+
+    public Trip flightReservation(FlightReservation flightReservation) {
+        this.flightReservation = flightReservation;
+        return this;
+    }
+
+    public void setFlightReservation(FlightReservation flightReservation) {
+        this.flightReservation = flightReservation;
+    }
+
+    public HotelReservation getHotelReservation() {
+        return hotelReservation;
+    }
+
+    public Trip hotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservation = hotelReservation;
+        return this;
+    }
+
+    public void setHotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservation = hotelReservation;
+    }
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public Trip insurance(Insurance insurance) {
+        this.insurance = insurance;
+        return this;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
+
+    public CarRental getCarRental() {
+        return carRental;
+    }
+
+    public Trip carRental(CarRental carRental) {
+        this.carRental = carRental;
+        return this;
+    }
+
+    public void setCarRental(CarRental carRental) {
+        this.carRental = carRental;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public Trip tickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+        return this;
+    }
+
+    public Trip addTicket(Ticket ticket) {
+        this.tickets.add(ticket);
+        ticket.setTrip(this);
+        return this;
+    }
+
+    public Trip removeTicket(Ticket ticket) {
+        this.tickets.remove(ticket);
+        ticket.setTrip(null);
+        return this;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Set<ChosenAttraction> getChosenAttractions() {
+        return chosenAttractions;
+    }
+
+    public Trip chosenAttractions(Set<ChosenAttraction> chosenAttractions) {
+        this.chosenAttractions = chosenAttractions;
+        return this;
+    }
+
+    public Trip addChosenAttraction(ChosenAttraction chosenAttraction) {
+        this.chosenAttractions.add(chosenAttraction);
+        chosenAttraction.setTrip(this);
+        return this;
+    }
+
+    public Trip removeChosenAttraction(ChosenAttraction chosenAttraction) {
+        this.chosenAttractions.remove(chosenAttraction);
+        chosenAttraction.setTrip(null);
+        return this;
+    }
+
+    public void setChosenAttractions(Set<ChosenAttraction> chosenAttractions) {
+        this.chosenAttractions = chosenAttractions;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Trip user(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

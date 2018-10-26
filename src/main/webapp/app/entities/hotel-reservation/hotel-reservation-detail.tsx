@@ -25,8 +25,9 @@ export class HotelReservationDetail extends React.Component<IHotelReservationDet
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="tripPlanningApp.hotelReservation.detail.title">HotelReservation</Translate> [
-            <b>{hotelReservationEntity.id}</b>]
+            <Translate contentKey="tripPlanningApp.hotelReservation.detail.title">HotelReservation</Translate> [<b>
+              {hotelReservationEntity.id}
+            </b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -75,8 +76,7 @@ export class HotelReservationDetail extends React.Component<IHotelReservationDet
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/hotel-reservation/${hotelReservationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

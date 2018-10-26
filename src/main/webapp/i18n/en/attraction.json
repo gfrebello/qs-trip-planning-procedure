@@ -19,7 +19,8 @@
             "name": "Name",
             "type": "Type",
             "city": "City",
-            "price": "Price"
+            "price": "Price",
+            "chosenAttraction": "Chosen Attraction"
         }
     }
 }

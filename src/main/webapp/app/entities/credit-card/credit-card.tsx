@@ -26,8 +26,7 @@ export class CreditCard extends React.Component<ICreditCardProps> {
         <h2 id="credit-card-heading">
           <Translate contentKey="tripPlanningApp.creditCard.home.title">Credit Cards</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.creditCard.home.createLabel">Create new Credit Card</Translate>
           </Link>
         </h2>

@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,6 +8,8 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -41,6 +44,14 @@ public class HotelReservation implements Serializable {
 
     @Column(name = "price")
     private Float price;
+
+    @OneToMany(mappedBy = "hotelReservation")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Hotel> hotels = new HashSet<>();
+
+    @OneToOne(mappedBy = "hotelReservation")
+    @JsonIgnore
+    private Trip trip;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -127,6 +138,44 @@ public class HotelReservation implements Serializable {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Set<Hotel> getHotels() {
+        return hotels;
+    }
+
+    public HotelReservation hotels(Set<Hotel> hotels) {
+        this.hotels = hotels;
+        return this;
+    }
+
+    public HotelReservation addHotel(Hotel hotel) {
+        this.hotels.add(hotel);
+        hotel.setHotelReservation(this);
+        return this;
+    }
+
+    public HotelReservation removeHotel(Hotel hotel) {
+        this.hotels.remove(hotel);
+        hotel.setHotelReservation(null);
+        return this;
+    }
+
+    public void setHotels(Set<Hotel> hotels) {
+        this.hotels = hotels;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public HotelReservation trip(Trip trip) {
+        this.trip = trip;
+        return this;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -8,6 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IHotelReservation } from 'app/shared/model/hotel-reservation.model';
+import { getEntities as getHotelReservations } from 'app/entities/hotel-reservation/hotel-reservation.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './hotel.reducer';
 import { IHotel } from 'app/shared/model/hotel.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +20,14 @@ export interface IHotelUpdateProps extends StateProps, DispatchProps, RouteCompo
 
 export interface IHotelUpdateState {
   isNew: boolean;
+  hotelReservationId: number;
 }
 
 export class HotelUpdate extends React.Component<IHotelUpdateProps, IHotelUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      hotelReservationId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -34,6 +38,8 @@ export class HotelUpdate extends React.Component<IHotelUpdateProps, IHotelUpdate
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getHotelReservations();
   }
 
   saveEntity = (event, errors, values) => {
@@ -58,7 +64,7 @@ export class HotelUpdate extends React.Component<IHotelUpdateProps, IHotelUpdate
   };
 
   render() {
-    const { hotelEntity, loading, updating } = this.props;
+    const { hotelEntity, hotelReservations, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -108,17 +114,30 @@ export class HotelUpdate extends React.Component<IHotelUpdateProps, IHotelUpdate
                   </Label>
                   <AvField id="hotel-type" type="text" name="type" />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="hotelReservation.id">
+                    <Translate contentKey="tripPlanningApp.hotel.hotelReservation">Hotel Reservation</Translate>
+                  </Label>
+                  <AvInput id="hotel-hotelReservation" type="select" className="form-control" name="hotelReservation.id">
+                    <option value="" key="0" />
+                    {hotelReservations
+                      ? hotelReservations.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/hotel" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="save" />&nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
@@ -131,12 +150,14 @@ export class HotelUpdate extends React.Component<IHotelUpdateProps, IHotelUpdate
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  hotelReservations: storeState.hotelReservation.entities,
   hotelEntity: storeState.hotel.entity,
   loading: storeState.hotel.loading,
   updating: storeState.hotel.updating
 });
 
 const mapDispatchToProps = {
+  getHotelReservations,
   getEntity,
   updateEntity,
   createEntity,

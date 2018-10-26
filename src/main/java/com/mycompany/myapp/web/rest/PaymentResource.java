@@ -16,6 +16,8 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing Payment.
@@ -79,11 +81,19 @@ public class PaymentResource {
     /**
      * GET  /payments : get all the payments.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of payments in body
      */
     @GetMapping("/payments")
     @Timed
-    public List<Payment> getAllPayments() {
+    public List<Payment> getAllPayments(@RequestParam(required = false) String filter) {
+        if ("trip-is-null".equals(filter)) {
+            log.debug("REST request to get all Payments where trip is null");
+            return StreamSupport
+                .stream(paymentRepository.findAll().spliterator(), false)
+                .filter(payment -> payment.getTrip() == null)
+                .collect(Collectors.toList());
+        }
         log.debug("REST request to get all Payments");
         return paymentRepository.findAll();
     }

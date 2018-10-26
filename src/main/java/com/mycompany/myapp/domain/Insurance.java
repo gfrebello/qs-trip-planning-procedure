@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -38,6 +39,10 @@ public class Insurance implements Serializable {
 
     @Column(name = "end_date")
     private Instant endDate;
+
+    @OneToOne(mappedBy = "insurance")
+    @JsonIgnore
+    private Trip trip;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -111,6 +116,19 @@ public class Insurance implements Serializable {
 
     public void setEndDate(Instant endDate) {
         this.endDate = endDate;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public Insurance trip(Trip trip) {
+        this.trip = trip;
+        return this;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

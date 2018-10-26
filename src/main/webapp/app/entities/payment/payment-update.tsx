@@ -8,6 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { ITrip } from 'app/shared/model/trip.model';
+import { getEntities as getTrips } from 'app/entities/trip/trip.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './payment.reducer';
 import { IPayment } from 'app/shared/model/payment.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +20,14 @@ export interface IPaymentUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export interface IPaymentUpdateState {
   isNew: boolean;
+  tripId: number;
 }
 
 export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPaymentUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      tripId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -34,6 +38,8 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getTrips();
   }
 
   saveEntity = (event, errors, values) => {
@@ -58,7 +64,7 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
   };
 
   render() {
-    const { paymentEntity, loading, updating } = this.props;
+    const { paymentEntity, trips, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -91,16 +97,14 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
                   <AvField id="payment-amount" type="number" className="form-control" name="amount" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/payment" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="save" />&nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
@@ -113,12 +117,14 @@ export class PaymentUpdate extends React.Component<IPaymentUpdateProps, IPayment
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  trips: storeState.trip.entities,
   paymentEntity: storeState.payment.entity,
   loading: storeState.payment.loading,
   updating: storeState.payment.updating
 });
 
 const mapDispatchToProps = {
+  getTrips,
   getEntity,
   updateEntity,
   createEntity,

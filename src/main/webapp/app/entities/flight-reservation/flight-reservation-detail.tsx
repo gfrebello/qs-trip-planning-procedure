@@ -25,8 +25,9 @@ export class FlightReservationDetail extends React.Component<IFlightReservationD
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="tripPlanningApp.flightReservation.detail.title">FlightReservation</Translate> [
-            <b>{flightReservationEntity.id}</b>]
+            <Translate contentKey="tripPlanningApp.flightReservation.detail.title">FlightReservation</Translate> [<b>
+              {flightReservationEntity.id}
+            </b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
@@ -47,14 +48,26 @@ export class FlightReservationDetail extends React.Component<IFlightReservationD
               </span>
             </dt>
             <dd>{flightReservationEntity.customerClass}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.flightReservation.flight">Flight</Translate>
+            </dt>
+            <dd>
+              {flightReservationEntity.flights
+                ? flightReservationEntity.flights.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.id}</a>
+                      {i === flightReservationEntity.flights.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </dd>
           </dl>
           <Button tag={Link} to="/entity/flight-reservation" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/flight-reservation/${flightReservationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

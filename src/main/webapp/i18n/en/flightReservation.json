@@ -18,7 +18,9 @@
             },
             "reservationId": "Reservation Id",
             "numberOfPeople": "Number Of People",
-            "customerClass": "Customer Class"
+            "customerClass": "Customer Class",
+            "flight": "Flight",
+            "trip": "Trip"
         }
     }
 }

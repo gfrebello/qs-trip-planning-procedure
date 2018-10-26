@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { IFlightReservation } from 'app/shared/model//flight-reservation.model';
 
 export interface IFlight {
   id?: number;
@@ -11,6 +12,7 @@ export interface IFlight {
   flightCode?: string;
   departAirport?: string;
   arrivalAirport?: string;
+  flightReservations?: IFlightReservation[];
 }
 
 export const defaultValue: Readonly<IFlight> = {};

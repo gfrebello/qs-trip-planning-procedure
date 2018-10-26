@@ -26,8 +26,7 @@ export class Flight extends React.Component<IFlightProps> {
         <h2 id="flight-heading">
           <Translate contentKey="tripPlanningApp.flight.home.title">Flights</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.flight.home.createLabel">Create new Flight</Translate>
           </Link>
         </h2>

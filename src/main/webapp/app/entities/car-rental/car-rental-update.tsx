@@ -8,6 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { ITrip } from 'app/shared/model/trip.model';
+import { getEntities as getTrips } from 'app/entities/trip/trip.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './car-rental.reducer';
 import { ICarRental } from 'app/shared/model/car-rental.model';
 // tslint:disable-next-line:no-unused-variable
@@ -18,12 +20,14 @@ export interface ICarRentalUpdateProps extends StateProps, DispatchProps, RouteC
 
 export interface ICarRentalUpdateState {
   isNew: boolean;
+  tripId: number;
 }
 
 export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICarRentalUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
+      tripId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -34,6 +38,8 @@ export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICar
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
+
+    this.props.getTrips();
   }
 
   saveEntity = (event, errors, values) => {
@@ -60,7 +66,7 @@ export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICar
   };
 
   render() {
-    const { carRentalEntity, loading, updating } = this.props;
+    const { carRentalEntity, trips, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -135,16 +141,14 @@ export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICar
                   <AvField id="car-rental-color" type="text" name="color" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/car-rental" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />
-                  &nbsp;
+                  <FontAwesomeIcon icon="save" />&nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
@@ -157,12 +161,14 @@ export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICar
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  trips: storeState.trip.entities,
   carRentalEntity: storeState.carRental.entity,
   loading: storeState.carRental.loading,
   updating: storeState.carRental.updating
 });
 
 const mapDispatchToProps = {
+  getTrips,
   getEntity,
   updateEntity,
   createEntity,

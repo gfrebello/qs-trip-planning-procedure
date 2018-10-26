@@ -16,6 +16,8 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing Attraction.
@@ -79,11 +81,19 @@ public class AttractionResource {
     /**
      * GET  /attractions : get all the attractions.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of attractions in body
      */
     @GetMapping("/attractions")
     @Timed
-    public List<Attraction> getAllAttractions() {
+    public List<Attraction> getAllAttractions(@RequestParam(required = false) String filter) {
+        if ("chosenattraction-is-null".equals(filter)) {
+            log.debug("REST request to get all Attractions where chosenAttraction is null");
+            return StreamSupport
+                .stream(attractionRepository.findAll().spliterator(), false)
+                .filter(attraction -> attraction.getChosenAttraction() == null)
+                .collect(Collectors.toList());
+        }
         log.debug("REST request to get all Attractions");
         return attractionRepository.findAll();
     }

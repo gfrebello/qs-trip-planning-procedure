@@ -21,7 +21,9 @@
             "onlinePaymentChoosen": "Online Payment Choosen",
             "checkinDate": "Checkin Date",
             "checkoutDate": "Checkout Date",
-            "price": "Price"
+            "price": "Price",
+            "hotel": "Hotel",
+            "trip": "Trip"
         }
     }
 }

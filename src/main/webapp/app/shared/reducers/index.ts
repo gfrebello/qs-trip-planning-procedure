@@ -7,7 +7,7 @@ import applicationProfile, { ApplicationProfileState } from './application-profi
 
 import administration, { AdministrationState } from 'app/modules/administration/administration.reducer';
 import userManagement, { UserManagementState } from 'app/modules/administration/user-management/user-management.reducer';
-import home, { TripState } from 'app/modules/home/home.reducer';
+import home, { PlanState } from 'app/modules/home/home.reducer';
 import register, { RegisterState } from 'app/modules/account/register/register.reducer';
 import activate, { ActivateState } from 'app/modules/account/activate/activate.reducer';
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
@@ -26,9 +26,9 @@ import payment, {
   PaymentState
 } from 'app/entities/payment/payment.reducer';
 // prettier-ignore
-import paycheck, {
-  PaycheckState
-} from 'app/entities/paycheck/paycheck.reducer';
+import checkPayment, {
+  CheckPaymentState
+} from 'app/entities/check-payment/check-payment.reducer';
 // prettier-ignore
 import creditCard, {
   CreditCardState
@@ -54,9 +54,9 @@ import hotelRoom, {
   HotelRoomState
 } from 'app/entities/hotel-room/hotel-room.reducer';
 // prettier-ignore
-import choosenAttraction, {
-  ChoosenAttractionState
-} from 'app/entities/choosen-attraction/choosen-attraction.reducer';
+import chosenAttraction, {
+  ChosenAttractionState
+} from 'app/entities/chosen-attraction/chosen-attraction.reducer';
 // prettier-ignore
 import attraction, {
   AttractionState
@@ -69,10 +69,6 @@ import insurance, {
 import carRental, {
   CarRentalState
 } from 'app/entities/car-rental/car-rental.reducer';
-// prettier-ignore
-import region, {
-  RegionState
-} from 'app/entities/region/region.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -86,22 +82,21 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
-  readonly home: TripState;
+  readonly home: PlanState;
   readonly trip: TripState;
   readonly ticket: TicketState;
   readonly payment: PaymentState;
-  readonly paycheck: PaycheckState;
+  readonly checkPayment: CheckPaymentState;
   readonly creditCard: CreditCardState;
   readonly flightReservation: FlightReservationState;
   readonly flight: FlightState;
   readonly hotelReservation: HotelReservationState;
   readonly hotel: HotelState;
   readonly hotelRoom: HotelRoomState;
-  readonly choosenAttraction: ChoosenAttractionState;
+  readonly chosenAttraction: ChosenAttractionState;
   readonly attraction: AttractionState;
   readonly insurance: InsuranceState;
   readonly carRental: CarRentalState;
-  readonly region: RegionState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -121,18 +116,17 @@ const rootReducer = combineReducers<IRootState>({
   trip,
   ticket,
   payment,
-  paycheck,
+  checkPayment,
   creditCard,
   flightReservation,
   flight,
   hotelReservation,
   hotel,
   hotelRoom,
-  choosenAttraction,
+  chosenAttraction,
   attraction,
   insurance,
   carRental,
-  region,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

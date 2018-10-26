@@ -26,8 +26,7 @@ export class Ticket extends React.Component<ITicketProps> {
         <h2 id="ticket-heading">
           <Translate contentKey="tripPlanningApp.ticket.home.title">Tickets</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.ticket.home.createLabel">Create new Ticket</Translate>
           </Link>
         </h2>
@@ -44,6 +43,9 @@ export class Ticket extends React.Component<ITicketProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.ticket.reservationId">Reservation Id</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.ticket.trip">Trip</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -57,6 +59,7 @@ export class Ticket extends React.Component<ITicketProps> {
                   </td>
                   <td>{ticket.type}</td>
                   <td>{ticket.reservationId}</td>
+                  <td>{ticket.trip ? <Link to={`trip/${ticket.trip.id}`}>{ticket.trip.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${ticket.id}`} color="info" size="sm">

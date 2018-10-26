@@ -30,8 +30,16 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
-    "changelogDate": "20181008012925",
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "carRental"
+        }
+    ],
+    "changelogDate": "20181024154910",
     "entityTableName": "car_rental",
     "dto": "no",
     "pagination": "no",

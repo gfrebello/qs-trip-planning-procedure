@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,6 +29,10 @@ public class Ticket implements Serializable {
 
     @Column(name = "reservation_id")
     private String reservationId;
+
+    @ManyToOne
+    @JsonIgnoreProperties("tickets")
+    private Trip trip;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -62,6 +67,19 @@ public class Ticket implements Serializable {
 
     public void setReservationId(String reservationId) {
         this.reservationId = reservationId;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public Ticket trip(Trip trip) {
+        this.trip = trip;
+        return this;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

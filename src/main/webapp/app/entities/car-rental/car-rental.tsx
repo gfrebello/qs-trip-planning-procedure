@@ -26,8 +26,7 @@ export class CarRental extends React.Component<ICarRentalProps> {
         <h2 id="car-rental-heading">
           <Translate contentKey="tripPlanningApp.carRental.home.title">Car Rentals</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.carRental.home.createLabel">Create new Car Rental</Translate>
           </Link>
         </h2>

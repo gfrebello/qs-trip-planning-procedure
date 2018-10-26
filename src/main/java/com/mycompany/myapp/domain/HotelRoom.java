@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -34,6 +35,10 @@ public class HotelRoom implements Serializable {
 
     @Column(name = "jhi_type")
     private String type;
+
+    @ManyToOne
+    @JsonIgnoreProperties("hotelRooms")
+    private Hotel hotel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -94,6 +99,19 @@ public class HotelRoom implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public HotelRoom hotel(Hotel hotel) {
+        this.hotel = hotel;
+        return this;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

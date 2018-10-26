@@ -22,7 +22,8 @@
             "price": "Price",
             "pickupAddress": "Pickup Address",
             "dropoffAddress": "Dropoff Address",
-            "color": "Color"
+            "color": "Color",
+            "trip": "Trip"
         }
     }
 }

@@ -10,8 +10,15 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
-    "changelogDate": "20181008012913",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181024154858",
     "entityTableName": "ticket",
     "dto": "no",
     "pagination": "no",

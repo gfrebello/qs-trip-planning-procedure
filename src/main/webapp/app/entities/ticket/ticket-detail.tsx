@@ -40,14 +40,17 @@ export class TicketDetail extends React.Component<ITicketDetailProps> {
               </span>
             </dt>
             <dd>{ticketEntity.reservationId}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.ticket.trip">Trip</Translate>
+            </dt>
+            <dd>{ticketEntity.trip ? ticketEntity.trip.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/ticket" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/ticket/${ticketEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

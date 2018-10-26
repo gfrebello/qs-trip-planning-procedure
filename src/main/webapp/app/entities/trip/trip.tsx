@@ -26,8 +26,7 @@ export class Trip extends React.Component<ITripProps> {
         <h2 id="trip-heading">
           <Translate contentKey="tripPlanningApp.trip.home.title">Trips</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.trip.home.createLabel">Create new Trip</Translate>
           </Link>
         </h2>
@@ -59,6 +58,24 @@ export class Trip extends React.Component<ITripProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.trip.destination">Destination</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.trip.payment">Payment</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.trip.flightReservation">Flight Reservation</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.trip.hotelReservation">Hotel Reservation</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.trip.insurance">Insurance</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.trip.carRental">Car Rental</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.trip.user">User</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -81,6 +98,24 @@ export class Trip extends React.Component<ITripProps> {
                   </td>
                   <td>{trip.origin}</td>
                   <td>{trip.destination}</td>
+                  <td>{trip.payment ? <Link to={`payment/${trip.payment.id}`}>{trip.payment.id}</Link> : ''}</td>
+                  <td>
+                    {trip.flightReservation ? (
+                      <Link to={`flight-reservation/${trip.flightReservation.id}`}>{trip.flightReservation.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {trip.hotelReservation ? (
+                      <Link to={`hotel-reservation/${trip.hotelReservation.id}`}>{trip.hotelReservation.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>{trip.insurance ? <Link to={`insurance/${trip.insurance.id}`}>{trip.insurance.id}</Link> : ''}</td>
+                  <td>{trip.carRental ? <Link to={`car-rental/${trip.carRental.id}`}>{trip.carRental.id}</Link> : ''}</td>
+                  <td>{trip.user ? trip.user.id : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${trip.id}`} color="info" size="sm">

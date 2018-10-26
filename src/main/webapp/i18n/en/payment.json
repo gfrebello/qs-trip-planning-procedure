@@ -16,7 +16,8 @@
             "detail": {
                 "title": "Payment"
             },
-            "amount": "Amount"
+            "amount": "Amount",
+            "trip": "Trip"
         }
     }
 }

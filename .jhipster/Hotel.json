@@ -18,8 +18,21 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
-    "changelogDate": "20181008012920",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "hotelRoom",
+            "otherEntityName": "hotelRoom",
+            "otherEntityRelationshipName": "hotel"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "hotelReservation",
+            "otherEntityName": "hotelReservation",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181024154905",
     "entityTableName": "hotel",
     "dto": "no",
     "pagination": "no",

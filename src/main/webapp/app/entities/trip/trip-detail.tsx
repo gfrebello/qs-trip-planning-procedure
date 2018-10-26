@@ -74,14 +74,37 @@ export class TripDetail extends React.Component<ITripDetailProps> {
               </span>
             </dt>
             <dd>{tripEntity.destination}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.trip.payment">Payment</Translate>
+            </dt>
+            <dd>{tripEntity.payment ? tripEntity.payment.id : ''}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.trip.flightReservation">Flight Reservation</Translate>
+            </dt>
+            <dd>{tripEntity.flightReservation ? tripEntity.flightReservation.id : ''}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.trip.hotelReservation">Hotel Reservation</Translate>
+            </dt>
+            <dd>{tripEntity.hotelReservation ? tripEntity.hotelReservation.id : ''}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.trip.insurance">Insurance</Translate>
+            </dt>
+            <dd>{tripEntity.insurance ? tripEntity.insurance.id : ''}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.trip.carRental">Car Rental</Translate>
+            </dt>
+            <dd>{tripEntity.carRental ? tripEntity.carRental.id : ''}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.trip.user">User</Translate>
+            </dt>
+            <dd>{tripEntity.user ? tripEntity.user.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/trip" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/trip/${tripEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

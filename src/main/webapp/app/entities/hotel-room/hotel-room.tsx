@@ -26,8 +26,7 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
         <h2 id="hotel-room-heading">
           <Translate contentKey="tripPlanningApp.hotelRoom.home.title">Hotel Rooms</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.hotelRoom.home.createLabel">Create new Hotel Room</Translate>
           </Link>
         </h2>
@@ -50,6 +49,9 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.hotelRoom.type">Type</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -65,6 +67,7 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                   <td>{hotelRoom.price}</td>
                   <td>{hotelRoom.available ? 'true' : 'false'}</td>
                   <td>{hotelRoom.type}</td>
+                  <td>{hotelRoom.hotel ? <Link to={`hotel/${hotelRoom.hotel.id}`}>{hotelRoom.hotel.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${hotelRoom.id}`} color="info" size="sm">

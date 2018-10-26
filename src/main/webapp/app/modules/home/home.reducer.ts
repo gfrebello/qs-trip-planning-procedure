@@ -13,10 +13,10 @@ const initialState = {
   redirect: false
 };
 
-export type TripState = Readonly<typeof initialState>;
+export type PlanState = Readonly<typeof initialState>;
 
 // Reducer
-export default (state: TripState = initialState, action): TripState => {
+export default (state: PlanState = initialState, action): PlanState => {
   switch (action.type) {
     case ACTION_TYPES.SUBMIT_TRIP:
       return {

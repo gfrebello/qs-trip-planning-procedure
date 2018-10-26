@@ -22,8 +22,16 @@
             "fieldType": "Instant"
         }
     ],
-    "relationships": [],
-    "changelogDate": "20181008012924",
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "insurance"
+        }
+    ],
+    "changelogDate": "20181024154909",
     "entityTableName": "insurance",
     "dto": "no",
     "pagination": "no",

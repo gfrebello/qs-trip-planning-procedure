@@ -26,8 +26,7 @@ export class Insurance extends React.Component<IInsuranceProps> {
         <h2 id="insurance-heading">
           <Translate contentKey="tripPlanningApp.insurance.home.title">Insurances</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.insurance.home.createLabel">Create new Insurance</Translate>
           </Link>
         </h2>

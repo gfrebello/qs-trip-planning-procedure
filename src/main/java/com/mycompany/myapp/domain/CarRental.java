@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -44,6 +45,10 @@ public class CarRental implements Serializable {
 
     @Column(name = "color")
     private String color;
+
+    @OneToOne(mappedBy = "carRental")
+    @JsonIgnore
+    private Trip trip;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -143,6 +148,19 @@ public class CarRental implements Serializable {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public CarRental trip(Trip trip) {
+        this.trip = trip;
+        return this;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

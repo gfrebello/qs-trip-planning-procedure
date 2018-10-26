@@ -16,6 +16,8 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing CarRental.
@@ -79,11 +81,19 @@ public class CarRentalResource {
     /**
      * GET  /car-rentals : get all the carRentals.
      *
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of carRentals in body
      */
     @GetMapping("/car-rentals")
     @Timed
-    public List<CarRental> getAllCarRentals() {
+    public List<CarRental> getAllCarRentals(@RequestParam(required = false) String filter) {
+        if ("trip-is-null".equals(filter)) {
+            log.debug("REST request to get all CarRentals where trip is null");
+            return StreamSupport
+                .stream(carRentalRepository.findAll().spliterator(), false)
+                .filter(carRental -> carRental.getTrip() == null)
+                .collect(Collectors.toList());
+        }
         log.debug("REST request to get all CarRentals");
         return carRentalRepository.findAll();
     }

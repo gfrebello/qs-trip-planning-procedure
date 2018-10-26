@@ -16,6 +16,8 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing FlightReservation.
@@ -79,13 +81,22 @@ public class FlightReservationResource {
     /**
      * GET  /flight-reservations : get all the flightReservations.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
+     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of flightReservations in body
      */
     @GetMapping("/flight-reservations")
     @Timed
-    public List<FlightReservation> getAllFlightReservations() {
+    public List<FlightReservation> getAllFlightReservations(@RequestParam(required = false) String filter,@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+        if ("trip-is-null".equals(filter)) {
+            log.debug("REST request to get all FlightReservations where trip is null");
+            return StreamSupport
+                .stream(flightReservationRepository.findAll().spliterator(), false)
+                .filter(flightReservation -> flightReservation.getTrip() == null)
+                .collect(Collectors.toList());
+        }
         log.debug("REST request to get all FlightReservations");
-        return flightReservationRepository.findAll();
+        return flightReservationRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -98,7 +109,7 @@ public class FlightReservationResource {
     @Timed
     public ResponseEntity<FlightReservation> getFlightReservation(@PathVariable Long id) {
         log.debug("REST request to get FlightReservation : {}", id);
-        Optional<FlightReservation> flightReservation = flightReservationRepository.findById(id);
+        Optional<FlightReservation> flightReservation = flightReservationRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(flightReservation);
     }
 

@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -34,6 +35,10 @@ public class Attraction implements Serializable {
 
     @Column(name = "price")
     private Float price;
+
+    @OneToOne(mappedBy = "attraction")
+    @JsonIgnore
+    private ChosenAttraction chosenAttraction;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -94,6 +99,19 @@ public class Attraction implements Serializable {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public ChosenAttraction getChosenAttraction() {
+        return chosenAttraction;
+    }
+
+    public Attraction chosenAttraction(ChosenAttraction chosenAttraction) {
+        this.chosenAttraction = chosenAttraction;
+        return this;
+    }
+
+    public void setChosenAttraction(ChosenAttraction chosenAttraction) {
+        this.chosenAttraction = chosenAttraction;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

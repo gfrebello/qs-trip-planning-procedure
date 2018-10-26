@@ -26,8 +26,7 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
         <h2 id="hotel-reservation-heading">
           <Translate contentKey="tripPlanningApp.hotelReservation.home.title">Hotel Reservations</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;
+            <FontAwesomeIcon icon="plus" />&nbsp;
             <Translate contentKey="tripPlanningApp.hotelReservation.home.createLabel">Create new Hotel Reservation</Translate>
           </Link>
         </h2>

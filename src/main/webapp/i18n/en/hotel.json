@@ -19,7 +19,9 @@
             "name": "Name",
             "city": "City",
             "address": "Address",
-            "type": "Type"
+            "type": "Type",
+            "hotelRoom": "Hotel Room",
+            "hotelReservation": "Hotel Reservation"
         }
     }
 }

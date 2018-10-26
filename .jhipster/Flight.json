@@ -38,8 +38,16 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
-    "changelogDate": "20181008012918",
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "flightReservation",
+            "otherEntityName": "flightReservation",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "flight"
+        }
+    ],
+    "changelogDate": "20181024154903",
     "entityTableName": "flight",
     "dto": "no",
     "pagination": "no",

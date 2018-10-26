@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { ITrip } from 'app/shared/model//trip.model';
 
 export interface ICarRental {
   id?: number;
@@ -9,6 +10,7 @@ export interface ICarRental {
   pickupAddress?: string;
   dropoffAddress?: string;
   color?: string;
+  trip?: ITrip;
 }
 
 export const defaultValue: Readonly<ICarRental> = {};

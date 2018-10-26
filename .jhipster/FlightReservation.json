@@ -14,8 +14,24 @@
             "fieldType": "String"
         }
     ],
-    "relationships": [],
-    "changelogDate": "20181008012917",
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "flightReservation",
+            "relationshipName": "flight",
+            "otherEntityName": "flight",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "trip",
+            "otherEntityName": "trip",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "flightReservation"
+        }
+    ],
+    "changelogDate": "20181024154902",
     "entityTableName": "flight_reservation",
     "dto": "no",
     "pagination": "no",

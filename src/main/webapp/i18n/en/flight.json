@@ -24,7 +24,8 @@
             "arrivalDate": "Arrival Date",
             "flightCode": "Flight Code",
             "departAirport": "Depart Airport",
-            "arrivalAirport": "Arrival Airport"
+            "arrivalAirport": "Arrival Airport",
+            "flightReservation": "Flight Reservation"
         }
     }
 }

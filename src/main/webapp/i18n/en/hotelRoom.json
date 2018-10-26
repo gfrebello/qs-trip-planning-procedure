@@ -19,7 +19,8 @@
             "numberOfPeople": "Number Of People",
             "price": "Price",
             "available": "Available",
-            "type": "Type"
+            "type": "Type",
+            "hotel": "Hotel"
         }
     }
 }

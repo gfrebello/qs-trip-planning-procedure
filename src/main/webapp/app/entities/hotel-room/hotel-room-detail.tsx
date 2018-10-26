@@ -52,14 +52,17 @@ export class HotelRoomDetail extends React.Component<IHotelRoomDetailProps> {
               </span>
             </dt>
             <dd>{hotelRoomEntity.type}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
+            </dt>
+            <dd>{hotelRoomEntity.hotel ? hotelRoomEntity.hotel.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/hotel-room" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>
-          &nbsp;
+          </Button>&nbsp;
           <Button tag={Link} to={`/entity/hotel-room/${hotelRoomEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">
