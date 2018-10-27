@@ -8,8 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IFlightReservation } from 'app/shared/model/flight-reservation.model';
-import { getEntities as getFlightReservations } from 'app/entities/flight-reservation/flight-reservation.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './flight.reducer';
 import { IFlight } from 'app/shared/model/flight.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +18,12 @@ export interface IFlightUpdateProps extends StateProps, DispatchProps, RouteComp
 
 export interface IFlightUpdateState {
   isNew: boolean;
-  flightReservationId: number;
 }
 
 export class FlightUpdate extends React.Component<IFlightUpdateProps, IFlightUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      flightReservationId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -38,8 +34,6 @@ export class FlightUpdate extends React.Component<IFlightUpdateProps, IFlightUpd
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getFlightReservations();
   }
 
   saveEntity = (event, errors, values) => {
@@ -67,7 +61,7 @@ export class FlightUpdate extends React.Component<IFlightUpdateProps, IFlightUpd
   };
 
   render() {
-    const { flightEntity, flightReservations, loading, updating } = this.props;
+    const { flightEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -112,10 +106,10 @@ export class FlightUpdate extends React.Component<IFlightUpdateProps, IFlightUpd
                   <AvField id="flight-destination" type="text" name="destination" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="avaibleSeatsLabel" for="avaibleSeats">
-                    <Translate contentKey="tripPlanningApp.flight.avaibleSeats">Avaible Seats</Translate>
+                  <Label id="availableSeatsLabel" for="availableSeats">
+                    <Translate contentKey="tripPlanningApp.flight.availableSeats">Available Seats</Translate>
                   </Label>
-                  <AvField id="flight-avaibleSeats" type="number" className="form-control" name="avaibleSeats" />
+                  <AvField id="flight-availableSeats" type="number" className="form-control" name="availableSeats" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="departureDateLabel" for="departureDate">
@@ -159,6 +153,12 @@ export class FlightUpdate extends React.Component<IFlightUpdateProps, IFlightUpd
                   </Label>
                   <AvField id="flight-arrivalAirport" type="text" name="arrivalAirport" />
                 </AvGroup>
+                <AvGroup>
+                  <Label id="priceLabel" for="price">
+                    <Translate contentKey="tripPlanningApp.flight.price">Price</Translate>
+                  </Label>
+                  <AvField id="flight-price" type="number" className="form-control" name="price" />
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/flight" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">
@@ -180,14 +180,12 @@ export class FlightUpdate extends React.Component<IFlightUpdateProps, IFlightUpd
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  flightReservations: storeState.flightReservation.entities,
   flightEntity: storeState.flight.entity,
   loading: storeState.flight.loading,
   updating: storeState.flight.updating
 });
 
 const mapDispatchToProps = {
-  getFlightReservations,
   getEntity,
   updateEntity,
   createEntity,

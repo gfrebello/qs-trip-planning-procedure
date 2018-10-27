@@ -22,7 +22,7 @@ export interface IFlightReservationUpdateProps extends StateProps, DispatchProps
 
 export interface IFlightReservationUpdateState {
   isNew: boolean;
-  idsflight: any[];
+  flightId: number;
   tripId: number;
 }
 
@@ -30,7 +30,7 @@ export class FlightReservationUpdate extends React.Component<IFlightReservationU
   constructor(props) {
     super(props);
     this.state = {
-      idsflight: [],
+      flightId: 0,
       tripId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -52,8 +52,7 @@ export class FlightReservationUpdate extends React.Component<IFlightReservationU
       const { flightReservationEntity } = this.props;
       const entity = {
         ...flightReservationEntity,
-        ...values,
-        flights: mapIdList(values.flights)
+        ...values
       };
 
       if (this.state.isNew) {
@@ -117,20 +116,28 @@ export class FlightReservationUpdate extends React.Component<IFlightReservationU
                   <AvField id="flight-reservation-customerClass" type="text" name="customerClass" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="flights">
+                  <Label for="flight.flightCode">
                     <Translate contentKey="tripPlanningApp.flightReservation.flight">Flight</Translate>
                   </Label>
-                  <AvInput
-                    id="flight-reservation-flight"
-                    type="select"
-                    multiple
-                    className="form-control"
-                    name="flights"
-                    value={flightReservationEntity.flights && flightReservationEntity.flights.map(e => e.id)}
-                  >
+                  <AvInput id="flight-reservation-flight" type="select" className="form-control" name="flight.id">
                     <option value="" key="0" />
                     {flights
                       ? flights.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.flightCode}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="trip.id">
+                    <Translate contentKey="tripPlanningApp.flightReservation.trip">Trip</Translate>
+                  </Label>
+                  <AvInput id="flight-reservation-trip" type="select" className="form-control" name="trip.id">
+                    <option value="" key="0" />
+                    {trips
+                      ? trips.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>

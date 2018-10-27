@@ -75,14 +75,6 @@ export class TripDetail extends React.Component<ITripDetailProps> {
             </dt>
             <dd>{tripEntity.destination}</dd>
             <dt>
-              <Translate contentKey="tripPlanningApp.trip.payment">Payment</Translate>
-            </dt>
-            <dd>{tripEntity.payment ? tripEntity.payment.id : ''}</dd>
-            <dt>
-              <Translate contentKey="tripPlanningApp.trip.flightReservation">Flight Reservation</Translate>
-            </dt>
-            <dd>{tripEntity.flightReservation ? tripEntity.flightReservation.id : ''}</dd>
-            <dt>
               <Translate contentKey="tripPlanningApp.trip.hotelReservation">Hotel Reservation</Translate>
             </dt>
             <dd>{tripEntity.hotelReservation ? tripEntity.hotelReservation.id : ''}</dd>
@@ -97,7 +89,7 @@ export class TripDetail extends React.Component<ITripDetailProps> {
             <dt>
               <Translate contentKey="tripPlanningApp.trip.user">User</Translate>
             </dt>
-            <dd>{tripEntity.user ? tripEntity.user.id : ''}</dd>
+            <dd>{tripEntity.user ? tripEntity.user.login : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/trip" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -24,20 +25,25 @@ public class HotelRoom implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "number_of_people")
-    private Integer numberOfPeople;
-
-    @Column(name = "price")
-    private Float price;
+    @Column(name = "max_capacity")
+    private Integer maxCapacity;
 
     @Column(name = "available")
     private Boolean available;
 
-    @Column(name = "jhi_type")
-    private String type;
+    @Column(name = "room_type")
+    private String roomType;
+
+    @Column(name = "price")
+    private Float price;
 
     @ManyToOne
     @JsonIgnoreProperties("hotelRooms")
+    private HotelReservation hotelReservation;
+
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(unique = true)
     private Hotel hotel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -49,30 +55,17 @@ public class HotelRoom implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
+    public Integer getMaxCapacity() {
+        return maxCapacity;
     }
 
-    public HotelRoom numberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
+    public HotelRoom maxCapacity(Integer maxCapacity) {
+        this.maxCapacity = maxCapacity;
         return this;
     }
 
-    public void setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public HotelRoom price(Float price) {
-        this.price = price;
-        return this;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
+    public void setMaxCapacity(Integer maxCapacity) {
+        this.maxCapacity = maxCapacity;
     }
 
     public Boolean isAvailable() {
@@ -88,17 +81,43 @@ public class HotelRoom implements Serializable {
         this.available = available;
     }
 
-    public String getType() {
-        return type;
+    public String getRoomType() {
+        return roomType;
     }
 
-    public HotelRoom type(String type) {
-        this.type = type;
+    public HotelRoom roomType(String roomType) {
+        this.roomType = roomType;
         return this;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public HotelRoom price(Float price) {
+        this.price = price;
+        return this;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public HotelReservation getHotelReservation() {
+        return hotelReservation;
+    }
+
+    public HotelRoom hotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservation = hotelReservation;
+        return this;
+    }
+
+    public void setHotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservation = hotelReservation;
     }
 
     public Hotel getHotel() {
@@ -139,10 +158,10 @@ public class HotelRoom implements Serializable {
     public String toString() {
         return "HotelRoom{" +
             "id=" + getId() +
-            ", numberOfPeople=" + getNumberOfPeople() +
-            ", price=" + getPrice() +
+            ", maxCapacity=" + getMaxCapacity() +
             ", available='" + isAvailable() + "'" +
-            ", type='" + getType() + "'" +
+            ", roomType='" + getRoomType() + "'" +
+            ", price=" + getPrice() +
             "}";
     }
 }

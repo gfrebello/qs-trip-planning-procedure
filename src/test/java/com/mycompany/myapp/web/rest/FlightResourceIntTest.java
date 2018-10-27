@@ -50,8 +50,8 @@ public class FlightResourceIntTest {
     private static final String DEFAULT_DESTINATION = "AAAAAAAAAA";
     private static final String UPDATED_DESTINATION = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_AVAIBLE_SEATS = 1;
-    private static final Integer UPDATED_AVAIBLE_SEATS = 2;
+    private static final Integer DEFAULT_AVAILABLE_SEATS = 1;
+    private static final Integer UPDATED_AVAILABLE_SEATS = 2;
 
     private static final Instant DEFAULT_DEPARTURE_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DEPARTURE_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
@@ -67,6 +67,9 @@ public class FlightResourceIntTest {
 
     private static final String DEFAULT_ARRIVAL_AIRPORT = "AAAAAAAAAA";
     private static final String UPDATED_ARRIVAL_AIRPORT = "BBBBBBBBBB";
+
+    private static final Float DEFAULT_PRICE = 1F;
+    private static final Float UPDATED_PRICE = 2F;
 
     @Autowired
     private FlightRepository flightRepository;
@@ -109,12 +112,13 @@ public class FlightResourceIntTest {
             .company(DEFAULT_COMPANY)
             .origin(DEFAULT_ORIGIN)
             .destination(DEFAULT_DESTINATION)
-            .avaibleSeats(DEFAULT_AVAIBLE_SEATS)
+            .availableSeats(DEFAULT_AVAILABLE_SEATS)
             .departureDate(DEFAULT_DEPARTURE_DATE)
             .arrivalDate(DEFAULT_ARRIVAL_DATE)
             .flightCode(DEFAULT_FLIGHT_CODE)
             .departAirport(DEFAULT_DEPART_AIRPORT)
-            .arrivalAirport(DEFAULT_ARRIVAL_AIRPORT);
+            .arrivalAirport(DEFAULT_ARRIVAL_AIRPORT)
+            .price(DEFAULT_PRICE);
         return flight;
     }
 
@@ -141,12 +145,13 @@ public class FlightResourceIntTest {
         assertThat(testFlight.getCompany()).isEqualTo(DEFAULT_COMPANY);
         assertThat(testFlight.getOrigin()).isEqualTo(DEFAULT_ORIGIN);
         assertThat(testFlight.getDestination()).isEqualTo(DEFAULT_DESTINATION);
-        assertThat(testFlight.getAvaibleSeats()).isEqualTo(DEFAULT_AVAIBLE_SEATS);
+        assertThat(testFlight.getAvailableSeats()).isEqualTo(DEFAULT_AVAILABLE_SEATS);
         assertThat(testFlight.getDepartureDate()).isEqualTo(DEFAULT_DEPARTURE_DATE);
         assertThat(testFlight.getArrivalDate()).isEqualTo(DEFAULT_ARRIVAL_DATE);
         assertThat(testFlight.getFlightCode()).isEqualTo(DEFAULT_FLIGHT_CODE);
         assertThat(testFlight.getDepartAirport()).isEqualTo(DEFAULT_DEPART_AIRPORT);
         assertThat(testFlight.getArrivalAirport()).isEqualTo(DEFAULT_ARRIVAL_AIRPORT);
+        assertThat(testFlight.getPrice()).isEqualTo(DEFAULT_PRICE);
     }
 
     @Test
@@ -182,12 +187,13 @@ public class FlightResourceIntTest {
             .andExpect(jsonPath("$.[*].company").value(hasItem(DEFAULT_COMPANY.toString())))
             .andExpect(jsonPath("$.[*].origin").value(hasItem(DEFAULT_ORIGIN.toString())))
             .andExpect(jsonPath("$.[*].destination").value(hasItem(DEFAULT_DESTINATION.toString())))
-            .andExpect(jsonPath("$.[*].avaibleSeats").value(hasItem(DEFAULT_AVAIBLE_SEATS)))
+            .andExpect(jsonPath("$.[*].availableSeats").value(hasItem(DEFAULT_AVAILABLE_SEATS)))
             .andExpect(jsonPath("$.[*].departureDate").value(hasItem(DEFAULT_DEPARTURE_DATE.toString())))
             .andExpect(jsonPath("$.[*].arrivalDate").value(hasItem(DEFAULT_ARRIVAL_DATE.toString())))
             .andExpect(jsonPath("$.[*].flightCode").value(hasItem(DEFAULT_FLIGHT_CODE.toString())))
             .andExpect(jsonPath("$.[*].departAirport").value(hasItem(DEFAULT_DEPART_AIRPORT.toString())))
-            .andExpect(jsonPath("$.[*].arrivalAirport").value(hasItem(DEFAULT_ARRIVAL_AIRPORT.toString())));
+            .andExpect(jsonPath("$.[*].arrivalAirport").value(hasItem(DEFAULT_ARRIVAL_AIRPORT.toString())))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())));
     }
     
     @Test
@@ -204,12 +210,13 @@ public class FlightResourceIntTest {
             .andExpect(jsonPath("$.company").value(DEFAULT_COMPANY.toString()))
             .andExpect(jsonPath("$.origin").value(DEFAULT_ORIGIN.toString()))
             .andExpect(jsonPath("$.destination").value(DEFAULT_DESTINATION.toString()))
-            .andExpect(jsonPath("$.avaibleSeats").value(DEFAULT_AVAIBLE_SEATS))
+            .andExpect(jsonPath("$.availableSeats").value(DEFAULT_AVAILABLE_SEATS))
             .andExpect(jsonPath("$.departureDate").value(DEFAULT_DEPARTURE_DATE.toString()))
             .andExpect(jsonPath("$.arrivalDate").value(DEFAULT_ARRIVAL_DATE.toString()))
             .andExpect(jsonPath("$.flightCode").value(DEFAULT_FLIGHT_CODE.toString()))
             .andExpect(jsonPath("$.departAirport").value(DEFAULT_DEPART_AIRPORT.toString()))
-            .andExpect(jsonPath("$.arrivalAirport").value(DEFAULT_ARRIVAL_AIRPORT.toString()));
+            .andExpect(jsonPath("$.arrivalAirport").value(DEFAULT_ARRIVAL_AIRPORT.toString()))
+            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()));
     }
 
     @Test
@@ -236,12 +243,13 @@ public class FlightResourceIntTest {
             .company(UPDATED_COMPANY)
             .origin(UPDATED_ORIGIN)
             .destination(UPDATED_DESTINATION)
-            .avaibleSeats(UPDATED_AVAIBLE_SEATS)
+            .availableSeats(UPDATED_AVAILABLE_SEATS)
             .departureDate(UPDATED_DEPARTURE_DATE)
             .arrivalDate(UPDATED_ARRIVAL_DATE)
             .flightCode(UPDATED_FLIGHT_CODE)
             .departAirport(UPDATED_DEPART_AIRPORT)
-            .arrivalAirport(UPDATED_ARRIVAL_AIRPORT);
+            .arrivalAirport(UPDATED_ARRIVAL_AIRPORT)
+            .price(UPDATED_PRICE);
 
         restFlightMockMvc.perform(put("/api/flights")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -255,12 +263,13 @@ public class FlightResourceIntTest {
         assertThat(testFlight.getCompany()).isEqualTo(UPDATED_COMPANY);
         assertThat(testFlight.getOrigin()).isEqualTo(UPDATED_ORIGIN);
         assertThat(testFlight.getDestination()).isEqualTo(UPDATED_DESTINATION);
-        assertThat(testFlight.getAvaibleSeats()).isEqualTo(UPDATED_AVAIBLE_SEATS);
+        assertThat(testFlight.getAvailableSeats()).isEqualTo(UPDATED_AVAILABLE_SEATS);
         assertThat(testFlight.getDepartureDate()).isEqualTo(UPDATED_DEPARTURE_DATE);
         assertThat(testFlight.getArrivalDate()).isEqualTo(UPDATED_ARRIVAL_DATE);
         assertThat(testFlight.getFlightCode()).isEqualTo(UPDATED_FLIGHT_CODE);
         assertThat(testFlight.getDepartAirport()).isEqualTo(UPDATED_DEPART_AIRPORT);
         assertThat(testFlight.getArrivalAirport()).isEqualTo(UPDATED_ARRIVAL_AIRPORT);
+        assertThat(testFlight.getPrice()).isEqualTo(UPDATED_PRICE);
     }
 
     @Test

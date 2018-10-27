@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.TripPlanningApp;
 
 import com.mycompany.myapp.domain.HotelReservation;
+import com.mycompany.myapp.domain.HotelRoom;
 import com.mycompany.myapp.repository.HotelReservationRepository;
 import com.mycompany.myapp.web.rest.errors.ExceptionTranslator;
 
@@ -56,9 +57,6 @@ public class HotelReservationResourceIntTest {
     private static final Instant DEFAULT_CHECKOUT_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_CHECKOUT_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Float DEFAULT_PRICE = 1F;
-    private static final Float UPDATED_PRICE = 2F;
-
     @Autowired
     private HotelReservationRepository hotelReservationRepository;
 
@@ -101,8 +99,12 @@ public class HotelReservationResourceIntTest {
             .numberOfPeople(DEFAULT_NUMBER_OF_PEOPLE)
             .onlinePaymentChoosen(DEFAULT_ONLINE_PAYMENT_CHOOSEN)
             .checkinDate(DEFAULT_CHECKIN_DATE)
-            .checkoutDate(DEFAULT_CHECKOUT_DATE)
-            .price(DEFAULT_PRICE);
+            .checkoutDate(DEFAULT_CHECKOUT_DATE);
+        // Add required entity
+        HotelRoom hotelRoom = HotelRoomResourceIntTest.createEntity(em);
+        em.persist(hotelRoom);
+        em.flush();
+        hotelReservation.getHotelRooms().add(hotelRoom);
         return hotelReservation;
     }
 
@@ -131,7 +133,6 @@ public class HotelReservationResourceIntTest {
         assertThat(testHotelReservation.isOnlinePaymentChoosen()).isEqualTo(DEFAULT_ONLINE_PAYMENT_CHOOSEN);
         assertThat(testHotelReservation.getCheckinDate()).isEqualTo(DEFAULT_CHECKIN_DATE);
         assertThat(testHotelReservation.getCheckoutDate()).isEqualTo(DEFAULT_CHECKOUT_DATE);
-        assertThat(testHotelReservation.getPrice()).isEqualTo(DEFAULT_PRICE);
     }
 
     @Test
@@ -168,8 +169,7 @@ public class HotelReservationResourceIntTest {
             .andExpect(jsonPath("$.[*].numberOfPeople").value(hasItem(DEFAULT_NUMBER_OF_PEOPLE)))
             .andExpect(jsonPath("$.[*].onlinePaymentChoosen").value(hasItem(DEFAULT_ONLINE_PAYMENT_CHOOSEN.booleanValue())))
             .andExpect(jsonPath("$.[*].checkinDate").value(hasItem(DEFAULT_CHECKIN_DATE.toString())))
-            .andExpect(jsonPath("$.[*].checkoutDate").value(hasItem(DEFAULT_CHECKOUT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())));
+            .andExpect(jsonPath("$.[*].checkoutDate").value(hasItem(DEFAULT_CHECKOUT_DATE.toString())));
     }
     
     @Test
@@ -187,8 +187,7 @@ public class HotelReservationResourceIntTest {
             .andExpect(jsonPath("$.numberOfPeople").value(DEFAULT_NUMBER_OF_PEOPLE))
             .andExpect(jsonPath("$.onlinePaymentChoosen").value(DEFAULT_ONLINE_PAYMENT_CHOOSEN.booleanValue()))
             .andExpect(jsonPath("$.checkinDate").value(DEFAULT_CHECKIN_DATE.toString()))
-            .andExpect(jsonPath("$.checkoutDate").value(DEFAULT_CHECKOUT_DATE.toString()))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()));
+            .andExpect(jsonPath("$.checkoutDate").value(DEFAULT_CHECKOUT_DATE.toString()));
     }
 
     @Test
@@ -216,8 +215,7 @@ public class HotelReservationResourceIntTest {
             .numberOfPeople(UPDATED_NUMBER_OF_PEOPLE)
             .onlinePaymentChoosen(UPDATED_ONLINE_PAYMENT_CHOOSEN)
             .checkinDate(UPDATED_CHECKIN_DATE)
-            .checkoutDate(UPDATED_CHECKOUT_DATE)
-            .price(UPDATED_PRICE);
+            .checkoutDate(UPDATED_CHECKOUT_DATE);
 
         restHotelReservationMockMvc.perform(put("/api/hotel-reservations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -233,7 +231,6 @@ public class HotelReservationResourceIntTest {
         assertThat(testHotelReservation.isOnlinePaymentChoosen()).isEqualTo(UPDATED_ONLINE_PAYMENT_CHOOSEN);
         assertThat(testHotelReservation.getCheckinDate()).isEqualTo(UPDATED_CHECKIN_DATE);
         assertThat(testHotelReservation.getCheckoutDate()).isEqualTo(UPDATED_CHECKOUT_DATE);
-        assertThat(testHotelReservation.getPrice()).isEqualTo(UPDATED_PRICE);
     }
 
     @Test

@@ -52,9 +52,6 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.hotelReservation.checkoutDate">Checkout Date</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.hotelReservation.price">Price</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -75,7 +72,6 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
                   <td>
                     <TextFormat type="date" value={hotelReservation.checkoutDate} format={APP_DATE_FORMAT} />
                   </td>
-                  <td>{hotelReservation.price}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${hotelReservation.id}`} color="info" size="sm">

@@ -29,17 +29,11 @@ export class HotelRoomDetail extends React.Component<IHotelRoomDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="numberOfPeople">
-                <Translate contentKey="tripPlanningApp.hotelRoom.numberOfPeople">Number Of People</Translate>
+              <span id="maxCapacity">
+                <Translate contentKey="tripPlanningApp.hotelRoom.maxCapacity">Max Capacity</Translate>
               </span>
             </dt>
-            <dd>{hotelRoomEntity.numberOfPeople}</dd>
-            <dt>
-              <span id="price">
-                <Translate contentKey="tripPlanningApp.hotelRoom.price">Price</Translate>
-              </span>
-            </dt>
-            <dd>{hotelRoomEntity.price}</dd>
+            <dd>{hotelRoomEntity.maxCapacity}</dd>
             <dt>
               <span id="available">
                 <Translate contentKey="tripPlanningApp.hotelRoom.available">Available</Translate>
@@ -47,15 +41,25 @@ export class HotelRoomDetail extends React.Component<IHotelRoomDetailProps> {
             </dt>
             <dd>{hotelRoomEntity.available ? 'true' : 'false'}</dd>
             <dt>
-              <span id="type">
-                <Translate contentKey="tripPlanningApp.hotelRoom.type">Type</Translate>
+              <span id="roomType">
+                <Translate contentKey="tripPlanningApp.hotelRoom.roomType">Room Type</Translate>
               </span>
             </dt>
-            <dd>{hotelRoomEntity.type}</dd>
+            <dd>{hotelRoomEntity.roomType}</dd>
+            <dt>
+              <span id="price">
+                <Translate contentKey="tripPlanningApp.hotelRoom.price">Price</Translate>
+              </span>
+            </dt>
+            <dd>{hotelRoomEntity.price}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.hotelRoom.hotelReservation">Hotel Reservation</Translate>
+            </dt>
+            <dd>{hotelRoomEntity.hotelReservation ? hotelRoomEntity.hotelReservation.id : ''}</dd>
             <dt>
               <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
             </dt>
-            <dd>{hotelRoomEntity.hotel ? hotelRoomEntity.hotel.id : ''}</dd>
+            <dd>{hotelRoomEntity.hotel ? hotelRoomEntity.hotel.name : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/hotel-room" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

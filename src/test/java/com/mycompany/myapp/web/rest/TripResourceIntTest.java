@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.TripPlanningApp;
 
 import com.mycompany.myapp.domain.Trip;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.TripRepository;
 import com.mycompany.myapp.web.rest.errors.ExceptionTranslator;
 
@@ -107,6 +108,11 @@ public class TripResourceIntTest {
             .returnDate(DEFAULT_RETURN_DATE)
             .origin(DEFAULT_ORIGIN)
             .destination(DEFAULT_DESTINATION);
+        // Add required entity
+        User user = UserResourceIntTest.createEntity(em);
+        em.persist(user);
+        em.flush();
+        trip.setUser(user);
         return trip;
     }
 

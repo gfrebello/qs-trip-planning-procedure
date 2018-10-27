@@ -59,12 +59,6 @@ export class Trip extends React.Component<ITripProps> {
                   <Translate contentKey="tripPlanningApp.trip.destination">Destination</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.trip.payment">Payment</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.trip.flightReservation">Flight Reservation</Translate>
-                </th>
-                <th>
                   <Translate contentKey="tripPlanningApp.trip.hotelReservation">Hotel Reservation</Translate>
                 </th>
                 <th>
@@ -98,14 +92,6 @@ export class Trip extends React.Component<ITripProps> {
                   </td>
                   <td>{trip.origin}</td>
                   <td>{trip.destination}</td>
-                  <td>{trip.payment ? <Link to={`payment/${trip.payment.id}`}>{trip.payment.id}</Link> : ''}</td>
-                  <td>
-                    {trip.flightReservation ? (
-                      <Link to={`flight-reservation/${trip.flightReservation.id}`}>{trip.flightReservation.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td>
                     {trip.hotelReservation ? (
                       <Link to={`hotel-reservation/${trip.hotelReservation.id}`}>{trip.hotelReservation.id}</Link>
@@ -115,7 +101,7 @@ export class Trip extends React.Component<ITripProps> {
                   </td>
                   <td>{trip.insurance ? <Link to={`insurance/${trip.insurance.id}`}>{trip.insurance.id}</Link> : ''}</td>
                   <td>{trip.carRental ? <Link to={`car-rental/${trip.carRental.id}`}>{trip.carRental.id}</Link> : ''}</td>
-                  <td>{trip.user ? trip.user.id : ''}</td>
+                  <td>{trip.user ? trip.user.login : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${trip.id}`} color="info" size="sm">

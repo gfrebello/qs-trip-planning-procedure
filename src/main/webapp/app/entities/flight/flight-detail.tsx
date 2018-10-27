@@ -47,11 +47,11 @@ export class FlightDetail extends React.Component<IFlightDetailProps> {
             </dt>
             <dd>{flightEntity.destination}</dd>
             <dt>
-              <span id="avaibleSeats">
-                <Translate contentKey="tripPlanningApp.flight.avaibleSeats">Avaible Seats</Translate>
+              <span id="availableSeats">
+                <Translate contentKey="tripPlanningApp.flight.availableSeats">Available Seats</Translate>
               </span>
             </dt>
-            <dd>{flightEntity.avaibleSeats}</dd>
+            <dd>{flightEntity.availableSeats}</dd>
             <dt>
               <span id="departureDate">
                 <Translate contentKey="tripPlanningApp.flight.departureDate">Departure Date</Translate>
@@ -86,6 +86,12 @@ export class FlightDetail extends React.Component<IFlightDetailProps> {
               </span>
             </dt>
             <dd>{flightEntity.arrivalAirport}</dd>
+            <dt>
+              <span id="price">
+                <Translate contentKey="tripPlanningApp.flight.price">Price</Translate>
+              </span>
+            </dt>
+            <dd>{flightEntity.price}</dd>
           </dl>
           <Button tag={Link} to="/entity/flight" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

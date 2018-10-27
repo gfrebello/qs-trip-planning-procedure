@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { IHotel } from 'app/shared/model//hotel.model';
+import { IHotelRoom } from 'app/shared/model//hotel-room.model';
 import { ITrip } from 'app/shared/model//trip.model';
 
 export interface IHotelReservation {
@@ -9,8 +9,7 @@ export interface IHotelReservation {
   onlinePaymentChoosen?: boolean;
   checkinDate?: Moment;
   checkoutDate?: Moment;
-  price?: number;
-  hotels?: IHotel[];
+  hotelRooms?: IHotelRoom[];
   trip?: ITrip;
 }
 

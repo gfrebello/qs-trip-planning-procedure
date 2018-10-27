@@ -18,22 +18,6 @@ import trip, {
   TripState
 } from 'app/entities/trip/trip.reducer';
 // prettier-ignore
-import ticket, {
-  TicketState
-} from 'app/entities/ticket/ticket.reducer';
-// prettier-ignore
-import payment, {
-  PaymentState
-} from 'app/entities/payment/payment.reducer';
-// prettier-ignore
-import checkPayment, {
-  CheckPaymentState
-} from 'app/entities/check-payment/check-payment.reducer';
-// prettier-ignore
-import creditCard, {
-  CreditCardState
-} from 'app/entities/credit-card/credit-card.reducer';
-// prettier-ignore
 import flightReservation, {
   FlightReservationState
 } from 'app/entities/flight-reservation/flight-reservation.reducer';
@@ -54,9 +38,9 @@ import hotelRoom, {
   HotelRoomState
 } from 'app/entities/hotel-room/hotel-room.reducer';
 // prettier-ignore
-import chosenAttraction, {
-  ChosenAttractionState
-} from 'app/entities/chosen-attraction/chosen-attraction.reducer';
+import attractionReservation, {
+  AttractionReservationState
+} from 'app/entities/attraction-reservation/attraction-reservation.reducer';
 // prettier-ignore
 import attraction, {
   AttractionState
@@ -84,16 +68,12 @@ export interface IRootState {
   readonly settings: SettingsState;
   readonly home: PlanState;
   readonly trip: TripState;
-  readonly ticket: TicketState;
-  readonly payment: PaymentState;
-  readonly checkPayment: CheckPaymentState;
-  readonly creditCard: CreditCardState;
   readonly flightReservation: FlightReservationState;
   readonly flight: FlightState;
   readonly hotelReservation: HotelReservationState;
   readonly hotel: HotelState;
   readonly hotelRoom: HotelRoomState;
-  readonly chosenAttraction: ChosenAttractionState;
+  readonly attractionReservation: AttractionReservationState;
   readonly attraction: AttractionState;
   readonly insurance: InsuranceState;
   readonly carRental: CarRentalState;
@@ -114,16 +94,12 @@ const rootReducer = combineReducers<IRootState>({
   settings,
   home,
   trip,
-  ticket,
-  payment,
-  checkPayment,
-  creditCard,
   flightReservation,
   flight,
   hotelReservation,
   hotel,
   hotelRoom,
-  chosenAttraction,
+  attractionReservation,
   attraction,
   insurance,
   carRental,

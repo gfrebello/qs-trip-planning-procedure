@@ -20,17 +20,14 @@
         {
             "fieldName": "checkoutDate",
             "fieldType": "Instant"
-        },
-        {
-            "fieldName": "price",
-            "fieldType": "Float"
         }
     ],
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "hotel",
-            "otherEntityName": "hotel",
+            "relationshipValidateRules": "required",
+            "relationshipName": "hotelRoom",
+            "otherEntityName": "hotelRoom",
             "otherEntityRelationshipName": "hotelReservation"
         },
         {
@@ -41,7 +38,7 @@
             "otherEntityRelationshipName": "hotelReservation"
         }
     ],
-    "changelogDate": "20181024154904",
+    "changelogDate": "20181027014012",
     "entityTableName": "hotel_reservation",
     "dto": "no",
     "pagination": "no",

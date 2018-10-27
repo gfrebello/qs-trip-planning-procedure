@@ -7,81 +7,52 @@ entity Trip {
     origin String,
     destination String
 }
-
-entity Ticket {
-    type String,
-    reservationId String
-}
-
-entity Payment {
-    amount Float
-}
-
-entity CheckPayment {
-    name String,
-    bankId String
-}
-
-entity CreditCard {
-    name String,
-    cardNumber String,
-    safetyCode String,
-    expirationDate Instant
-}
-
 entity FlightReservation {
     reservationId String,
     numberOfPeople Integer,
     customerClass String
 }
-
 entity Flight {
     company String,
     origin String,
     destination String,
-    avaibleSeats Integer,
+    availableSeats Integer,
     departureDate Instant,
     arrivalDate Instant,
     flightCode String,
     departAirport String,
-    arrivalAirport String
+    arrivalAirport String,
+    price Float
 }
-
 entity HotelReservation {
     reservationId String,
     numberOfPeople Integer,
     onlinePaymentChoosen Boolean,
     checkinDate Instant,
-    checkoutDate Instant,
-    price Float
+    checkoutDate Instant
 }
-
 entity Hotel {
     name String,
     city String,
     address String,
     type String
 }
-
 entity HotelRoom {
-    numberOfPeople Integer,
-    price Float,
+    maxCapacity Integer,
     available Boolean,
-    type String
+    roomType String,
+    price Float
 }
-
-entity ChosenAttraction {
+entity AttractionReservation {
     isReserved Boolean,
     reservationDate Instant
 }
-
 entity Attraction {
     name String,
     type String,
     city String,
     price Float
 }
-
 entity Insurance {
     type String,
     price Float,
@@ -89,7 +60,6 @@ entity Insurance {
     startDate Instant,
     endDate Instant
 }
-
 entity CarRental {
     carType String,
     rentalDays Integer,
@@ -99,27 +69,21 @@ entity CarRental {
     dropoffAddress String,
     color String
 }
-
 relationship OneToMany {
-    Trip to Ticket
-    Trip to ChosenAttraction
-    HotelReservation to Hotel
-    Hotel to HotelRoom
+    Trip to FlightReservation,
+    Trip to AttractionReservation,
+    HotelReservation{hotelRoom(roomType) required} to HotelRoom
 }
-
 relationship OneToOne {
-    Trip to Payment
-    Trip to FlightReservation
-    Trip to HotelReservation
-    Trip to Insurance
-    Trip to CarRental
-    ChosenAttraction to Attraction
+    Trip to HotelReservation,
+    Trip to Insurance,
+    Trip to CarRental,
+    FlightReservation{flight(flightCode) required} to Flight,
+    AttractionReservation{attraction(name) required} to Attraction,
+    HotelRoom{hotel(name) required} to Hotel
 }
-
-relationship ManyToMany {
-    FlightReservation to Flight
-}
-
+// relationship ManyToMany {
+// }
 relationship ManyToOne {
-    Trip to User
+    Trip{user(login) required} to User
 }

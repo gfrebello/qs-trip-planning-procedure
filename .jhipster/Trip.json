@@ -33,22 +33,6 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "payment",
-            "otherEntityName": "payment",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "trip"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "flightReservation",
-            "otherEntityName": "flightReservation",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "trip"
-        },
-        {
-            "relationshipType": "one-to-one",
             "relationshipName": "hotelReservation",
             "otherEntityName": "hotelReservation",
             "otherEntityField": "id",
@@ -73,24 +57,25 @@
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "ticket",
-            "otherEntityName": "ticket",
+            "relationshipName": "flightReservation",
+            "otherEntityName": "flightReservation",
             "otherEntityRelationshipName": "trip"
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "chosenAttraction",
-            "otherEntityName": "chosenAttraction",
+            "relationshipName": "attractionReservation",
+            "otherEntityName": "attractionReservation",
             "otherEntityRelationshipName": "trip"
         },
         {
             "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
             "relationshipName": "user",
             "otherEntityName": "user",
-            "otherEntityField": "id"
+            "otherEntityField": "login"
         }
     ],
-    "changelogDate": "20181024154857",
+    "changelogDate": "20181027014009",
     "entityTableName": "trip",
     "dto": "no",
     "pagination": "no",

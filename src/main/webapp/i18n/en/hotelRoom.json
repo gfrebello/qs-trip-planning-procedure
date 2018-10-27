@@ -16,10 +16,11 @@
             "detail": {
                 "title": "Hotel Room"
             },
-            "numberOfPeople": "Number Of People",
-            "price": "Price",
+            "maxCapacity": "Max Capacity",
             "available": "Available",
-            "type": "Type",
+            "roomType": "Room Type",
+            "price": "Price",
+            "hotelReservation": "Hotel Reservation",
             "hotel": "Hotel"
         }
     }

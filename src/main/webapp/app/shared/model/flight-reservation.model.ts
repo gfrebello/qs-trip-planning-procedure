@@ -6,7 +6,7 @@ export interface IFlightReservation {
   reservationId?: string;
   numberOfPeople?: number;
   customerClass?: string;
-  flights?: IFlight[];
+  flight?: IFlight;
   trip?: ITrip;
 }
 

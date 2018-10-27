@@ -8,6 +8,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IHotelReservation } from 'app/shared/model/hotel-reservation.model';
+import { getEntities as getHotelReservations } from 'app/entities/hotel-reservation/hotel-reservation.reducer';
 import { IHotel } from 'app/shared/model/hotel.model';
 import { getEntities as getHotels } from 'app/entities/hotel/hotel.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './hotel-room.reducer';
@@ -20,6 +22,7 @@ export interface IHotelRoomUpdateProps extends StateProps, DispatchProps, RouteC
 
 export interface IHotelRoomUpdateState {
   isNew: boolean;
+  hotelReservationId: number;
   hotelId: number;
 }
 
@@ -27,6 +30,7 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
   constructor(props) {
     super(props);
     this.state = {
+      hotelReservationId: 0,
       hotelId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
@@ -39,6 +43,7 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
       this.props.getEntity(this.props.match.params.id);
     }
 
+    this.props.getHotelReservations();
     this.props.getHotels();
   }
 
@@ -64,7 +69,7 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
   };
 
   render() {
-    const { hotelRoomEntity, hotels, loading, updating } = this.props;
+    const { hotelRoomEntity, hotelReservations, hotels, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -91,16 +96,10 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="numberOfPeopleLabel" for="numberOfPeople">
-                    <Translate contentKey="tripPlanningApp.hotelRoom.numberOfPeople">Number Of People</Translate>
+                  <Label id="maxCapacityLabel" for="maxCapacity">
+                    <Translate contentKey="tripPlanningApp.hotelRoom.maxCapacity">Max Capacity</Translate>
                   </Label>
-                  <AvField id="hotel-room-numberOfPeople" type="number" className="form-control" name="numberOfPeople" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="priceLabel" for="price">
-                    <Translate contentKey="tripPlanningApp.hotelRoom.price">Price</Translate>
-                  </Label>
-                  <AvField id="hotel-room-price" type="number" className="form-control" name="price" />
+                  <AvField id="hotel-room-maxCapacity" type="number" className="form-control" name="maxCapacity" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="availableLabel" check>
@@ -109,13 +108,34 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
                   </Label>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="typeLabel" for="type">
-                    <Translate contentKey="tripPlanningApp.hotelRoom.type">Type</Translate>
+                  <Label id="roomTypeLabel" for="roomType">
+                    <Translate contentKey="tripPlanningApp.hotelRoom.roomType">Room Type</Translate>
                   </Label>
-                  <AvField id="hotel-room-type" type="text" name="type" />
+                  <AvField id="hotel-room-roomType" type="text" name="roomType" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="hotel.id">
+                  <Label id="priceLabel" for="price">
+                    <Translate contentKey="tripPlanningApp.hotelRoom.price">Price</Translate>
+                  </Label>
+                  <AvField id="hotel-room-price" type="number" className="form-control" name="price" />
+                </AvGroup>
+                <AvGroup>
+                  <Label for="hotelReservation.id">
+                    <Translate contentKey="tripPlanningApp.hotelRoom.hotelReservation">Hotel Reservation</Translate>
+                  </Label>
+                  <AvInput id="hotel-room-hotelReservation" type="select" className="form-control" name="hotelReservation.id">
+                    <option value="" key="0" />
+                    {hotelReservations
+                      ? hotelReservations.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="hotel.name">
                     <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
                   </Label>
                   <AvInput id="hotel-room-hotel" type="select" className="form-control" name="hotel.id">
@@ -123,7 +143,7 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
                     {hotels
                       ? hotels.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.name}
                           </option>
                         ))
                       : null}
@@ -150,6 +170,7 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
+  hotelReservations: storeState.hotelReservation.entities,
   hotels: storeState.hotel.entities,
   hotelRoomEntity: storeState.hotelRoom.entity,
   loading: storeState.hotelRoom.loading,
@@ -157,6 +178,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getHotelReservations,
   getHotels,
   getEntity,
   updateEntity,

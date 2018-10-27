@@ -1,18 +1,17 @@
 import { Moment } from 'moment';
-import { IFlightReservation } from 'app/shared/model//flight-reservation.model';
 
 export interface IFlight {
   id?: number;
   company?: string;
   origin?: string;
   destination?: string;
-  avaibleSeats?: number;
+  availableSeats?: number;
   departureDate?: Moment;
   arrivalDate?: Moment;
   flightCode?: string;
   departAirport?: string;
   arrivalAirport?: string;
-  flightReservations?: IFlightReservation[];
+  price?: number;
 }
 
 export const defaultValue: Readonly<IFlight> = {};

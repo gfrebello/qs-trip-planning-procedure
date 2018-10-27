@@ -8,8 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IChosenAttraction } from 'app/shared/model/chosen-attraction.model';
-import { getEntities as getChosenAttractions } from 'app/entities/chosen-attraction/chosen-attraction.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './attraction.reducer';
 import { IAttraction } from 'app/shared/model/attraction.model';
 // tslint:disable-next-line:no-unused-variable
@@ -20,14 +18,12 @@ export interface IAttractionUpdateProps extends StateProps, DispatchProps, Route
 
 export interface IAttractionUpdateState {
   isNew: boolean;
-  chosenAttractionId: number;
 }
 
 export class AttractionUpdate extends React.Component<IAttractionUpdateProps, IAttractionUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      chosenAttractionId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -38,8 +34,6 @@ export class AttractionUpdate extends React.Component<IAttractionUpdateProps, IA
     } else {
       this.props.getEntity(this.props.match.params.id);
     }
-
-    this.props.getChosenAttractions();
   }
 
   saveEntity = (event, errors, values) => {
@@ -64,7 +58,7 @@ export class AttractionUpdate extends React.Component<IAttractionUpdateProps, IA
   };
 
   render() {
-    const { attractionEntity, chosenAttractions, loading, updating } = this.props;
+    const { attractionEntity, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -135,14 +129,12 @@ export class AttractionUpdate extends React.Component<IAttractionUpdateProps, IA
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  chosenAttractions: storeState.chosenAttraction.entities,
   attractionEntity: storeState.attraction.entity,
   loading: storeState.attraction.loading,
   updating: storeState.attraction.updating
 });
 
 const mapDispatchToProps = {
-  getChosenAttractions,
   getEntity,
   updateEntity,
   createEntity,

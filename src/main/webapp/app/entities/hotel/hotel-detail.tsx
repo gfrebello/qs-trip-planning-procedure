@@ -52,10 +52,6 @@ export class HotelDetail extends React.Component<IHotelDetailProps> {
               </span>
             </dt>
             <dd>{hotelEntity.type}</dd>
-            <dt>
-              <Translate contentKey="tripPlanningApp.hotel.hotelReservation">Hotel Reservation</Translate>
-            </dt>
-            <dd>{hotelEntity.hotelReservation ? hotelEntity.hotelReservation.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/hotel" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

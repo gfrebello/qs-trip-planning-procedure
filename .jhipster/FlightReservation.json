@@ -16,22 +16,22 @@
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-many",
-            "otherEntityRelationshipName": "flightReservation",
+            "relationshipType": "one-to-one",
+            "relationshipValidateRules": "required",
             "relationshipName": "flight",
             "otherEntityName": "flight",
-            "otherEntityField": "id",
-            "ownerSide": true
+            "otherEntityField": "flightCode",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "flightReservation"
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "trip",
             "otherEntityName": "trip",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "flightReservation"
+            "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20181024154902",
+    "changelogDate": "20181027014010",
     "entityTableName": "flight_reservation",
     "dto": "no",
     "pagination": "no",

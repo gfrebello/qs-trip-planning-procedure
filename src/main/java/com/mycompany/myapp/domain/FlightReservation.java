@@ -1,14 +1,13 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -35,15 +34,13 @@ public class FlightReservation implements Serializable {
     @Column(name = "customer_class")
     private String customerClass;
 
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "flight_reservation_flight",
-               joinColumns = @JoinColumn(name = "flight_reservations_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "flights_id", referencedColumnName = "id"))
-    private Set<Flight> flights = new HashSet<>();
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(unique = true)
+    private Flight flight;
 
-    @OneToOne(mappedBy = "flightReservation")
-    @JsonIgnore
+    @ManyToOne
+    @JsonIgnoreProperties("flightReservations")
     private Trip trip;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -94,29 +91,17 @@ public class FlightReservation implements Serializable {
         this.customerClass = customerClass;
     }
 
-    public Set<Flight> getFlights() {
-        return flights;
+    public Flight getFlight() {
+        return flight;
     }
 
-    public FlightReservation flights(Set<Flight> flights) {
-        this.flights = flights;
+    public FlightReservation flight(Flight flight) {
+        this.flight = flight;
         return this;
     }
 
-    public FlightReservation addFlight(Flight flight) {
-        this.flights.add(flight);
-        flight.getFlightReservations().add(this);
-        return this;
-    }
-
-    public FlightReservation removeFlight(Flight flight) {
-        this.flights.remove(flight);
-        flight.getFlightReservations().remove(this);
-        return this;
-    }
-
-    public void setFlights(Set<Flight> flights) {
-        this.flights = flights;
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
     public Trip getTrip() {

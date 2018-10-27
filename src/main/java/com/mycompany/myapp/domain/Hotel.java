@@ -1,15 +1,11 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -38,14 +34,6 @@ public class Hotel implements Serializable {
 
     @Column(name = "jhi_type")
     private String type;
-
-    @OneToMany(mappedBy = "hotel")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<HotelRoom> hotelRooms = new HashSet<>();
-
-    @ManyToOne
-    @JsonIgnoreProperties("hotels")
-    private HotelReservation hotelReservation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -106,44 +94,6 @@ public class Hotel implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Set<HotelRoom> getHotelRooms() {
-        return hotelRooms;
-    }
-
-    public Hotel hotelRooms(Set<HotelRoom> hotelRooms) {
-        this.hotelRooms = hotelRooms;
-        return this;
-    }
-
-    public Hotel addHotelRoom(HotelRoom hotelRoom) {
-        this.hotelRooms.add(hotelRoom);
-        hotelRoom.setHotel(this);
-        return this;
-    }
-
-    public Hotel removeHotelRoom(HotelRoom hotelRoom) {
-        this.hotelRooms.remove(hotelRoom);
-        hotelRoom.setHotel(null);
-        return this;
-    }
-
-    public void setHotelRooms(Set<HotelRoom> hotelRooms) {
-        this.hotelRooms = hotelRooms;
-    }
-
-    public HotelReservation getHotelReservation() {
-        return hotelReservation;
-    }
-
-    public Hotel hotelReservation(HotelReservation hotelReservation) {
-        this.hotelReservation = hotelReservation;
-        return this;
-    }
-
-    public void setHotelReservation(HotelReservation hotelReservation) {
-        this.hotelReservation = hotelReservation;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
