@@ -1,23 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, Card, CardHeader, CardBody, CardText, ListGroup, ListGroupItem } from 'reactstrap';
 
 import { getSession } from 'app/shared/reducers/authentication';
 import { resetRedirect } from '../home/home.reducer';
 
 import PlannerEditModal from './planner-edit-modal';
+import FlightList from './flight-list';
+import HotelList from './hotel-list';
+import FlightReservationCard from './flight-reservation-card';
+import HotelReservationCard from './hotel-reservation-card';
+import AttractionReservationCard from './attraction-reservation-card';
+import CarRentalCard from './car-rental-card';
+import InsuranceCard from './insurance-card';
 
 export interface IPlannerProps extends StateProps, DispatchProps {}
 
 export class PlannerPage extends React.Component<IPlannerProps> {
   state = {
-    showModal: false
+    showModal: false,
+    showFlightList: true,
+    showHotelList: false,
+    showAttractionList: false,
+    showCarRentalList: false,
+    showInsuranceList: false
   };
   constructor(props) {
     super(props);
-
-    this.handleClose = this.handleClose.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
   }
 
   componentDidMount() {
@@ -34,9 +43,54 @@ export class PlannerPage extends React.Component<IPlannerProps> {
   handleClose = () => {
     this.setState({ showModal: false });
   };
-
   handleOpen = () => {
     this.setState({ showModal: true });
+  };
+
+  handleShowFlights = () => {
+    this.setState({
+      showFlightList: true,
+      showHotelList: false,
+      showAttractionList: false,
+      showCarRentalList: false,
+      showInsuranceList: false
+    });
+  };
+  handleShowHotels = () => {
+    this.setState({
+      showFlightList: false,
+      showHotelList: true,
+      showAttractionList: false,
+      showCarRentalList: false,
+      showInsuranceList: false
+    });
+  };
+  handleShowAttractions = () => {
+    this.setState({
+      showFlightList: false,
+      showHotelList: false,
+      showAttractionList: true,
+      showCarRentalList: false,
+      showInsuranceList: false
+    });
+  };
+  handleShowCarRentals = () => {
+    this.setState({
+      showFlightList: false,
+      showHotelList: false,
+      showAttractionList: false,
+      showCarRentalList: true,
+      showInsuranceList: false
+    });
+  };
+  handleShowInsurance = () => {
+    this.setState({
+      showFlightList: false,
+      showHotelList: false,
+      showAttractionList: false,
+      showCarRentalList: false,
+      showInsuranceList: true
+    });
   };
 
   render() {
@@ -66,8 +120,33 @@ export class PlannerPage extends React.Component<IPlannerProps> {
           </ul>
 
           <Button onClick={this.handleOpen}>Edit Itinerary</Button>
+          <br />
 
           <PlannerEditModal showModal={this.state.showModal} handleClose={this.handleClose} />
+
+          <h2>Plan your trip</h2>
+          <div>
+            <Row>
+              <Col>
+                <Row>
+                  <FlightReservationCard handleShowFlights={this.handleShowFlights} />
+                </Row>
+                <Row>
+                  <HotelReservationCard handleShowHotels={this.handleShowHotels} />
+                </Row>
+                <Row>
+                  <AttractionReservationCard handleShowAttractions={this.handleShowAttractions} />
+                </Row>
+                <Row>
+                  <CarRentalCard handleShowCarRentals={this.handleShowCarRentals} />
+                </Row>
+                <Row>
+                  <InsuranceCard handleShowInsurance={this.handleShowInsurance} />
+                </Row>
+              </Col>
+              <Col>{this.state.showFlightList ? <FlightList /> : this.state.showHotelList ? <HotelList /> : 'Not implemented yet'}</Col>
+            </Row>
+          </div>
         </div>
       </div>
     );
@@ -84,7 +163,10 @@ const mapStateToProps = storeState => ({
   nPassengers: storeState.home.nPassengers
 });
 
-const mapDispatchToProps = { getSession, resetRedirect };
+const mapDispatchToProps = {
+  getSession,
+  resetRedirect
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
