@@ -9,7 +9,8 @@ export const ACTION_TYPES = {
   RESET_HOTEL_RESERVATIONS: 'reservations/RESET_HOTEL_RESERVATIONS',
   RESET_ATTRACTION_RESERVATIONS: 'reservations/RESET_ATTRACTION_RESERVATIONS',
   RESET_CAR_RENTAL_RESERVATIONS: 'reservations/RESET_CAR_RENTAL_RESERVATIONS',
-  RESET_INSURANCE_RESERVATIONS: 'reservations/RESET_INSURANCE_RESERVATIONS'
+  RESET_INSURANCE_RESERVATIONS: 'reservations/RESET_INSURANCE_RESERVATIONS',
+  ADD_SELECTED_FLIGHT: 'reservations/ADD_SELECTED_FLIGHT'
 };
 
 const initialState = {
@@ -55,6 +56,11 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
         ...state,
         boughtInsurances: []
       };
+    case ACTION_TYPES.ADD_SELECTED_FLIGHT:
+      return {
+        ...state,
+        reservedFlights: [action.payload.rSelected]
+      };
     default:
       return state;
   }
@@ -79,4 +85,9 @@ export const resetCarRentalReservations = () => ({
 
 export const resetInsuranceReservations = () => ({
   type: ACTION_TYPES.RESET_INSURANCE_RESERVATIONS
+});
+
+export const addSelectedFlight = rSelected => ({
+  type: ACTION_TYPES.ADD_SELECTED_FLIGHT,
+  payload: { rSelected }
 });

@@ -13,6 +13,7 @@ import HotelReservationCard from './hotel-reservation-card';
 import AttractionReservationCard from './attraction-reservation-card';
 import CarRentalCard from './car-rental-card';
 import InsuranceCard from './insurance-card';
+import { Link } from 'react-router-dom';
 
 export interface IPlannerProps extends StateProps, DispatchProps {}
 
@@ -119,7 +120,9 @@ export class PlannerPage extends React.Component<IPlannerProps> {
             <li>Number of Passengers: {nPassengers}</li>
           </ul>
 
-          <Button onClick={this.handleOpen}>Edit Itinerary</Button>
+          <Button color="primary" onClick={this.handleOpen}>
+            Edit Itinerary
+          </Button>
           <br />
 
           <PlannerEditModal showModal={this.state.showModal} handleClose={this.handleClose} />
@@ -127,26 +130,45 @@ export class PlannerPage extends React.Component<IPlannerProps> {
           <h2>Plan your trip</h2>
           <div>
             <Row>
-              <Col>
+              <Col xs="4">
                 <Row>
-                  <FlightReservationCard handleShowFlights={this.handleShowFlights} />
+                  <Col xs="11">
+                    <FlightReservationCard handleShowFlights={this.handleShowFlights} />
+                  </Col>
                 </Row>
                 <Row>
-                  <HotelReservationCard handleShowHotels={this.handleShowHotels} />
+                  <Col xs="11">
+                    <HotelReservationCard handleShowHotels={this.handleShowHotels} />
+                  </Col>
                 </Row>
                 <Row>
-                  <AttractionReservationCard handleShowAttractions={this.handleShowAttractions} />
+                  <Col xs="11">
+                    <AttractionReservationCard handleShowAttractions={this.handleShowAttractions} />
+                  </Col>
                 </Row>
                 <Row>
-                  <CarRentalCard handleShowCarRentals={this.handleShowCarRentals} />
+                  <Col xs="11">
+                    <CarRentalCard handleShowCarRentals={this.handleShowCarRentals} />
+                  </Col>
                 </Row>
                 <Row>
-                  <InsuranceCard handleShowInsurance={this.handleShowInsurance} />
+                  <Col xs="11">
+                    <InsuranceCard handleShowInsurance={this.handleShowInsurance} />
+                  </Col>
                 </Row>
               </Col>
-              <Col>{this.state.showFlightList ? <FlightList /> : this.state.showHotelList ? <HotelList /> : 'Not implemented yet'}</Col>
+              <Col xs="8">
+                {this.state.showFlightList ? <FlightList /> : this.state.showHotelList ? <HotelList /> : 'Not implemented yet'}
+              </Col>
             </Row>
           </div>
+          <Row>
+            <Col>
+              <Button tag={Link} to="/summary" color="primary">
+                Go to Trip Summary Page
+              </Button>
+            </Col>
+          </Row>
         </div>
       </div>
     );
