@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,6 +100,20 @@ public class FlightResource {
         log.debug("REST request to get Flight : {}", id);
         Optional<Flight> flight = flightRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(flight);
+    }
+
+    /**
+     * GET  /flights/:departureDate/:origin/:destination : get flights by departureDate, origin and destination.
+     *
+     * @param departureDate the departure date of the flight to retrieve
+     * @param origin the origin city of the flight to retrieve
+     * @param destination the destination city of the flight to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of flights in body
+     */
+    @GetMapping("/flights/{departureDate}/{origin}/{destintion}")
+    @Timed
+    public List<Flight> getFlightByDepartureDateAndOriginAndDestination(@PathVariable Instant departureDate, String origin, String destination) {
+        return flightRepository.findByDepartureDateAndOriginAndDestination(departureDate, origin, destination);
     }
 
     /**
