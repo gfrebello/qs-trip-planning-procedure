@@ -110,9 +110,9 @@ public class FlightResource {
      * @param destination the destination city of the flight to retrieve
      * @return the ResponseEntity with status 200 (OK) and the list of flights in body
      */
-    @GetMapping("/flights/{departureDate}/{origin}/{destintion}")
+    @GetMapping("/flights/{departureDate}/{origin}/{destination}")
     @Timed
-    public List<Flight> getFlightByDepartureDateAndOriginAndDestination(@PathVariable Instant departureDate, String origin, String destination) {
+    public List<Flight> getFlightByDepartureDateAndOriginAndDestination(@PathVariable Instant departureDate,@PathVariable String origin,@PathVariable String destination) {
         return flightRepository.findByDepartureDateAndOriginAndDestination(departureDate, origin, destination);
     }
 
