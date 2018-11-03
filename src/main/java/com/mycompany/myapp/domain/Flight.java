@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,6 +8,8 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -53,6 +56,10 @@ public class Flight implements Serializable {
 
     @Column(name = "price")
     private Float price;
+
+    @OneToMany(mappedBy = "flight")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Seat> seats = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -191,6 +198,31 @@ public class Flight implements Serializable {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public Set<Seat> getSeats() {
+        return seats;
+    }
+
+    public Flight seats(Set<Seat> seats) {
+        this.seats = seats;
+        return this;
+    }
+
+    public Flight addSeat(Seat seat) {
+        this.seats.add(seat);
+        seat.setFlight(this);
+        return this;
+    }
+
+    public Flight removeSeat(Seat seat) {
+        this.seats.remove(seat);
+        seat.setFlight(null);
+        return this;
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats = seats;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -68,6 +68,12 @@
             "otherEntityRelationshipName": "trip"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "passenger",
+            "otherEntityName": "passenger",
+            "otherEntityRelationshipName": "trip"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
             "relationshipName": "user",

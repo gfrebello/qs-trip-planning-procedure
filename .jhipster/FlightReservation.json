@@ -25,6 +25,12 @@
             "otherEntityRelationshipName": "flightReservation"
         },
         {
+            "relationshipType": "one-to-many",
+            "relationshipName": "seat",
+            "otherEntityName": "seat",
+            "otherEntityRelationshipName": "flightReservation"
+        },
+        {
             "relationshipType": "many-to-one",
             "relationshipName": "trip",
             "otherEntityName": "trip",

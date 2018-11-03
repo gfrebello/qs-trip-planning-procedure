@@ -1,4 +1,5 @@
 import { IFlight } from 'app/shared/model//flight.model';
+import { ISeat } from 'app/shared/model//seat.model';
 import { ITrip } from 'app/shared/model//trip.model';
 
 export interface IFlightReservation {
@@ -7,6 +8,7 @@ export interface IFlightReservation {
   numberOfPeople?: number;
   customerClass?: string;
   flight?: IFlight;
+  seats?: ISeat[];
   trip?: ITrip;
 }
 

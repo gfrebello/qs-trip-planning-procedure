@@ -4,6 +4,7 @@ import { IInsurance } from 'app/shared/model//insurance.model';
 import { ICarRental } from 'app/shared/model//car-rental.model';
 import { IFlightReservation } from 'app/shared/model//flight-reservation.model';
 import { IAttractionReservation } from 'app/shared/model//attraction-reservation.model';
+import { IPassenger } from 'app/shared/model//passenger.model';
 import { IUser } from './user.model';
 
 export interface ITrip {
@@ -20,6 +21,7 @@ export interface ITrip {
   carRental?: ICarRental;
   flightReservations?: IFlightReservation[];
   attractionReservations?: IAttractionReservation[];
+  passengers?: IPassenger[];
   user?: IUser;
 }
 

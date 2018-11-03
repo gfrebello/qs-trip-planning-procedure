@@ -69,9 +69,24 @@ entity CarRental {
     dropoffAddress String,
     color String
 }
+entity Seat {
+	number String,
+    row String,
+    customerClass String,
+    isReserved Boolean
+}
+entity Passenger {
+	name String,
+    email String,
+    phoneNumber String,
+    passport String
+}
 relationship OneToMany {
     Trip to FlightReservation,
     Trip to AttractionReservation,
+    Trip to Passenger,
+    Flight to Seat,
+    FlightReservation to Seat,
     HotelReservation{hotelRoom(roomType) required} to HotelRoom
 }
 relationship OneToOne {

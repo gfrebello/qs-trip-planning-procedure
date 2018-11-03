@@ -15,10 +15,14 @@
     <include file="config/liquibase/changelog/20181027014016_added_entity_Attraction.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181027014017_added_entity_Insurance.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181027014018_added_entity_CarRental.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181103210755_added_entity_Seat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181103210756_added_entity_Passenger.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20181027014009_added_entity_constraints_Trip.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181027014010_added_entity_constraints_FlightReservation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181027014014_added_entity_constraints_HotelRoom.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181027014015_added_entity_constraints_AttractionReservation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181103210755_added_entity_constraints_Seat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181103210756_added_entity_constraints_Passenger.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

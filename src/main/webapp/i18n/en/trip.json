@@ -28,6 +28,7 @@
             "carRental": "Car Rental",
             "flightReservation": "Flight Reservation",
             "attractionReservation": "Attraction Reservation",
+            "passenger": "Passenger",
             "user": "User"
         }
     }

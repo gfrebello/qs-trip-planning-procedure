@@ -53,6 +53,14 @@ import insurance, {
 import carRental, {
   CarRentalState
 } from 'app/entities/car-rental/car-rental.reducer';
+// prettier-ignore
+import seat, {
+  SeatState
+} from 'app/entities/seat/seat.reducer';
+// prettier-ignore
+import passenger, {
+  PassengerState
+} from 'app/entities/passenger/passenger.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -77,6 +85,8 @@ export interface IRootState {
   readonly attraction: AttractionState;
   readonly insurance: InsuranceState;
   readonly carRental: CarRentalState;
+  readonly seat: SeatState;
+  readonly passenger: PassengerState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -103,6 +113,8 @@ const rootReducer = combineReducers<IRootState>({
   attraction,
   insurance,
   carRental,
+  seat,
+  passenger,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

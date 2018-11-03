@@ -70,6 +70,10 @@ public class Trip implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AttractionReservation> attractionReservations = new HashSet<>();
 
+    @OneToMany(mappedBy = "trip")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Passenger> passengers = new HashSet<>();
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("")
@@ -262,6 +266,31 @@ public class Trip implements Serializable {
 
     public void setAttractionReservations(Set<AttractionReservation> attractionReservations) {
         this.attractionReservations = attractionReservations;
+    }
+
+    public Set<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public Trip passengers(Set<Passenger> passengers) {
+        this.passengers = passengers;
+        return this;
+    }
+
+    public Trip addPassenger(Passenger passenger) {
+        this.passengers.add(passenger);
+        passenger.setTrip(this);
+        return this;
+    }
+
+    public Trip removePassenger(Passenger passenger) {
+        this.passengers.remove(passenger);
+        passenger.setTrip(null);
+        return this;
+    }
+
+    public void setPassengers(Set<Passenger> passengers) {
+        this.passengers = passengers;
     }
 
     public User getUser() {

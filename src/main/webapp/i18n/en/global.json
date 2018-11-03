@@ -17,6 +17,8 @@
                 "attraction": "Attraction",
                 "insurance": "Insurance",
                 "carRental": "Car Rental",
+                "seat": "Seat",
+                "passenger": "Passenger",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

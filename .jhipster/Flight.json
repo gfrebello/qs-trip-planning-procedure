@@ -42,7 +42,14 @@
             "fieldType": "Float"
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "seat",
+            "otherEntityName": "seat",
+            "otherEntityRelationshipName": "flight"
+        }
+    ],
     "changelogDate": "20181027014011",
     "entityTableName": "flight",
     "dto": "no",

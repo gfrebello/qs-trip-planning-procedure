@@ -1,0 +1,44 @@
+{
+    "name": "Seat",
+    "fields": [
+        {
+            "fieldName": "number",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "row",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerClass",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "isReserved",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "flight",
+            "otherEntityName": "flight",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "flightReservation",
+            "otherEntityName": "flightReservation",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181103210755",
+    "entityTableName": "seat",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -51,6 +51,11 @@ public class CacheConfiguration {
             cm.createCache(com.mycompany.myapp.domain.Attraction.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.Insurance.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.CarRental.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Trip.class.getName() + ".passengers", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.FlightReservation.class.getName() + ".seats", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Flight.class.getName() + ".seats", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Seat.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Passenger.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -14,6 +14,8 @@ import AttractionReservation from './attraction-reservation';
 import Attraction from './attraction';
 import Insurance from './insurance';
 import CarRental from './car-rental';
+import Seat from './seat';
+import Passenger from './passenger';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -30,6 +32,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/attraction`} component={Attraction} />
       <ErrorBoundaryRoute path={`${match.url}/insurance`} component={Insurance} />
       <ErrorBoundaryRoute path={`${match.url}/car-rental`} component={CarRental} />
+      <ErrorBoundaryRoute path={`${match.url}/seat`} component={Seat} />
+      <ErrorBoundaryRoute path={`${match.url}/passenger`} component={Passenger} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>

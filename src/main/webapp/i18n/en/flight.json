@@ -25,7 +25,8 @@
             "flightCode": "Flight Code",
             "departAirport": "Depart Airport",
             "arrivalAirport": "Arrival Airport",
-            "price": "Price"
+            "price": "Price",
+            "seat": "Seat"
         }
     }
 }

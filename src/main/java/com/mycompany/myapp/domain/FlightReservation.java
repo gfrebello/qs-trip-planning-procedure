@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -8,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -38,6 +41,10 @@ public class FlightReservation implements Serializable {
     @NotNull
     @JoinColumn(unique = true)
     private Flight flight;
+
+    @OneToMany(mappedBy = "flightReservation")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Seat> seats = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("flightReservations")
@@ -102,6 +109,31 @@ public class FlightReservation implements Serializable {
 
     public void setFlight(Flight flight) {
         this.flight = flight;
+    }
+
+    public Set<Seat> getSeats() {
+        return seats;
+    }
+
+    public FlightReservation seats(Set<Seat> seats) {
+        this.seats = seats;
+        return this;
+    }
+
+    public FlightReservation addSeat(Seat seat) {
+        this.seats.add(seat);
+        seat.setFlightReservation(this);
+        return this;
+    }
+
+    public FlightReservation removeSeat(Seat seat) {
+        this.seats.remove(seat);
+        seat.setFlightReservation(null);
+        return this;
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats = seats;
     }
 
     public Trip getTrip() {
