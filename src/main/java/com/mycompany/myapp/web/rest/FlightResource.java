@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,9 +114,18 @@ public class FlightResource {
      */
     @GetMapping("/flights/{departureDate}/{origin}/{destination}")
     @Timed
-    public List<Flight> getFlightByDepartureDateAndOriginAndDestination(@PathVariable Instant departureDate,@PathVariable String origin,@PathVariable String destination) {
-        return flightRepository.findByDepartureDateAndOriginAndDestination(departureDate, origin, destination);
+    public List<Flight> getFlightByDepartureDateAndOriginAndDestination(@PathVariable String departureDate,@PathVariable String origin,@PathVariable String destination) {
+        Instant startOfDay = Instant.parse(departureDate).truncatedTo(ChronoUnit.DAYS);
+        Instant endOfDay = startOfDay.plus(Duration.ofDays(1));
+        return flightRepository.findByDepartureDateAfterAndDepartureDateBeforeAndOriginAndDestination(startOfDay, endOfDay, origin, destination);
     }
+
+    // public List<SaleOrder> findByDate(String date) {
+    //     Instant startOfDay = Instant.parse(date).truncatedTo(ChronoUnit.DAYS);
+    //     Instant endOfDay = startOfDay.plus(Duration.ofDays(1));
+    
+    //     return saleOrderRepository.findBySaleTimeAfterAndSaleTimeBefore(startOfDay, endOfDay);
+    // }
 
     /**
      * DELETE  /flights/:id : delete the "id" flight.

@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
-  List<Flight> findByDepartureDateAndOriginAndDestination(Instant departureDate, String origin, String destination);
+  List<Flight> findByDepartureDateAfterAndDepartureDateBeforeAndOriginAndDestination(Instant startOfDay, Instant endOfDay, String origin, String destination);
 }
