@@ -4,6 +4,7 @@ export interface ISeatProps {
   isSelected: boolean;
   isEnabled: boolean;
   isReserved: boolean;
+  isExecutive: boolean;
   seatNumber: number;
   selectSeat: Function;
 }
@@ -14,8 +15,11 @@ export default class Seat extends React.Component<ISeatProps> {
   };
 
   render() {
-    const { isSelected, isEnabled, isReserved } = this.props;
+    const { isSelected, isEnabled, isExecutive, isReserved } = this.props;
     let className = 'Seat';
+    if (isExecutive) {
+      className = className.concat(' Seat--executive');
+    }
     if (isSelected) {
       className = className.concat(' Seat--selected');
     }

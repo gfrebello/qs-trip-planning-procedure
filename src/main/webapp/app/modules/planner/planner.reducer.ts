@@ -10,7 +10,10 @@ export const ACTION_TYPES = {
   RESET_ATTRACTION_RESERVATIONS: 'reservations/RESET_ATTRACTION_RESERVATIONS',
   RESET_CAR_RENTAL_RESERVATIONS: 'reservations/RESET_CAR_RENTAL_RESERVATIONS',
   RESET_INSURANCE_RESERVATIONS: 'reservations/RESET_INSURANCE_RESERVATIONS',
-  ADD_SELECTED_FLIGHT: 'reservations/ADD_SELECTED_FLIGHT'
+  ADD_SELECTED_FLIGHT: 'reservations/ADD_SELECTED_FLIGHT',
+  UPDATE_PASSENGERS_EXECUTIVE: 'reservations/UPDATE_PASSENGERS_EXECUTIVE',
+  UPDATE_PASSENGERS_ECONOMIC: 'reservations/UPDATE_PASSENGERS_ECONOMIC',
+  UPDATE_R_SELECTED: 'reservations/UPDATE_R_SELECTED'
 };
 
 const initialState = {
@@ -23,7 +26,10 @@ const initialState = {
   // rentedCars: [] as ReadonlyArray<ICarRental>,
   rentedCars: ['test'],
   // insurances: [] as ReadonlyArray<IInsurance>
-  boughtInsurances: ['test']
+  boughtInsurances: ['test'],
+  nPassengersEconomic: 0,
+  nPassengersExecutive: 0,
+  rSelected: -1
 };
 
 export type ReservationsState = Readonly<typeof initialState>;
@@ -61,6 +67,21 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
         ...state,
         reservedFlights: [action.payload.rSelected]
       };
+    case ACTION_TYPES.UPDATE_PASSENGERS_ECONOMIC:
+      return {
+        ...state,
+        nPassengersEconomic: action.payload.nPassengersEconomic
+      };
+    case ACTION_TYPES.UPDATE_PASSENGERS_EXECUTIVE:
+      return {
+        ...state,
+        nPassengersExecutive: action.payload.nPassengersExecutive
+      };
+    case ACTION_TYPES.UPDATE_R_SELECTED:
+      return {
+        ...state,
+        rSelected: action.payload.rSelected
+      };
     default:
       return state;
   }
@@ -89,5 +110,20 @@ export const resetInsuranceReservations = () => ({
 
 export const addSelectedFlight = rSelected => ({
   type: ACTION_TYPES.ADD_SELECTED_FLIGHT,
+  payload: { rSelected }
+});
+
+export const updatePassengersEconomic = nPassengersEconomic => ({
+  type: ACTION_TYPES.UPDATE_PASSENGERS_ECONOMIC,
+  payload: { nPassengersEconomic }
+});
+
+export const updatePassengersExecutive = nPassengersExecutive => ({
+  type: ACTION_TYPES.UPDATE_PASSENGERS_EXECUTIVE,
+  payload: { nPassengersExecutive }
+});
+
+export const updateRSelected = rSelected => ({
+  type: ACTION_TYPES.UPDATE_R_SELECTED,
   payload: { rSelected }
 });

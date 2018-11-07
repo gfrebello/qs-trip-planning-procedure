@@ -19,28 +19,55 @@ import {
   Input
 } from 'reactstrap';
 
-import { addSelectedFlight } from './planner.reducer';
+import { updateRSelected, updatePassengersEconomic, updatePassengersExecutive } from './planner.reducer';
 
-export interface IFlightListProps extends StateProps, DispatchProps {}
+export interface IFlightListProps extends StateProps, DispatchProps {
+  handleOpenSeatmap: Function;
+}
 
 export class FlightList extends React.Component<IFlightListProps> {
-  state = {
-    rSelected: -1
-  };
   constructor(props) {
     super(props);
   }
 
-  onRadioBtnClick = rSelected => {
-    this.setState({ rSelected });
+  componentDidMount() {
+    const { nPassengers } = this.props;
+    if (!this.checkTotalPassengers()) {
+      this.props.updatePassengersEconomic(Number(nPassengers));
+      this.props.updatePassengersExecutive(Number(0));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.nPassengers !== this.props.nPassengers) {
+      this.props.updatePassengersEconomic(Number(nextProps.nPassengers));
+      this.props.updatePassengersExecutive(Number(0));
+    }
+  }
+
+  checkTotalPassengers = () => {
+    const { nPassengers, nPassengersExecutive, nPassengersEconomic } = this.props;
+    return nPassengersExecutive + nPassengersEconomic === nPassengers;
   };
 
-  handleAddSelection = () => {
-    if (this.state.rSelected !== -1) {
-      this.props.addSelectedFlight(this.state.rSelected);
+  onRadioBtnClick = rSelected => {
+    this.props.updateRSelected(rSelected);
+  };
+
+  handleChooseSeats = () => {
+    if (this.props.rSelected !== -1) {
+      this.props.handleOpenSeatmap();
     } else {
       alert('Please select a flight first!');
     }
+  };
+
+  handleChangeExecutive = e => {
+    const { nPassengers } = this.props;
+    const nExecutive = e.target.value > nPassengers ? nPassengers : e.target.value;
+    const nEconomic = nPassengers - nExecutive;
+    this.props.updatePassengersEconomic(nEconomic);
+    this.props.updatePassengersExecutive(nExecutive);
   };
 
   createFlightList = () => {
@@ -49,7 +76,7 @@ export class FlightList extends React.Component<IFlightListProps> {
     // Loop to create children
     for (let j = 0; j < 3; j++) {
       items.push(
-        <ListGroupItem className="list-item" outline onClick={() => this.onRadioBtnClick(j)} active={this.state.rSelected === j}>
+        <ListGroupItem className="list-item" outline onClick={() => this.onRadioBtnClick(j)} active={this.props.rSelected === j}>
           <Row>
             <Col>{`Flight ${j + 1} company`}</Col>
             <Col>{`Flight ${j + 1} time`}</Col>
@@ -75,8 +102,15 @@ export class FlightList extends React.Component<IFlightListProps> {
               </InputGroup>
             </Col>
             <Col sm="4">
+              <InputGroupAddon addonType="prepend">Number of executive passengers</InputGroupAddon>
               <InputGroup>
-                <Input type="checkbox" name="customerClass" id="customerClass" /> Executive
+                <Input
+                  type="number"
+                  name="nExecutive"
+                  id="nExecutive"
+                  value={this.props.nPassengersExecutive}
+                  onChange={this.handleChangeExecutive}
+                />
               </InputGroup>
             </Col>
             <Col sm="4">
@@ -93,7 +127,7 @@ export class FlightList extends React.Component<IFlightListProps> {
           </Row>
         </CardBody>
         <CardFooter>
-          <Button onClick={this.handleAddSelection}>Add selected flight</Button>
+          <Button onClick={this.handleChooseSeats}>Select seats</Button>
         </CardFooter>
       </Card>
     );
@@ -101,14 +135,13 @@ export class FlightList extends React.Component<IFlightListProps> {
 }
 
 const mapStateToProps = storeState => ({
-  // origin: storeState.home.origin,
-  // destination: storeState.home.destination,
-  // departDate: storeState.home.departDate,
-  // returnDate: storeState.home.returnDate,
-  // nPassengers: storeState.home.nPassengers
+  nPassengers: storeState.home.nPassengers,
+  nPassengersEconomic: storeState.reservations.nPassengersEconomic,
+  nPassengersExecutive: storeState.reservations.nPassengersExecutive,
+  rSelected: storeState.reservations.rSelected
 });
 
-const mapDispatchToProps = { addSelectedFlight };
+const mapDispatchToProps = { updateRSelected, updatePassengersEconomic, updatePassengersExecutive };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

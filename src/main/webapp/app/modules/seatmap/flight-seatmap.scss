@@ -1,3 +1,22 @@
+.Seatmap {
+  text-align: center;
+  justify-content: center;
+}
+
+.FrontBackText {
+  font-size: 20px;
+  font-weight: normal;
+  text-align: center;
+  color: #9e9e9e;
+  margin-left: 22px;
+}
+
+.PlaneBorder {
+  background-color: darkslategray;
+  height: 35px;
+  width: 7px;
+}
+
 .Seat {
   background-color: #4fc3f7;
   height: 35px;
@@ -8,6 +27,10 @@
   align-items: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.Seat--executive {
+  background-color: chocolate;
 }
 
 .Seat--enabled {

@@ -25,7 +25,7 @@ export default class SeatmapRow extends React.Component<ISeatmapRowProps> {
     const { over } = this.state;
     const { rowNumber, isSelected } = this.props;
     const bold = over || isSelected;
-    let className = 'Row';
+    const className = 'Row';
     if (!isSelected) {
       className.concat(' Row--enabled');
     }

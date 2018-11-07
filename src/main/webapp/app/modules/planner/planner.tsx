@@ -14,12 +14,14 @@ import AttractionReservationCard from './attraction-reservation-card';
 import CarRentalCard from './car-rental-card';
 import InsuranceCard from './insurance-card';
 import { Link } from 'react-router-dom';
+import Seatmap from '../seatmap/flight-seatmap';
 
 export interface IPlannerProps extends StateProps, DispatchProps {}
 
 export class PlannerPage extends React.Component<IPlannerProps> {
   state = {
     showModal: false,
+    showSeatmap: false,
     showFlightList: true,
     showHotelList: false,
     showAttractionList: false,
@@ -46,6 +48,13 @@ export class PlannerPage extends React.Component<IPlannerProps> {
   };
   handleOpen = () => {
     this.setState({ showModal: true });
+  };
+
+  handleCloseSeatmap = () => {
+    this.setState({ showSeatmap: false });
+  };
+  handleOpenSeatmap = rSelected => {
+    this.setState({ showSeatmap: true });
   };
 
   handleShowFlights = () => {
@@ -126,6 +135,7 @@ export class PlannerPage extends React.Component<IPlannerProps> {
           <br />
 
           <PlannerEditModal showModal={this.state.showModal} handleClose={this.handleClose} />
+          <Seatmap showSeatmap={this.state.showSeatmap} handleClose={this.handleCloseSeatmap} />
 
           <h2>Plan your trip</h2>
           <div>
@@ -158,7 +168,13 @@ export class PlannerPage extends React.Component<IPlannerProps> {
                 </Row>
               </Col>
               <Col xs="8">
-                {this.state.showFlightList ? <FlightList /> : this.state.showHotelList ? <HotelList /> : 'Not implemented yet'}
+                {this.state.showFlightList ? (
+                  <FlightList handleOpenSeatmap={this.handleOpenSeatmap} />
+                ) : this.state.showHotelList ? (
+                  <HotelList />
+                ) : (
+                  'Not implemented yet'
+                )}
               </Col>
             </Row>
           </div>

@@ -14,7 +14,7 @@ export interface ISeatmapProps {
         isReserved: boolean
     }>,
     seatWidth: number
-    
+
     T.arrayOf(T.arrayOf(T.shape({
         number: T.oneOfType([
             T.string,
