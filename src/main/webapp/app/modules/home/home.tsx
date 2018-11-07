@@ -4,7 +4,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Translate } from 'react-jhipster';
 import { connect } from 'react-redux';
-import { Row, Col, Alert, Button } from 'reactstrap';
+import { Row, Col, Alert, Button, Card, CardBody, CardImg, CardText, CardTitle, CardSubtitle } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 import { handleSubmit, handleRedirect } from './home.reducer';
@@ -63,6 +63,19 @@ export class Home extends React.Component<IHomeProp> {
     this.state.form.validateInput('destination');
   };
 
+  handleParisClick = () => {
+    this.props.handleSubmit('Rio de Janeiro', 'Paris', '12/12/2018', '20/12/2018', '2');
+    this.props.handleRedirect();
+  };
+  handleRomeClick = () => {
+    this.props.handleSubmit('Rio de Janeiro', 'Rome', '20/12/2018', '27/12/2018', '2');
+    this.props.handleRedirect();
+  };
+  handleDubaiClick = () => {
+    this.props.handleSubmit('Rio de Janeiro', 'Dubai', '28/12/2018', '04/01/2019', '2');
+    this.props.handleRedirect();
+  };
+
   render() {
     const { account, redirect } = this.props;
 
@@ -71,117 +84,199 @@ export class Home extends React.Component<IHomeProp> {
     }
 
     return (
-      <Row>
-        <Col md="9">
-          <h2>Welcome to the Trip Planner!</h2>
-          <p className="lead">Ready to plan a trip?</p>
-          {account && account.login ? (
-            <div>
-              <Alert color="success">You are logged in as user {account.login}.</Alert>
-            </div>
-          ) : (
-            <div>
-              <Alert color="warning">
-                <Translate contentKey="global.messages.info.authenticated.prefix">If you want to </Translate>
-                <Link to="/login" className="alert-link">
-                  <Translate contentKey="global.messages.info.authenticated.link"> sign in</Translate>
-                </Link>
-                <Translate contentKey="global.messages.info.authenticated.suffix">
-                  , you can try the default accounts:
-                  <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-                  <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
-                </Translate>
-              </Alert>
+      <Col>
+        <h2>Welcome to the Trip Planner!</h2>
+        <p className="lead">Ready to plan a trip?</p>
+        <Row>
+          <Col md={{ size: 8, offset: 2 }}>
+            <Card className="tripCard">
+              <AvForm ref={c => (this.state.form = c)} id="trip-form" onValidSubmit={this.handleValidSubmit}>
+                <Row>
+                  <Col>
+                    <AvField
+                      name="origin"
+                      label="Origin"
+                      placeholder="Rio de Janeiro"
+                      type="search"
+                      validate={{
+                        required: { value: true, errorMessage: 'Origin not provided!' },
+                        minLength: { value: 3, errorMessage: 'Origin must have more than 3 characters.' },
+                        maxLength: { value: 30, errorMessage: 'Origin name is too big!' },
+                        myValidation: originDestinationValidation
+                      }}
+                      onChange={this.validateDestination}
+                    />
+                  </Col>
+                  <Col>
+                    <AvField
+                      name="destination"
+                      label="Destination"
+                      placeholder="Paris"
+                      type="search"
+                      validate={{
+                        required: { value: true, errorMessage: 'Destination not provided!' },
+                        minLength: { value: 3, errorMessage: 'Destination must have more than 3 characters.' },
+                        maxLength: { value: 30, errorMessage: 'Destination name is too big!' },
+                        myValidation: originDestinationValidation
+                      }}
+                      onChange={this.validateOrigin}
+                    />
+                  </Col>
+                  <Col>
+                    <AvField
+                      name="departDate"
+                      label="Departure Date"
+                      placeholder="date placeholder"
+                      type="date"
+                      validate={{
+                        required: { value: true, errorMessage: 'A departure date is required!' },
+                        dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
+                        myValidation: returnAfterDepart
+                      }}
+                      onChange={this.validateReturn}
+                    />
+                  </Col>
+                  <Col>
+                    <AvField
+                      name="returnDate"
+                      label="Return Date"
+                      placeholder="date placeholder"
+                      type="date"
+                      validate={{
+                        required: { value: true, errorMessage: 'A return date is required!' },
+                        dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
+                        myValidation: returnAfterDepart
+                      }}
+                      onChange={this.validateDeparture}
+                    />
+                  </Col>
+                  <Col>
+                    <AvField
+                      name="nPassengers"
+                      label="Number of Passengers"
+                      type="number"
+                      validate={{
+                        required: { value: true, errorMessage: 'Must provide number of passengers.' }
+                      }}
+                    />
+                  </Col>
+                </Row>
+                <Button id="trip-submit" color="primary" type="submit">
+                  Start planning!
+                </Button>
+              </AvForm>
+            </Card>
+          </Col>
+        </Row>
 
-              <Alert color="warning">
-                <Translate contentKey="global.messages.info.register.noaccount">You do not have an account yet?</Translate>
-                &nbsp;
-                <Link to="/register" className="alert-link">
-                  <Translate contentKey="global.messages.info.register.link">Register a new account</Translate>
-                </Link>
-              </Alert>
-            </div>
-          )}
-          <p>With our web app, you will be capable of:</p>
+        <Row>
+          <Col md="9">
+            <br />
+            <p>With our web app, you will be able to:</p>
 
-          <ul>
-            <li>Booking flights to all the destinations in your itinerary.</li>
-            <li>Booking a hotel room (or other accommodation) throughout your trip.</li>
-            <li>Looking up attractions and, when possible, reserving tickets.</li>
-            <li>Renting a car.</li>
-            <li>Buying an insurance that will give you the security you need for a smooth trip.</li>
-          </ul>
+            <Row>
+              <Col>
+                <Row>
+                  <Col xs="1">
+                    <Card>
+                      <CardImg top src={require('../../../static/images/planeIcon.png')} alt="Card image cap" />
+                    </Card>
+                  </Col>
+                  <Col className="functionalityCardDescription">Book flights to all the destinations in your itinerary.</Col>
+                </Row>
+                <Row>
+                  <Col xs="1">
+                    <Card>
+                      <CardImg top src={require('../../../static/images/hotelIcon.png')} alt="Card image cap" />
+                    </Card>
+                  </Col>
+                  <Col className="functionalityCardDescription">Book a hotel room for your trip.</Col>
+                </Row>
+                <Row>
+                  <Col xs="1">
+                    <Card>
+                      <CardImg top src={require('../../../static/images/attractionIcon.png')} alt="Card image cap" />
+                    </Card>
+                  </Col>
+                  <Col className="functionalityCardDescription">Look up attractions and reserve tickets.</Col>
+                </Row>
+                <Row>
+                  <Col xs="1">
+                    <Card>
+                      <CardImg top src={require('../../../static/images/carIcon.jpg')} alt="Card image cap" />
+                    </Card>
+                  </Col>
+                  <Col className="functionalityCardDescription">Rent a car.</Col>
+                </Row>
+                <Row>
+                  <Col xs="1">
+                    <Card>
+                      <CardImg top src={require('../../../static/images/insuranceIcon.png')} alt="Card image cap" />
+                    </Card>
+                  </Col>
+                  <Col className="functionalityCardDescription">Buy an insurance for your trip.</Col>
+                </Row>
+              </Col>
+            </Row>
+            <br />
+            <h2>Check out our recommendations!</h2>
+          </Col>
+        </Row>
 
-          <p>We hope you enjoy our services. To start a new trip, fill in the information below and click the "Start planning" button!</p>
-
-          <AvForm ref={c => (this.state.form = c)} id="trip-form" onValidSubmit={this.handleValidSubmit}>
-            <AvField
-              name="origin"
-              label="Origin"
-              placeholder="Rio de Janeiro"
-              type="search"
-              validate={{
-                required: { value: true, errorMessage: 'Origin not provided!' },
-                minLength: { value: 3, errorMessage: 'Origin must have more than 3 characters.' },
-                maxLength: { value: 30, errorMessage: 'Origin name is too big!' },
-                myValidation: originDestinationValidation
-              }}
-              onChange={this.validateDestination}
-            />
-            <AvField
-              name="destination"
-              label="Destination"
-              placeholder="Paris"
-              type="search"
-              validate={{
-                required: { value: true, errorMessage: 'Destination not provided!' },
-                minLength: { value: 3, errorMessage: 'Destination must have more than 3 characters.' },
-                maxLength: { value: 30, errorMessage: 'Destination name is too big!' },
-                myValidation: originDestinationValidation
-              }}
-              onChange={this.validateOrigin}
-            />
-            <AvField
-              name="departDate"
-              label="Departure Date"
-              placeholder="date placeholder"
-              type="date"
-              validate={{
-                required: { value: true, errorMessage: 'A departure date is required!' },
-                dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
-                myValidation: returnAfterDepart
-              }}
-              onChange={this.validateReturn}
-            />
-            <AvField
-              name="returnDate"
-              label="Return Date"
-              placeholder="date placeholder"
-              type="date"
-              validate={{
-                required: { value: true, errorMessage: 'A return date is required!' },
-                dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
-                myValidation: returnAfterDepart
-              }}
-              onChange={this.validateDeparture}
-            />
-            <AvField
-              name="nPassengers"
-              label="Number of Passengers"
-              type="number"
-              validate={{
-                required: { value: true, errorMessage: 'Must provide number of passengers.' }
-              }}
-            />
-            <Button id="trip-submit" color="primary" type="submit">
-              Start planning!
-            </Button>
-          </AvForm>
-        </Col>
-        <Col md="3" className="pad">
-          <span className="hipster rounded" />
-        </Col>
-      </Row>
+        <Row>
+          <Col md="4">
+            <Card>
+              <CardImg
+                className="recommendationImg"
+                onClick={this.handleParisClick}
+                top
+                width="100%"
+                height="300"
+                src={require('../../../static/images/parisTrip.jpg')}
+                alt="Card image cap"
+              />
+              <CardBody>
+                <CardTitle>Paris</CardTitle>
+                <CardText>Take a look at some of our trips to Paris in December.</CardText>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <CardImg
+                className="recommendationImg"
+                onClick={this.handleRomeClick}
+                top
+                width="100%"
+                height="300"
+                src={require('../../../static/images/romeTrip.jpg')}
+                alt="Card image cap"
+              />
+              <CardBody>
+                <CardTitle>Rome</CardTitle>
+                <CardText>Enjoy Christmas at one of the most historical european cities.</CardText>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col md="4">
+            <Card>
+              <CardImg
+                className="recommendationImg"
+                onClick={this.handleDubaiClick}
+                top
+                width="100%"
+                height="300"
+                src={require('../../../static/images/dubaiTrip.jpg')}
+                alt="Card image cap"
+              />
+              <CardBody>
+                <CardTitle>Dubai</CardTitle>
+                <CardText>With a new year coming, why not try something exotic?</CardText>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Col>
     );
   }
 }
