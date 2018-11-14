@@ -47,7 +47,7 @@ export class Flight extends React.Component<IFlightProps> {
                   <Translate contentKey="tripPlanningApp.flight.destination">Destination</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.flight.avaibleSeats">Avaible Seats</Translate>
+                  <Translate contentKey="tripPlanningApp.flight.availableSeats">Available Seats</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.flight.departureDate">Departure Date</Translate>
@@ -64,6 +64,9 @@ export class Flight extends React.Component<IFlightProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.flight.arrivalAirport">Arrival Airport</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.flight.price">Price</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -78,7 +81,7 @@ export class Flight extends React.Component<IFlightProps> {
                   <td>{flight.company}</td>
                   <td>{flight.origin}</td>
                   <td>{flight.destination}</td>
-                  <td>{flight.avaibleSeats}</td>
+                  <td>{flight.availableSeats}</td>
                   <td>
                     <TextFormat type="date" value={flight.departureDate} format={APP_DATE_FORMAT} />
                   </td>
@@ -88,6 +91,7 @@ export class Flight extends React.Component<IFlightProps> {
                   <td>{flight.flightCode}</td>
                   <td>{flight.departAirport}</td>
                   <td>{flight.arrivalAirport}</td>
+                  <td>{flight.price}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${flight.id}`} color="info" size="sm">

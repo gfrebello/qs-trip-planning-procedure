@@ -2,31 +2,40 @@
     "name": "HotelRoom",
     "fields": [
         {
-            "fieldName": "numberOfPeople",
+            "fieldName": "maxCapacity",
             "fieldType": "Integer"
-        },
-        {
-            "fieldName": "price",
-            "fieldType": "Float"
         },
         {
             "fieldName": "available",
             "fieldType": "Boolean"
         },
         {
-            "fieldName": "type",
+            "fieldName": "roomType",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Float"
         }
     ],
     "relationships": [
         {
+            "relationshipName": "hotelReservation",
+            "otherEntityName": "hotelReservation",
             "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipValidateRules": "required",
             "relationshipName": "hotel",
             "otherEntityName": "hotel",
-            "otherEntityField": "id"
+            "otherEntityField": "name",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "hotelRoom"
         }
     ],
-    "changelogDate": "20181024154906",
+    "changelogDate": "20181027014014",
     "entityTableName": "hotel_room",
     "dto": "no",
     "pagination": "no",

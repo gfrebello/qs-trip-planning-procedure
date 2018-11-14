@@ -23,13 +23,12 @@
             "returnDate": "Return Date",
             "origin": "Origin",
             "destination": "Destination",
-            "payment": "Payment",
-            "flightReservation": "Flight Reservation",
             "hotelReservation": "Hotel Reservation",
             "insurance": "Insurance",
             "carRental": "Car Rental",
-            "ticket": "Ticket",
-            "chosenAttraction": "Chosen Attraction",
+            "flightReservation": "Flight Reservation",
+            "attractionReservation": "Attraction Reservation",
+            "passenger": "Passenger",
             "user": "User"
         }
     }

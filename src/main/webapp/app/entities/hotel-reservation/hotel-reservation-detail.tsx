@@ -64,12 +64,6 @@ export class HotelReservationDetail extends React.Component<IHotelReservationDet
             <dd>
               <TextFormat value={hotelReservationEntity.checkoutDate} type="date" format={APP_DATE_FORMAT} />
             </dd>
-            <dt>
-              <span id="price">
-                <Translate contentKey="tripPlanningApp.hotelReservation.price">Price</Translate>
-              </span>
-            </dt>
-            <dd>{hotelReservationEntity.price}</dd>
           </dl>
           <Button tag={Link} to="/entity/hotel-reservation" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}

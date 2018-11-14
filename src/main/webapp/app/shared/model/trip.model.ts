@@ -1,11 +1,10 @@
 import { Moment } from 'moment';
-import { IPayment } from 'app/shared/model//payment.model';
-import { IFlightReservation } from 'app/shared/model//flight-reservation.model';
 import { IHotelReservation } from 'app/shared/model//hotel-reservation.model';
 import { IInsurance } from 'app/shared/model//insurance.model';
 import { ICarRental } from 'app/shared/model//car-rental.model';
-import { ITicket } from 'app/shared/model//ticket.model';
-import { IChosenAttraction } from 'app/shared/model//chosen-attraction.model';
+import { IFlightReservation } from 'app/shared/model//flight-reservation.model';
+import { IAttractionReservation } from 'app/shared/model//attraction-reservation.model';
+import { IPassenger } from 'app/shared/model//passenger.model';
 import { IUser } from './user.model';
 
 export interface ITrip {
@@ -17,13 +16,12 @@ export interface ITrip {
   returnDate?: Moment;
   origin?: string;
   destination?: string;
-  payment?: IPayment;
-  flightReservation?: IFlightReservation;
   hotelReservation?: IHotelReservation;
   insurance?: IInsurance;
   carRental?: ICarRental;
-  tickets?: ITicket[];
-  chosenAttractions?: IChosenAttraction[];
+  flightReservations?: IFlightReservation[];
+  attractionReservations?: IAttractionReservation[];
+  passengers?: IPassenger[];
   user?: IUser;
 }
 

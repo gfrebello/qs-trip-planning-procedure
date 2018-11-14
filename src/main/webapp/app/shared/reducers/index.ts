@@ -19,22 +19,6 @@ import trip, {
   TripState
 } from 'app/entities/trip/trip.reducer';
 // prettier-ignore
-import ticket, {
-  TicketState
-} from 'app/entities/ticket/ticket.reducer';
-// prettier-ignore
-import payment, {
-  PaymentState
-} from 'app/entities/payment/payment.reducer';
-// prettier-ignore
-import checkPayment, {
-  CheckPaymentState
-} from 'app/entities/check-payment/check-payment.reducer';
-// prettier-ignore
-import creditCard, {
-  CreditCardState
-} from 'app/entities/credit-card/credit-card.reducer';
-// prettier-ignore
 import flightReservation, {
   FlightReservationState
 } from 'app/entities/flight-reservation/flight-reservation.reducer';
@@ -55,9 +39,9 @@ import hotelRoom, {
   HotelRoomState
 } from 'app/entities/hotel-room/hotel-room.reducer';
 // prettier-ignore
-import chosenAttraction, {
-  ChosenAttractionState
-} from 'app/entities/chosen-attraction/chosen-attraction.reducer';
+import attractionReservation, {
+  AttractionReservationState
+} from 'app/entities/attraction-reservation/attraction-reservation.reducer';
 // prettier-ignore
 import attraction, {
   AttractionState
@@ -70,6 +54,14 @@ import insurance, {
 import carRental, {
   CarRentalState
 } from 'app/entities/car-rental/car-rental.reducer';
+// prettier-ignore
+import seat, {
+  SeatState
+} from 'app/entities/seat/seat.reducer';
+// prettier-ignore
+import passenger, {
+  PassengerState
+} from 'app/entities/passenger/passenger.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -86,19 +78,17 @@ export interface IRootState {
   readonly home: PlanState;
   readonly reservations: ReservationsState;
   readonly trip: TripState;
-  readonly ticket: TicketState;
-  readonly payment: PaymentState;
-  readonly checkPayment: CheckPaymentState;
-  readonly creditCard: CreditCardState;
   readonly flightReservation: FlightReservationState;
   readonly flight: FlightState;
   readonly hotelReservation: HotelReservationState;
   readonly hotel: HotelState;
   readonly hotelRoom: HotelRoomState;
-  readonly chosenAttraction: ChosenAttractionState;
+  readonly attractionReservation: AttractionReservationState;
   readonly attraction: AttractionState;
   readonly insurance: InsuranceState;
   readonly carRental: CarRentalState;
+  readonly seat: SeatState;
+  readonly passenger: PassengerState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -117,19 +107,17 @@ const rootReducer = combineReducers<IRootState>({
   home,
   reservations,
   trip,
-  ticket,
-  payment,
-  checkPayment,
-  creditCard,
   flightReservation,
   flight,
   hotelReservation,
   hotel,
   hotelRoom,
-  chosenAttraction,
+  attractionReservation,
   attraction,
   insurance,
   carRental,
+  seat,
+  passenger,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });

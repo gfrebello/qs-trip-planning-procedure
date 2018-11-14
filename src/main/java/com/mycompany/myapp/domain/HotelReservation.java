@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -42,12 +43,9 @@ public class HotelReservation implements Serializable {
     @Column(name = "checkout_date")
     private Instant checkoutDate;
 
-    @Column(name = "price")
-    private Float price;
-
     @OneToMany(mappedBy = "hotelReservation")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Hotel> hotels = new HashSet<>();
+    private Set<HotelRoom> hotelRooms = new HashSet<>();
 
     @OneToOne(mappedBy = "hotelReservation")
     @JsonIgnore
@@ -127,42 +125,29 @@ public class HotelReservation implements Serializable {
         this.checkoutDate = checkoutDate;
     }
 
-    public Float getPrice() {
-        return price;
+    public Set<HotelRoom> getHotelRooms() {
+        return hotelRooms;
     }
 
-    public HotelReservation price(Float price) {
-        this.price = price;
+    public HotelReservation hotelRooms(Set<HotelRoom> hotelRooms) {
+        this.hotelRooms = hotelRooms;
         return this;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
-    public Set<Hotel> getHotels() {
-        return hotels;
-    }
-
-    public HotelReservation hotels(Set<Hotel> hotels) {
-        this.hotels = hotels;
+    public HotelReservation addHotelRoom(HotelRoom hotelRoom) {
+        this.hotelRooms.add(hotelRoom);
+        hotelRoom.setHotelReservation(this);
         return this;
     }
 
-    public HotelReservation addHotel(Hotel hotel) {
-        this.hotels.add(hotel);
-        hotel.setHotelReservation(this);
+    public HotelReservation removeHotelRoom(HotelRoom hotelRoom) {
+        this.hotelRooms.remove(hotelRoom);
+        hotelRoom.setHotelReservation(null);
         return this;
     }
 
-    public HotelReservation removeHotel(Hotel hotel) {
-        this.hotels.remove(hotel);
-        hotel.setHotelReservation(null);
-        return this;
-    }
-
-    public void setHotels(Set<Hotel> hotels) {
-        this.hotels = hotels;
+    public void setHotelRooms(Set<HotelRoom> hotelRooms) {
+        this.hotelRooms = hotelRooms;
     }
 
     public Trip getTrip() {
@@ -208,7 +193,6 @@ public class HotelReservation implements Serializable {
             ", onlinePaymentChoosen='" + isOnlinePaymentChoosen() + "'" +
             ", checkinDate='" + getCheckinDate() + "'" +
             ", checkoutDate='" + getCheckoutDate() + "'" +
-            ", price=" + getPrice() +
             "}";
     }
 }

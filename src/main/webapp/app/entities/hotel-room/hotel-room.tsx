@@ -38,16 +38,19 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.hotelRoom.numberOfPeople">Number Of People</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.hotelRoom.price">Price</Translate>
+                  <Translate contentKey="tripPlanningApp.hotelRoom.maxCapacity">Max Capacity</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.hotelRoom.available">Available</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.hotelRoom.type">Type</Translate>
+                  <Translate contentKey="tripPlanningApp.hotelRoom.roomType">Room Type</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.hotelRoom.price">Price</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.hotelRoom.hotelReservation">Hotel Reservation</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
@@ -63,11 +66,18 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                       {hotelRoom.id}
                     </Button>
                   </td>
-                  <td>{hotelRoom.numberOfPeople}</td>
-                  <td>{hotelRoom.price}</td>
+                  <td>{hotelRoom.maxCapacity}</td>
                   <td>{hotelRoom.available ? 'true' : 'false'}</td>
-                  <td>{hotelRoom.type}</td>
-                  <td>{hotelRoom.hotel ? <Link to={`hotel/${hotelRoom.hotel.id}`}>{hotelRoom.hotel.id}</Link> : ''}</td>
+                  <td>{hotelRoom.roomType}</td>
+                  <td>{hotelRoom.price}</td>
+                  <td>
+                    {hotelRoom.hotelReservation ? (
+                      <Link to={`hotel-reservation/${hotelRoom.hotelReservation.id}`}>{hotelRoom.hotelReservation.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>{hotelRoom.hotel ? <Link to={`hotel/${hotelRoom.hotel.id}`}>{hotelRoom.hotel.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${hotelRoom.id}`} color="info" size="sm">

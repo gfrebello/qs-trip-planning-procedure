@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -43,7 +44,7 @@ public class TripResource {
      */
     @PostMapping("/trips")
     @Timed
-    public ResponseEntity<Trip> createTrip(@RequestBody Trip trip) throws URISyntaxException {
+    public ResponseEntity<Trip> createTrip(@Valid @RequestBody Trip trip) throws URISyntaxException {
         log.debug("REST request to save Trip : {}", trip);
         if (trip.getId() != null) {
             throw new BadRequestAlertException("A new trip cannot already have an ID", ENTITY_NAME, "idexists");
@@ -65,7 +66,7 @@ public class TripResource {
      */
     @PutMapping("/trips")
     @Timed
-    public ResponseEntity<Trip> updateTrip(@RequestBody Trip trip) throws URISyntaxException {
+    public ResponseEntity<Trip> updateTrip(@Valid @RequestBody Trip trip) throws URISyntaxException {
         log.debug("REST request to update Trip : {}", trip);
         if (trip.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

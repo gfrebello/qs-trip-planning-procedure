@@ -140,12 +140,6 @@ export class HotelReservationUpdate extends React.Component<IHotelReservationUpd
                     value={isNew ? null : convertDateTimeFromServer(this.props.hotelReservationEntity.checkoutDate)}
                   />
                 </AvGroup>
-                <AvGroup>
-                  <Label id="priceLabel" for="price">
-                    <Translate contentKey="tripPlanningApp.hotelReservation.price">Price</Translate>
-                  </Label>
-                  <AvField id="hotel-reservation-price" type="number" className="form-control" name="price" />
-                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/hotel-reservation" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">

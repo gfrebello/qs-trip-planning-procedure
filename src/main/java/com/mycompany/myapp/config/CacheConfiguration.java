@@ -39,25 +39,23 @@ public class CacheConfiguration {
             cm.createCache(com.mycompany.myapp.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.Trip.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Trip.class.getName() + ".tickets", jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Trip.class.getName() + ".chosenAttractions", jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Ticket.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Payment.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.CheckPayment.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.CreditCard.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Trip.class.getName() + ".flightReservations", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Trip.class.getName() + ".attractionReservations", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.FlightReservation.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.FlightReservation.class.getName() + ".flights", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.Flight.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Flight.class.getName() + ".flightReservations", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.HotelReservation.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.HotelReservation.class.getName() + ".hotels", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.HotelReservation.class.getName() + ".hotelRooms", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.Hotel.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Hotel.class.getName() + ".hotelRooms", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.HotelRoom.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.ChosenAttraction.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.AttractionReservation.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.Attraction.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.Insurance.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.CarRental.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Trip.class.getName() + ".passengers", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.FlightReservation.class.getName() + ".seats", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Flight.class.getName() + ".seats", jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Seat.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.Passenger.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

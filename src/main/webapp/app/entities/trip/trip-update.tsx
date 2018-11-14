@@ -8,10 +8,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IPayment } from 'app/shared/model/payment.model';
-import { getEntities as getPayments } from 'app/entities/payment/payment.reducer';
-import { IFlightReservation } from 'app/shared/model/flight-reservation.model';
-import { getEntities as getFlightReservations } from 'app/entities/flight-reservation/flight-reservation.reducer';
 import { IHotelReservation } from 'app/shared/model/hotel-reservation.model';
 import { getEntities as getHotelReservations } from 'app/entities/hotel-reservation/hotel-reservation.reducer';
 import { IInsurance } from 'app/shared/model/insurance.model';
@@ -30,8 +26,6 @@ export interface ITripUpdateProps extends StateProps, DispatchProps, RouteCompon
 
 export interface ITripUpdateState {
   isNew: boolean;
-  paymentId: number;
-  flightReservationId: number;
   hotelReservationId: number;
   insuranceId: number;
   carRentalId: number;
@@ -42,8 +36,6 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
   constructor(props) {
     super(props);
     this.state = {
-      paymentId: 0,
-      flightReservationId: 0,
       hotelReservationId: 0,
       insuranceId: 0,
       carRentalId: 0,
@@ -59,8 +51,6 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getPayments();
-    this.props.getFlightReservations();
     this.props.getHotelReservations();
     this.props.getInsurances();
     this.props.getCarRentals();
@@ -92,7 +82,7 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
   };
 
   render() {
-    const { tripEntity, payments, flightReservations, hotelReservations, insurances, carRentals, users, loading, updating } = this.props;
+    const { tripEntity, hotelReservations, insurances, carRentals, users, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -173,36 +163,6 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                   <AvField id="trip-destination" type="text" name="destination" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="payment.id">
-                    <Translate contentKey="tripPlanningApp.trip.payment">Payment</Translate>
-                  </Label>
-                  <AvInput id="trip-payment" type="select" className="form-control" name="payment.id">
-                    <option value="" key="0" />
-                    {payments
-                      ? payments.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
-                  <Label for="flightReservation.id">
-                    <Translate contentKey="tripPlanningApp.trip.flightReservation">Flight Reservation</Translate>
-                  </Label>
-                  <AvInput id="trip-flightReservation" type="select" className="form-control" name="flightReservation.id">
-                    <option value="" key="0" />
-                    {flightReservations
-                      ? flightReservations.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="hotelReservation.id">
                     <Translate contentKey="tripPlanningApp.trip.hotelReservation">Hotel Reservation</Translate>
                   </Label>
@@ -248,15 +208,20 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label for="user.id">
+                  <Label for="user.login">
                     <Translate contentKey="tripPlanningApp.trip.user">User</Translate>
                   </Label>
-                  <AvInput id="trip-user" type="select" className="form-control" name="user.id">
-                    <option value="" key="0" />
+                  <AvInput
+                    id="trip-user"
+                    type="select"
+                    className="form-control"
+                    name="user.id"
+                    value={isNew ? users[0] && users[0].id : tripEntity.user.id}
+                  >
                     {users
                       ? users.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.login}
                           </option>
                         ))
                       : null}
@@ -283,8 +248,6 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  payments: storeState.payment.entities,
-  flightReservations: storeState.flightReservation.entities,
   hotelReservations: storeState.hotelReservation.entities,
   insurances: storeState.insurance.entities,
   carRentals: storeState.carRental.entities,
@@ -295,8 +258,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getPayments,
-  getFlightReservations,
   getHotelReservations,
   getInsurances,
   getCarRentals,

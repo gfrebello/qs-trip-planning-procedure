@@ -14,7 +14,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "avaibleSeats",
+            "fieldName": "availableSeats",
             "fieldType": "Integer"
         },
         {
@@ -36,18 +36,21 @@
         {
             "fieldName": "arrivalAirport",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Float"
         }
     ],
     "relationships": [
         {
-            "relationshipType": "many-to-many",
-            "relationshipName": "flightReservation",
-            "otherEntityName": "flightReservation",
-            "ownerSide": false,
+            "relationshipType": "one-to-many",
+            "relationshipName": "seat",
+            "otherEntityName": "seat",
             "otherEntityRelationshipName": "flight"
         }
     ],
-    "changelogDate": "20181024154903",
+    "changelogDate": "20181027014011",
     "entityTableName": "flight",
     "dto": "no",
     "pagination": "no",

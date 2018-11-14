@@ -11,18 +11,6 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/trip">
       <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.trip" />
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/ticket">
-      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.ticket" />
-    </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/payment">
-      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.payment" />
-    </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/check-payment">
-      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.checkPayment" />
-    </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/credit-card">
-      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.creditCard" />
-    </DropdownItem>
     <DropdownItem tag={Link} to="/entity/flight-reservation">
       <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.flightReservation" />
     </DropdownItem>
@@ -38,8 +26,8 @@ export const EntitiesMenu = props => (
     <DropdownItem tag={Link} to="/entity/hotel-room">
       <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.hotelRoom" />
     </DropdownItem>
-    <DropdownItem tag={Link} to="/entity/chosen-attraction">
-      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.chosenAttraction" />
+    <DropdownItem tag={Link} to="/entity/attraction-reservation">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.attractionReservation" />
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/attraction">
       <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.attraction" />
@@ -49,6 +37,12 @@ export const EntitiesMenu = props => (
     </DropdownItem>
     <DropdownItem tag={Link} to="/entity/car-rental">
       <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.carRental" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/seat">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.seat" />
+    </DropdownItem>
+    <DropdownItem tag={Link} to="/entity/passenger">
+      <FontAwesomeIcon icon="asterisk" />&nbsp;<Translate contentKey="global.menu.entities.passenger" />
     </DropdownItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>

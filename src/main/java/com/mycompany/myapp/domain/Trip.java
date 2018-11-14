@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -51,14 +52,6 @@ public class Trip implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private Payment payment;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private FlightReservation flightReservation;
-
-    @OneToOne
-    @JoinColumn(unique = true)
     private HotelReservation hotelReservation;
 
     @OneToOne
@@ -71,13 +64,18 @@ public class Trip implements Serializable {
 
     @OneToMany(mappedBy = "trip")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Ticket> tickets = new HashSet<>();
+    private Set<FlightReservation> flightReservations = new HashSet<>();
 
     @OneToMany(mappedBy = "trip")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ChosenAttraction> chosenAttractions = new HashSet<>();
+    private Set<AttractionReservation> attractionReservations = new HashSet<>();
 
-    @ManyToOne
+    @OneToMany(mappedBy = "trip")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Passenger> passengers = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("")
     private User user;
 
@@ -181,32 +179,6 @@ public class Trip implements Serializable {
         this.destination = destination;
     }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public Trip payment(Payment payment) {
-        this.payment = payment;
-        return this;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
-
-    public FlightReservation getFlightReservation() {
-        return flightReservation;
-    }
-
-    public Trip flightReservation(FlightReservation flightReservation) {
-        this.flightReservation = flightReservation;
-        return this;
-    }
-
-    public void setFlightReservation(FlightReservation flightReservation) {
-        this.flightReservation = flightReservation;
-    }
-
     public HotelReservation getHotelReservation() {
         return hotelReservation;
     }
@@ -246,54 +218,79 @@ public class Trip implements Serializable {
         this.carRental = carRental;
     }
 
-    public Set<Ticket> getTickets() {
-        return tickets;
+    public Set<FlightReservation> getFlightReservations() {
+        return flightReservations;
     }
 
-    public Trip tickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
+    public Trip flightReservations(Set<FlightReservation> flightReservations) {
+        this.flightReservations = flightReservations;
         return this;
     }
 
-    public Trip addTicket(Ticket ticket) {
-        this.tickets.add(ticket);
-        ticket.setTrip(this);
+    public Trip addFlightReservation(FlightReservation flightReservation) {
+        this.flightReservations.add(flightReservation);
+        flightReservation.setTrip(this);
         return this;
     }
 
-    public Trip removeTicket(Ticket ticket) {
-        this.tickets.remove(ticket);
-        ticket.setTrip(null);
+    public Trip removeFlightReservation(FlightReservation flightReservation) {
+        this.flightReservations.remove(flightReservation);
+        flightReservation.setTrip(null);
         return this;
     }
 
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setFlightReservations(Set<FlightReservation> flightReservations) {
+        this.flightReservations = flightReservations;
     }
 
-    public Set<ChosenAttraction> getChosenAttractions() {
-        return chosenAttractions;
+    public Set<AttractionReservation> getAttractionReservations() {
+        return attractionReservations;
     }
 
-    public Trip chosenAttractions(Set<ChosenAttraction> chosenAttractions) {
-        this.chosenAttractions = chosenAttractions;
+    public Trip attractionReservations(Set<AttractionReservation> attractionReservations) {
+        this.attractionReservations = attractionReservations;
         return this;
     }
 
-    public Trip addChosenAttraction(ChosenAttraction chosenAttraction) {
-        this.chosenAttractions.add(chosenAttraction);
-        chosenAttraction.setTrip(this);
+    public Trip addAttractionReservation(AttractionReservation attractionReservation) {
+        this.attractionReservations.add(attractionReservation);
+        attractionReservation.setTrip(this);
         return this;
     }
 
-    public Trip removeChosenAttraction(ChosenAttraction chosenAttraction) {
-        this.chosenAttractions.remove(chosenAttraction);
-        chosenAttraction.setTrip(null);
+    public Trip removeAttractionReservation(AttractionReservation attractionReservation) {
+        this.attractionReservations.remove(attractionReservation);
+        attractionReservation.setTrip(null);
         return this;
     }
 
-    public void setChosenAttractions(Set<ChosenAttraction> chosenAttractions) {
-        this.chosenAttractions = chosenAttractions;
+    public void setAttractionReservations(Set<AttractionReservation> attractionReservations) {
+        this.attractionReservations = attractionReservations;
+    }
+
+    public Set<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public Trip passengers(Set<Passenger> passengers) {
+        this.passengers = passengers;
+        return this;
+    }
+
+    public Trip addPassenger(Passenger passenger) {
+        this.passengers.add(passenger);
+        passenger.setTrip(this);
+        return this;
+    }
+
+    public Trip removePassenger(Passenger passenger) {
+        this.passengers.remove(passenger);
+        passenger.setTrip(null);
+        return this;
+    }
+
+    public void setPassengers(Set<Passenger> passengers) {
+        this.passengers = passengers;
     }
 
     public User getUser() {

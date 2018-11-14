@@ -49,9 +49,6 @@ export class Hotel extends React.Component<IHotelProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.hotel.type">Type</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.hotel.hotelReservation">Hotel Reservation</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -67,13 +64,6 @@ export class Hotel extends React.Component<IHotelProps> {
                   <td>{hotel.city}</td>
                   <td>{hotel.address}</td>
                   <td>{hotel.type}</td>
-                  <td>
-                    {hotel.hotelReservation ? (
-                      <Link to={`hotel-reservation/${hotel.hotelReservation.id}`}>{hotel.hotelReservation.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${hotel.id}`} color="info" size="sm">

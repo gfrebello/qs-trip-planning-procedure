@@ -18,16 +18,8 @@
             "fieldType": "Float"
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "chosenAttraction",
-            "otherEntityName": "chosenAttraction",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "attraction"
-        }
-    ],
-    "changelogDate": "20181024154908",
+    "relationships": [],
+    "changelogDate": "20181027014016",
     "entityTableName": "attraction",
     "dto": "no",
     "pagination": "no",

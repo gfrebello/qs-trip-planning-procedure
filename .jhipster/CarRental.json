@@ -39,7 +39,7 @@
             "otherEntityRelationshipName": "carRental"
         }
     ],
-    "changelogDate": "20181024154910",
+    "changelogDate": "20181027014018",
     "entityTableName": "car_rental",
     "dto": "no",
     "pagination": "no",

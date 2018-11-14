@@ -20,6 +20,7 @@
             "numberOfPeople": "Number Of People",
             "customerClass": "Customer Class",
             "flight": "Flight",
+            "seat": "Seat",
             "trip": "Trip"
         }
     }

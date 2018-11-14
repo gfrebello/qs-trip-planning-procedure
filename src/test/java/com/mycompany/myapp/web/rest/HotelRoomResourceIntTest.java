@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.TripPlanningApp;
 
 import com.mycompany.myapp.domain.HotelRoom;
+import com.mycompany.myapp.domain.Hotel;
 import com.mycompany.myapp.repository.HotelRoomRepository;
 import com.mycompany.myapp.web.rest.errors.ExceptionTranslator;
 
@@ -39,17 +40,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TripPlanningApp.class)
 public class HotelRoomResourceIntTest {
 
-    private static final Integer DEFAULT_NUMBER_OF_PEOPLE = 1;
-    private static final Integer UPDATED_NUMBER_OF_PEOPLE = 2;
-
-    private static final Float DEFAULT_PRICE = 1F;
-    private static final Float UPDATED_PRICE = 2F;
+    private static final Integer DEFAULT_MAX_CAPACITY = 1;
+    private static final Integer UPDATED_MAX_CAPACITY = 2;
 
     private static final Boolean DEFAULT_AVAILABLE = false;
     private static final Boolean UPDATED_AVAILABLE = true;
 
-    private static final String DEFAULT_TYPE = "AAAAAAAAAA";
-    private static final String UPDATED_TYPE = "BBBBBBBBBB";
+    private static final String DEFAULT_ROOM_TYPE = "AAAAAAAAAA";
+    private static final String UPDATED_ROOM_TYPE = "BBBBBBBBBB";
+
+    private static final Float DEFAULT_PRICE = 1F;
+    private static final Float UPDATED_PRICE = 2F;
 
     @Autowired
     private HotelRoomRepository hotelRoomRepository;
@@ -89,10 +90,15 @@ public class HotelRoomResourceIntTest {
      */
     public static HotelRoom createEntity(EntityManager em) {
         HotelRoom hotelRoom = new HotelRoom()
-            .numberOfPeople(DEFAULT_NUMBER_OF_PEOPLE)
-            .price(DEFAULT_PRICE)
+            .maxCapacity(DEFAULT_MAX_CAPACITY)
             .available(DEFAULT_AVAILABLE)
-            .type(DEFAULT_TYPE);
+            .roomType(DEFAULT_ROOM_TYPE)
+            .price(DEFAULT_PRICE);
+        // Add required entity
+        Hotel hotel = HotelResourceIntTest.createEntity(em);
+        em.persist(hotel);
+        em.flush();
+        hotelRoom.setHotel(hotel);
         return hotelRoom;
     }
 
@@ -116,10 +122,10 @@ public class HotelRoomResourceIntTest {
         List<HotelRoom> hotelRoomList = hotelRoomRepository.findAll();
         assertThat(hotelRoomList).hasSize(databaseSizeBeforeCreate + 1);
         HotelRoom testHotelRoom = hotelRoomList.get(hotelRoomList.size() - 1);
-        assertThat(testHotelRoom.getNumberOfPeople()).isEqualTo(DEFAULT_NUMBER_OF_PEOPLE);
-        assertThat(testHotelRoom.getPrice()).isEqualTo(DEFAULT_PRICE);
+        assertThat(testHotelRoom.getMaxCapacity()).isEqualTo(DEFAULT_MAX_CAPACITY);
         assertThat(testHotelRoom.isAvailable()).isEqualTo(DEFAULT_AVAILABLE);
-        assertThat(testHotelRoom.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testHotelRoom.getRoomType()).isEqualTo(DEFAULT_ROOM_TYPE);
+        assertThat(testHotelRoom.getPrice()).isEqualTo(DEFAULT_PRICE);
     }
 
     @Test
@@ -152,10 +158,10 @@ public class HotelRoomResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hotelRoom.getId().intValue())))
-            .andExpect(jsonPath("$.[*].numberOfPeople").value(hasItem(DEFAULT_NUMBER_OF_PEOPLE)))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].maxCapacity").value(hasItem(DEFAULT_MAX_CAPACITY)))
             .andExpect(jsonPath("$.[*].available").value(hasItem(DEFAULT_AVAILABLE.booleanValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())));
+            .andExpect(jsonPath("$.[*].roomType").value(hasItem(DEFAULT_ROOM_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())));
     }
     
     @Test
@@ -169,10 +175,10 @@ public class HotelRoomResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(hotelRoom.getId().intValue()))
-            .andExpect(jsonPath("$.numberOfPeople").value(DEFAULT_NUMBER_OF_PEOPLE))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
+            .andExpect(jsonPath("$.maxCapacity").value(DEFAULT_MAX_CAPACITY))
             .andExpect(jsonPath("$.available").value(DEFAULT_AVAILABLE.booleanValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()));
+            .andExpect(jsonPath("$.roomType").value(DEFAULT_ROOM_TYPE.toString()))
+            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()));
     }
 
     @Test
@@ -196,10 +202,10 @@ public class HotelRoomResourceIntTest {
         // Disconnect from session so that the updates on updatedHotelRoom are not directly saved in db
         em.detach(updatedHotelRoom);
         updatedHotelRoom
-            .numberOfPeople(UPDATED_NUMBER_OF_PEOPLE)
-            .price(UPDATED_PRICE)
+            .maxCapacity(UPDATED_MAX_CAPACITY)
             .available(UPDATED_AVAILABLE)
-            .type(UPDATED_TYPE);
+            .roomType(UPDATED_ROOM_TYPE)
+            .price(UPDATED_PRICE);
 
         restHotelRoomMockMvc.perform(put("/api/hotel-rooms")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -210,10 +216,10 @@ public class HotelRoomResourceIntTest {
         List<HotelRoom> hotelRoomList = hotelRoomRepository.findAll();
         assertThat(hotelRoomList).hasSize(databaseSizeBeforeUpdate);
         HotelRoom testHotelRoom = hotelRoomList.get(hotelRoomList.size() - 1);
-        assertThat(testHotelRoom.getNumberOfPeople()).isEqualTo(UPDATED_NUMBER_OF_PEOPLE);
-        assertThat(testHotelRoom.getPrice()).isEqualTo(UPDATED_PRICE);
+        assertThat(testHotelRoom.getMaxCapacity()).isEqualTo(UPDATED_MAX_CAPACITY);
         assertThat(testHotelRoom.isAvailable()).isEqualTo(UPDATED_AVAILABLE);
-        assertThat(testHotelRoom.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testHotelRoom.getRoomType()).isEqualTo(UPDATED_ROOM_TYPE);
+        assertThat(testHotelRoom.getPrice()).isEqualTo(UPDATED_PRICE);
     }
 
     @Test

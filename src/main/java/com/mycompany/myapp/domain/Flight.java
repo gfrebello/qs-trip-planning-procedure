@@ -36,8 +36,8 @@ public class Flight implements Serializable {
     @Column(name = "destination")
     private String destination;
 
-    @Column(name = "avaible_seats")
-    private Integer avaibleSeats;
+    @Column(name = "available_seats")
+    private Integer availableSeats;
 
     @Column(name = "departure_date")
     private Instant departureDate;
@@ -54,10 +54,12 @@ public class Flight implements Serializable {
     @Column(name = "arrival_airport")
     private String arrivalAirport;
 
-    @ManyToMany(mappedBy = "flights")
-    @JsonIgnore
+    @Column(name = "price")
+    private Float price;
+
+    @OneToMany(mappedBy = "flight")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<FlightReservation> flightReservations = new HashSet<>();
+    private Set<Seat> seats = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -107,17 +109,17 @@ public class Flight implements Serializable {
         this.destination = destination;
     }
 
-    public Integer getAvaibleSeats() {
-        return avaibleSeats;
+    public Integer getAvailableSeats() {
+        return availableSeats;
     }
 
-    public Flight avaibleSeats(Integer avaibleSeats) {
-        this.avaibleSeats = avaibleSeats;
+    public Flight availableSeats(Integer availableSeats) {
+        this.availableSeats = availableSeats;
         return this;
     }
 
-    public void setAvaibleSeats(Integer avaibleSeats) {
-        this.avaibleSeats = avaibleSeats;
+    public void setAvailableSeats(Integer availableSeats) {
+        this.availableSeats = availableSeats;
     }
 
     public Instant getDepartureDate() {
@@ -185,29 +187,42 @@ public class Flight implements Serializable {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public Set<FlightReservation> getFlightReservations() {
-        return flightReservations;
+    public Float getPrice() {
+        return price;
     }
 
-    public Flight flightReservations(Set<FlightReservation> flightReservations) {
-        this.flightReservations = flightReservations;
+    public Flight price(Float price) {
+        this.price = price;
         return this;
     }
 
-    public Flight addFlightReservation(FlightReservation flightReservation) {
-        this.flightReservations.add(flightReservation);
-        flightReservation.getFlights().add(this);
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Set<Seat> getSeats() {
+        return seats;
+    }
+
+    public Flight seats(Set<Seat> seats) {
+        this.seats = seats;
         return this;
     }
 
-    public Flight removeFlightReservation(FlightReservation flightReservation) {
-        this.flightReservations.remove(flightReservation);
-        flightReservation.getFlights().remove(this);
+    public Flight addSeat(Seat seat) {
+        this.seats.add(seat);
+        seat.setFlight(this);
         return this;
     }
 
-    public void setFlightReservations(Set<FlightReservation> flightReservations) {
-        this.flightReservations = flightReservations;
+    public Flight removeSeat(Seat seat) {
+        this.seats.remove(seat);
+        seat.setFlight(null);
+        return this;
+    }
+
+    public void setSeats(Set<Seat> seats) {
+        this.seats = seats;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -238,12 +253,13 @@ public class Flight implements Serializable {
             ", company='" + getCompany() + "'" +
             ", origin='" + getOrigin() + "'" +
             ", destination='" + getDestination() + "'" +
-            ", avaibleSeats=" + getAvaibleSeats() +
+            ", availableSeats=" + getAvailableSeats() +
             ", departureDate='" + getDepartureDate() + "'" +
             ", arrivalDate='" + getArrivalDate() + "'" +
             ", flightCode='" + getFlightCode() + "'" +
             ", departAirport='" + getDepartAirport() + "'" +
             ", arrivalAirport='" + getArrivalAirport() + "'" +
+            ", price=" + getPrice() +
             "}";
     }
 }

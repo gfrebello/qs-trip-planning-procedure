@@ -49,6 +49,9 @@ export class FlightReservation extends React.Component<IFlightReservationProps> 
                 <th>
                   <Translate contentKey="tripPlanningApp.flightReservation.flight">Flight</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.flightReservation.trip">Trip</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -64,15 +67,13 @@ export class FlightReservation extends React.Component<IFlightReservationProps> 
                   <td>{flightReservation.numberOfPeople}</td>
                   <td>{flightReservation.customerClass}</td>
                   <td>
-                    {flightReservation.flights
-                      ? flightReservation.flights.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`flight/${val.id}`}>{val.id}</Link>
-                            {j === flightReservation.flights.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
+                    {flightReservation.flight ? (
+                      <Link to={`flight/${flightReservation.flight.id}`}>{flightReservation.flight.flightCode}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
+                  <td>{flightReservation.trip ? <Link to={`trip/${flightReservation.trip.id}`}>{flightReservation.trip.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${flightReservation.id}`} color="info" size="sm">

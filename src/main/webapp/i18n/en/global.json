@@ -8,19 +8,17 @@
             "entities": {
                 "main": "Entities",
                 "trip": "Trip",
-                "ticket": "Ticket",
-                "payment": "Payment",
-                "checkPayment": "Check Payment",
-                "creditCard": "Credit Card",
                 "flightReservation": "Flight Reservation",
                 "flight": "Flight",
                 "hotelReservation": "Hotel Reservation",
                 "hotel": "Hotel",
                 "hotelRoom": "Hotel Room",
-                "chosenAttraction": "Chosen Attraction",
+                "attractionReservation": "Attraction Reservation",
                 "attraction": "Attraction",
                 "insurance": "Insurance",
                 "carRental": "Car Rental",
+                "seat": "Seat",
+                "passenger": "Passenger",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

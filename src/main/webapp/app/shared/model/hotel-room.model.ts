@@ -1,11 +1,13 @@
+import { IHotelReservation } from 'app/shared/model//hotel-reservation.model';
 import { IHotel } from 'app/shared/model//hotel.model';
 
 export interface IHotelRoom {
   id?: number;
-  numberOfPeople?: number;
-  price?: number;
+  maxCapacity?: number;
   available?: boolean;
-  type?: string;
+  roomType?: string;
+  price?: number;
+  hotelReservation?: IHotelReservation;
   hotel?: IHotel;
 }
 

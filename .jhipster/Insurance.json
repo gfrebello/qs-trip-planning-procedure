@@ -31,7 +31,7 @@
             "otherEntityRelationshipName": "insurance"
         }
     ],
-    "changelogDate": "20181024154909",
+    "changelogDate": "20181027014017",
     "entityTableName": "insurance",
     "dto": "no",
     "pagination": "no",

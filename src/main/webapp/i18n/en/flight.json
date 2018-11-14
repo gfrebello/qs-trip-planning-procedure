@@ -19,13 +19,14 @@
             "company": "Company",
             "origin": "Origin",
             "destination": "Destination",
-            "avaibleSeats": "Avaible Seats",
+            "availableSeats": "Available Seats",
             "departureDate": "Departure Date",
             "arrivalDate": "Arrival Date",
             "flightCode": "Flight Code",
             "departAirport": "Depart Airport",
             "arrivalAirport": "Arrival Airport",
-            "flightReservation": "Flight Reservation"
+            "price": "Price",
+            "seat": "Seat"
         }
     }
 }
