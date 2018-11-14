@@ -12,7 +12,8 @@ export const ACTION_TYPES = {
   CREATE_FLIGHT: 'flight/CREATE_FLIGHT',
   UPDATE_FLIGHT: 'flight/UPDATE_FLIGHT',
   DELETE_FLIGHT: 'flight/DELETE_FLIGHT',
-  RESET: 'flight/RESET'
+  RESET: 'flight/RESET',
+  FETCH_FLIGHTS_BY_DATE_ORIGIN_DESTINATION: 'flight/FETCH_FLIGHTS_BY_DATE_ORIGIN_DESTINATION'
 };
 
 const initialState = {
@@ -32,6 +33,7 @@ export default (state: FlightState = initialState, action): FlightState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_FLIGHT_LIST):
     case REQUEST(ACTION_TYPES.FETCH_FLIGHT):
+    case REQUEST(ACTION_TYPES.FETCH_FLIGHTS_BY_DATE_ORIGIN_DESTINATION):
       return {
         ...state,
         errorMessage: null,
@@ -49,6 +51,7 @@ export default (state: FlightState = initialState, action): FlightState => {
       };
     case FAILURE(ACTION_TYPES.FETCH_FLIGHT_LIST):
     case FAILURE(ACTION_TYPES.FETCH_FLIGHT):
+    case FAILURE(ACTION_TYPES.FETCH_FLIGHTS_BY_DATE_ORIGIN_DESTINATION):
     case FAILURE(ACTION_TYPES.CREATE_FLIGHT):
     case FAILURE(ACTION_TYPES.UPDATE_FLIGHT):
     case FAILURE(ACTION_TYPES.DELETE_FLIGHT):
@@ -60,6 +63,7 @@ export default (state: FlightState = initialState, action): FlightState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.FETCH_FLIGHT_LIST):
+    case SUCCESS(ACTION_TYPES.FETCH_FLIGHTS_BY_DATE_ORIGIN_DESTINATION):
       return {
         ...state,
         loading: false,
@@ -108,6 +112,14 @@ export const getEntity: ICrudGetAction<IFlight> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_FLIGHT,
+    payload: axios.get<IFlight>(requestUrl)
+  };
+};
+
+export const getEntitiesByDateOriginDestination: ICrudGetAllAction<IFlight> = (departureDate, origin, destination) => {
+  const requestUrl = `${apiUrl}/${departureDate}/${origin}/${destination}`;
+  return {
+    type: ACTION_TYPES.FETCH_FLIGHTS_BY_DATE_ORIGIN_DESTINATION,
     payload: axios.get<IFlight>(requestUrl)
   };
 };
