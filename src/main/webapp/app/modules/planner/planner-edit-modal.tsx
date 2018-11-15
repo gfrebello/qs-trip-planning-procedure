@@ -83,7 +83,6 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
             <AvField
               name="origin"
               label="Origin"
-              placeholder="Rio de Janeiro"
               type="search"
               validate={{
                 required: { value: true, errorMessage: 'Origin not provided!' },
@@ -96,7 +95,6 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
             <AvField
               name="destination"
               label="Destination"
-              placeholder="Paris"
               type="search"
               validate={{
                 required: { value: true, errorMessage: 'Destination not provided!' },
@@ -109,7 +107,6 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
             <AvField
               name="departDate"
               label="Departure Date"
-              placeholder="date placeholder"
               type="date"
               validate={{
                 required: { value: true, errorMessage: 'A departure date is required!' },
@@ -121,7 +118,6 @@ export class PlannerEditModal extends React.Component<IEditPlanModalProps> {
             <AvField
               name="returnDate"
               label="Return Date"
-              placeholder="date placeholder"
               type="date"
               validate={{
                 required: { value: true, errorMessage: 'A return date is required!' },

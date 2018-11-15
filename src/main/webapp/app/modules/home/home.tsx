@@ -64,15 +64,15 @@ export class Home extends React.Component<IHomeProp> {
   };
 
   handleParisClick = () => {
-    this.props.handleSubmit('Rio de Janeiro', 'Paris', '12/12/2018', '20/12/2018', '2');
+    this.props.handleSubmit('Rio de Janeiro', 'Paris', '2018-12-12', '2018-12-20', '2');
     this.props.handleRedirect();
   };
   handleRomeClick = () => {
-    this.props.handleSubmit('Rio de Janeiro', 'Rome', '20/12/2018', '27/12/2018', '2');
+    this.props.handleSubmit('Rio de Janeiro', 'Rome', '2018-12-20', '2018-12-27', '2');
     this.props.handleRedirect();
   };
   handleDubaiClick = () => {
-    this.props.handleSubmit('Rio de Janeiro', 'Dubai', '28/12/2018', '04/01/2019', '2');
+    this.props.handleSubmit('Rio de Janeiro', 'Dubai', '2018-12-28', '2019-01-04', '2');
     this.props.handleRedirect();
   };
 

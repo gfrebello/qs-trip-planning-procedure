@@ -17,9 +17,59 @@ export class FlightReservationCard extends React.Component<IFlightReservationCar
   };
 
   showReservedFlights = () => {
+    const { reservedFlights } = this.props;
     const output = [];
-    if (this.props.reservedFlights.length > 0) {
-      output.push(<CardText>{'You have a flight, yay'}</CardText>);
+    if (reservedFlights.length > 0) {
+      output.push(
+        <Row>
+          <Col>Flight</Col>
+          <Col>Departure</Col>
+          <Col>Arrival</Col>
+          <Col>Seats</Col>
+        </Row>
+      );
+      for (const reservation of reservedFlights) {
+        const { company, origin, destination, departureDate, arrivalDate, flightCode, departAirport, arrivalAirport } = reservation.flight;
+        const depart = new Date(departureDate);
+        const dateOfDepart = depart.toLocaleDateString();
+        const timeOfDepart = depart.toLocaleTimeString();
+        const arrival = new Date(arrivalDate);
+        const dateOfArrival = arrival.toLocaleDateString();
+        const timeOfArrival = arrival.toLocaleTimeString();
+        output.push(
+          <CardText>
+            <ListGroupItem>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col>{`${company}`}</Col>
+                  </Row>
+                  <Row>
+                    <Col>{`Flight ${flightCode}`}</Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Row>
+                    <Col>{`${origin} (${departAirport})`}</Col>
+                  </Row>
+                  <Row>
+                    <Col>{`${dateOfDepart} - ${timeOfDepart}`}</Col>
+                  </Row>
+                </Col>
+                <Col>
+                  <Row>
+                    <Col>{`${destination} (${arrivalAirport})`}</Col>
+                  </Row>
+                  <Row>
+                    <Col>{`${dateOfArrival} - ${timeOfArrival}`}</Col>
+                  </Row>
+                </Col>
+                <Col>{`${reservation.reservedSeats}`}</Col>
+              </Row>
+            </ListGroupItem>
+          </CardText>
+        );
+      }
       output.push(
         <Row>
           <Col sm={{ size: '4', offset: 0 }}>

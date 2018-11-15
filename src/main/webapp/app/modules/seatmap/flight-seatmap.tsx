@@ -6,39 +6,9 @@ import Seat from './seat';
 import Blank from './blank';
 import { Row, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { addSelectedFlight } from '../planner/planner.reducer';
+import { getEntities } from '../../entities/seat/seat.reducer';
 
 const seatWidth = 35;
-const rows_example = [
-  [
-    { number: 1, isExecutive: true },
-    { number: 2, isExecutive: true },
-    { number: '3', isReserved: true, isExecutive: true },
-    null,
-    { number: '4', isExecutive: true },
-    { number: 5, isExecutive: true },
-    { number: 6, isExecutive: true }
-  ],
-  [
-    { number: 1, isReserved: true },
-    { number: 2, isReserved: true },
-    { number: '3', isReserved: true },
-    null,
-    { number: '4' },
-    { number: 5 },
-    { number: 6 }
-  ],
-  [{ number: 1 }, { number: 2 }, { number: 3, isReserved: true }, null, { number: '4' }, { number: 5 }, { number: 6 }],
-  [{ number: 1 }, { number: 2 }, { number: 3 }, null, { number: '4' }, { number: 5 }, { number: 6 }],
-  [
-    { number: 1, isReserved: true },
-    { number: 2 },
-    { number: '3', isReserved: true },
-    null,
-    { number: '4' },
-    { number: 5 },
-    { number: 6, isReserved: true }
-  ]
-];
 
 export interface ISeatmapProps extends StateProps, DispatchProps {
   showSeatmap: boolean;
@@ -50,11 +20,91 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
     selectedSeats: {},
     sizeEconomic: 0,
     sizeExecutive: 0,
-    width: seatWidth * (1 + Math.max.apply(null, rows_example.map(row => row.length)))
+    seatmapRows: [],
+    width: 0
   };
 
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.getEntities();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.showSeatmap === false && this.props.showSeatmap === true) {
+      this.setState({
+        selectedSeats: {},
+        sizeEconomic: 0,
+        sizeExecutive: 0,
+        seatmapRows: [],
+        width: 0
+      });
+      if (this.props.rSelected !== -1) {
+        this.filterSeats();
+      }
+    }
+  }
+
+  filterSeats() {
+    const { seatList, rSelected, flightList } = this.props;
+    const selectedFlight = flightList[rSelected];
+    const flightID = selectedFlight.id;
+    const filteredSeats = [];
+    for (const seat of seatList) {
+      if (seat.flight.id === flightID) {
+        filteredSeats.push(seat);
+      }
+    }
+    filteredSeats.sort(function sortByRow(a, b) {
+      if (a.row > b.row) {
+        return 1;
+      }
+      if (a.row < b.row) {
+        return -1;
+      }
+      if (a.row === b.row) {
+        if (a.number > b.number) {
+          return 1;
+        }
+        if (a.number < b.number) {
+          return -1;
+        }
+      }
+      return 0;
+    });
+    const rows = [];
+    let currentRowNumber = '';
+    let currentRow = [];
+    let currentSeat = {};
+    for (const seat of filteredSeats) {
+      currentSeat = {};
+      if (currentRowNumber === '') {
+        currentRowNumber = seat.row;
+      }
+      if (seat.row !== currentRowNumber) {
+        rows.push(currentRow);
+        currentRow = [];
+        currentRowNumber = seat.row;
+      }
+      if (String(seat.number) === '4') {
+        currentRow.push(null);
+      }
+      currentSeat['number'] = seat.number;
+      if (seat.isReserved) {
+        currentSeat['isReserved'] = true;
+      }
+      if (seat.customerClass === 'Executive') {
+        currentSeat['isExecutive'] = true;
+      }
+      currentRow.push(currentSeat);
+    }
+    rows.push(currentRow);
+    this.setState({
+      seatmapRows: rows,
+      width: seatWidth * (1 + Math.max.apply(null, rows.map(row => row.length)))
+    });
   }
 
   selectSeat = (row, number, isExecutive) => {
@@ -148,10 +198,11 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
 
   renderRows = () => {
     const renderedRows = [];
-    for (let i = 0; i < rows_example.length; i++) {
-      if (rows_example[i]) {
+    const { seatmapRows } = this.state;
+    for (let i = 0; i < seatmapRows.length; i++) {
+      if (seatmapRows[i]) {
         const rowLetter = String.fromCharCode('A'.charCodeAt(0) + i);
-        renderedRows.push(this.renderSeats(rows_example[i], rowLetter));
+        renderedRows.push(this.renderSeats(seatmapRows[i], rowLetter));
       }
     }
     const renderedSeatmap = [];
@@ -193,9 +244,26 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
 
   handleAddFlight = () => {
     // Also check for number of seats
-    if (this.props.rSelected !== -1) {
-      this.props.addSelectedFlight(this.props.rSelected);
-      this.props.handleClose();
+    const { rSelected, flightList, nPassengersExecutive, nPassengersEconomic } = this.props;
+    const { selectedSeats } = this.state;
+    if (rSelected !== -1) {
+      const selectedFlight = flightList[rSelected];
+      const reservedSeats = [];
+      // tslint:disable-next-line:forin
+      for (const rowLetter in selectedSeats) {
+        // tslint:disable-next-line:forin
+        for (const rowNumber in selectedSeats[rowLetter]) {
+          const seatLetterNumber = String(rowLetter) + String(rowNumber);
+          reservedSeats.push(seatLetterNumber);
+        }
+      }
+      const totalNumberPassengers = Number(nPassengersEconomic) + Number(nPassengersExecutive);
+      if (reservedSeats.length !== totalNumberPassengers) {
+        alert('Please select seats for all the passengers.');
+      } else {
+        this.props.addSelectedFlight(selectedFlight, reservedSeats);
+        this.props.handleClose();
+      }
     } else {
       alert('Please select a flight first!');
     }
@@ -223,10 +291,12 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
 const mapStateToProps = storeState => ({
   nPassengersEconomic: storeState.reservations.nPassengersEconomic,
   nPassengersExecutive: storeState.reservations.nPassengersExecutive,
-  rSelected: storeState.reservations.rSelected
+  rSelected: storeState.reservations.rSelected,
+  flightList: storeState.flight.entities,
+  seatList: storeState.seat.entities
 });
 
-const mapDispatchToProps = { addSelectedFlight };
+const mapDispatchToProps = { addSelectedFlight, getEntities };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

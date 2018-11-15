@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import {
+  ICrudGetAction,
+  ICrudGetAllAction,
+  ICrudPutAction,
+  ICrudDeleteAction,
+  ICrudGetFlightByDateOriginDestination
+} from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -116,7 +122,14 @@ export const getEntity: ICrudGetAction<IFlight> = id => {
   };
 };
 
-export const getEntitiesByDateOriginDestination: ICrudGetAllAction<IFlight> = (departureDate, origin, destination) => {
+export const getEntitiesByDateOriginDestination: ICrudGetFlightByDateOriginDestination<IFlight> = (
+  departureDate,
+  origin,
+  destination,
+  page,
+  size,
+  sort
+) => {
   const requestUrl = `${apiUrl}/${departureDate}/${origin}/${destination}`;
   return {
     type: ACTION_TYPES.FETCH_FLIGHTS_BY_DATE_ORIGIN_DESTINATION,

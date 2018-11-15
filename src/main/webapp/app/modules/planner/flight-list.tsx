@@ -20,6 +20,7 @@ import {
 } from 'reactstrap';
 
 import { updateRSelected, updatePassengersEconomic, updatePassengersExecutive } from './planner.reducer';
+import { getEntitiesByDateOriginDestination, getEntities } from '../../entities/flight/flight.reducer';
 
 export interface IFlightListProps extends StateProps, DispatchProps {
   handleOpenSeatmap: Function;
@@ -31,24 +32,31 @@ export class FlightList extends React.Component<IFlightListProps> {
   }
 
   componentDidMount() {
-    const { nPassengers } = this.props;
-    if (!this.checkTotalPassengers()) {
-      this.props.updatePassengersEconomic(Number(nPassengers));
-      this.props.updatePassengersExecutive(Number(0));
+    const { nPassengers, departDate, origin, destination } = this.props;
+    this.props.updatePassengersEconomic(Number(nPassengers));
+    this.props.updatePassengersExecutive(Number(0));
+    if (departDate) {
+      const qDate = departDate + 'T00:00:00Z';
+      this.props.getEntitiesByDateOriginDestination(qDate, origin, destination);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.nPassengers !== this.props.nPassengers) {
-      this.props.updatePassengersEconomic(Number(nextProps.nPassengers));
+    if (
+      nextProps.nPassengers !== this.props.nPassengers ||
+      nextProps.departDate !== this.props.departDate ||
+      nextProps.origin !== this.props.origin ||
+      nextProps.destination !== this.props.destination
+    ) {
+      const { nPassengers, departDate, origin, destination } = nextProps;
+      this.props.updatePassengersEconomic(Number(nPassengers));
       this.props.updatePassengersExecutive(Number(0));
+      if (departDate) {
+        const qDate = departDate + 'T00:00:00Z';
+        this.props.getEntitiesByDateOriginDestination(qDate, origin, destination);
+      }
     }
   }
-
-  checkTotalPassengers = () => {
-    const { nPassengers, nPassengersExecutive, nPassengersEconomic } = this.props;
-    return nPassengersExecutive + nPassengersEconomic === nPassengers;
-  };
 
   onRadioBtnClick = rSelected => {
     this.props.updateRSelected(rSelected);
@@ -71,16 +79,48 @@ export class FlightList extends React.Component<IFlightListProps> {
   };
 
   createFlightList = () => {
+    const { flightList } = this.props;
     const list = [];
     const items = [];
     // Loop to create children
-    for (let j = 0; j < 3; j++) {
+    items.push(
+      <Row>
+        <Col>Flight Company</Col>
+        <Col>Departure</Col>
+        <Col>Arrival</Col>
+        <Col>Price</Col>
+      </Row>
+    );
+    items.push(<br />);
+    for (let j = 0; j < flightList.length; j++) {
+      const onRadioBtnClick = this.onRadioBtnClick.bind(this, j);
+      const depart = new Date(flightList[j].departureDate);
+      const departDate = depart.toLocaleDateString();
+      const departTime = depart.toLocaleTimeString();
+      const arrival = new Date(flightList[j].arrivalDate);
+      const arrivalDate = arrival.toLocaleDateString();
+      const arrivalTime = arrival.toLocaleTimeString();
       items.push(
-        <ListGroupItem className="list-item" outline onClick={() => this.onRadioBtnClick(j)} active={this.props.rSelected === j}>
+        <ListGroupItem className="list-item" outline onClick={onRadioBtnClick} active={this.props.rSelected === j}>
           <Row>
-            <Col>{`Flight ${j + 1} company`}</Col>
-            <Col>{`Flight ${j + 1} time`}</Col>
-            <Col>{`Flight ${j + 1} price`}</Col>
+            <Col>{`${flightList[j].company}`}</Col>
+            <Col>
+              <Row>
+                <Col>{`${flightList[j].origin} (${flightList[j].departAirport})`}</Col>
+              </Row>
+              <Row>
+                <Col>{`${departDate} - ${departTime}`}</Col>
+              </Row>
+            </Col>
+            <Col>
+              <Row>
+                <Col>{`${flightList[j].destination} (${flightList[j].arrivalAirport})`}</Col>
+              </Row>
+              <Row>
+                <Col>{`${arrivalDate} - ${arrivalTime}`}</Col>
+              </Row>
+            </Col>
+            <Col>{`R$${flightList[j].price}`}</Col>
           </Row>
         </ListGroupItem>
       );
@@ -138,10 +178,20 @@ const mapStateToProps = storeState => ({
   nPassengers: storeState.home.nPassengers,
   nPassengersEconomic: storeState.reservations.nPassengersEconomic,
   nPassengersExecutive: storeState.reservations.nPassengersExecutive,
-  rSelected: storeState.reservations.rSelected
+  rSelected: storeState.reservations.rSelected,
+  origin: storeState.home.origin,
+  destination: storeState.home.destination,
+  departDate: storeState.home.departDate,
+  flightList: storeState.flight.entities
 });
 
-const mapDispatchToProps = { updateRSelected, updatePassengersEconomic, updatePassengersExecutive };
+const mapDispatchToProps = {
+  updateRSelected,
+  updatePassengersEconomic,
+  updatePassengersExecutive,
+  getEntitiesByDateOriginDestination,
+  getEntities
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

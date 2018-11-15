@@ -18,7 +18,7 @@ export const ACTION_TYPES = {
 
 const initialState = {
   // reservedFlights: [] as ReadonlyArray<IFlightReservation>,
-  reservedFlights: ['test'],
+  reservedFlights: [],
   // reservedHotels: [] as ReadonlyArray<IHotelReservation>,
   reservedHotels: ['test'],
   // chosenAttractions: [] as ReadonlyArray<IChosenAttraction>,
@@ -65,7 +65,7 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
     case ACTION_TYPES.ADD_SELECTED_FLIGHT:
       return {
         ...state,
-        reservedFlights: [action.payload.rSelected]
+        reservedFlights: [...state.reservedFlights, { flight: action.payload.selectedFlight, reservedSeats: action.payload.reservedSeats }]
       };
     case ACTION_TYPES.UPDATE_PASSENGERS_ECONOMIC:
       return {
@@ -108,9 +108,9 @@ export const resetInsuranceReservations = () => ({
   type: ACTION_TYPES.RESET_INSURANCE_RESERVATIONS
 });
 
-export const addSelectedFlight = rSelected => ({
+export const addSelectedFlight = (selectedFlight, reservedSeats) => ({
   type: ACTION_TYPES.ADD_SELECTED_FLIGHT,
-  payload: { rSelected }
+  payload: { selectedFlight, reservedSeats }
 });
 
 export const updatePassengersEconomic = nPassengersEconomic => ({
