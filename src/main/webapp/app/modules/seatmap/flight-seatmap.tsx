@@ -242,6 +242,13 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
     return renderedRow;
   }
 
+  calculateTotalPrice = flight => {
+    const { nPassengersEconomic, nPassengersExecutive } = this.props;
+    const basePrice = flight.price;
+    const totalPrice = Number(nPassengersEconomic) * Number(basePrice) + 2 * basePrice * Number(nPassengersExecutive);
+    return totalPrice;
+  };
+
   handleAddFlight = () => {
     // Also check for number of seats
     const { rSelected, flightList, nPassengersExecutive, nPassengersEconomic, seatList } = this.props;
@@ -261,10 +268,11 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
         }
       }
       const totalNumberPassengers = Number(nPassengersEconomic) + Number(nPassengersExecutive);
+      const totalPrice = this.calculateTotalPrice(selectedFlight);
       if (reservedSeats.length !== totalNumberPassengers) {
         alert('Please select seats for all the passengers.');
       } else {
-        this.props.addSelectedFlight(selectedFlight, reservedSeats);
+        this.props.addSelectedFlight(selectedFlight, reservedSeats, totalPrice);
         this.props.handleClose();
       }
     } else {

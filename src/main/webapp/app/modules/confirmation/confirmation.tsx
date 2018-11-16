@@ -23,7 +23,10 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
       destination: this.props.destination,
       user: { id: this.props.account.id }
     };
-    const flightReservationEntities = {};
+    const flightReservationEntities = [];
+    const seatEntities = [];
+    for (const flightRes of this.props.flightReservations) {
+    }
     this.props.createTrip(tripEntity, flightReservationEntities);
   }
 

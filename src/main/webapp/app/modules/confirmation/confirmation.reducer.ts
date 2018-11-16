@@ -59,7 +59,7 @@ const apiUrl = 'api/trips';
 
 // Actions
 export const createTrip = (tripEntity, flightReservations) => async dispatch => {
-  /* const result = await dispatch({
+  /*const result = await dispatch({
     type: ACTION_TYPES.CREATE_TRIP,
     payload: axios.post('api/trips', cleanTrip(tripEntity))
   });

@@ -47,17 +47,8 @@ export class SummaryPage extends React.Component<ISummaryProps> {
         </Row>
       );
       for (const reservation of reservedFlights) {
-        const {
-          company,
-          origin,
-          destination,
-          departureDate,
-          arrivalDate,
-          flightCode,
-          departAirport,
-          arrivalAirport,
-          price
-        } = reservation.flight;
+        const { company, origin, destination, departureDate, arrivalDate, flightCode, departAirport, arrivalAirport } = reservation.flight;
+        const price = reservation.price;
         const depart = new Date(departureDate);
         const dateOfDepart = depart.toLocaleDateString();
         const timeOfDepart = depart.toLocaleTimeString();
