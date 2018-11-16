@@ -25,7 +25,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="available" type="boolean">
+            <column name="is_reserved" type="boolean">
                 <constraints nullable="true" />
             </column>
 
@@ -40,9 +40,11 @@
             <column name="hotel_reservation_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+
             <column name="hotel_id" type="bigint">
-                <constraints unique="true" nullable="false" uniqueConstraintName="ux_hotel_room_hotel_id" />
+                <constraints nullable="false" />
             </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

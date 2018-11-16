@@ -28,9 +28,11 @@
             <column name="reservation_date" type="datetime">
                 <constraints nullable="true" />
             </column>
+
             <column name="attraction_id" type="bigint">
-                <constraints unique="true" nullable="false" uniqueConstraintName="ux_attraction_reservation_attraction_id" />
+                <constraints nullable="false" />
             </column>
+
             <column name="trip_id" type="bigint">
                 <constraints nullable="true" />
             </column>

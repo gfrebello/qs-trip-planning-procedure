@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 
@@ -50,11 +50,11 @@ public class InsuranceResourceIntTest {
     private static final String DEFAULT_PERSON_NAME = "AAAAAAAAAA";
     private static final String UPDATED_PERSON_NAME = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_START_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_START_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_START_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_START_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private InsuranceRepository insuranceRepository;

@@ -102,9 +102,9 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
                   <AvField id="hotel-room-maxCapacity" type="number" className="form-control" name="maxCapacity" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="availableLabel" check>
-                    <AvInput id="hotel-room-available" type="checkbox" className="form-control" name="available" />
-                    <Translate contentKey="tripPlanningApp.hotelRoom.available">Available</Translate>
+                  <Label id="isReservedLabel" check>
+                    <AvInput id="hotel-room-isReserved" type="checkbox" className="form-control" name="isReserved" />
+                    <Translate contentKey="tripPlanningApp.hotelRoom.isReserved">Is Reserved</Translate>
                   </Label>
                 </AvGroup>
                 <AvGroup>
@@ -138,8 +138,13 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
                   <Label for="hotel.name">
                     <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
                   </Label>
-                  <AvInput id="hotel-room-hotel" type="select" className="form-control" name="hotel.id">
-                    <option value="" key="0" />
+                  <AvInput
+                    id="hotel-room-hotel"
+                    type="select"
+                    className="form-control"
+                    name="hotel.id"
+                    value={isNew ? hotels[0] && hotels[0].id : hotelRoomEntity.hotel.id}
+                  >
                     {hotels
                       ? hotels.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -150,14 +155,16 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/hotel-room" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>

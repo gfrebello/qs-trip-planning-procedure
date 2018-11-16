@@ -17,7 +17,7 @@
                 "title": "Hotel Room"
             },
             "maxCapacity": "Max Capacity",
-            "available": "Available",
+            "isReserved": "Is Reserved",
             "roomType": "Room Type",
             "price": "Price",
             "hotelReservation": "Hotel Reservation",

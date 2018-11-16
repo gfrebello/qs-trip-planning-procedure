@@ -26,7 +26,8 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
         <h2 id="hotel-reservation-heading">
           <Translate contentKey="tripPlanningApp.hotelReservation.home.title">Hotel Reservations</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="tripPlanningApp.hotelReservation.home.createLabel">Create new Hotel Reservation</Translate>
           </Link>
         </h2>
@@ -38,19 +39,16 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.hotelReservation.reservationId">Reservation Id</Translate>
-                </th>
-                <th>
                   <Translate contentKey="tripPlanningApp.hotelReservation.numberOfPeople">Number Of People</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.hotelReservation.onlinePaymentChoosen">Online Payment Choosen</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.hotelReservation.checkinDate">Checkin Date</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.hotelReservation.checkoutDate">Checkout Date</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.hotelReservation.trip">Trip</Translate>
                 </th>
                 <th />
               </tr>
@@ -63,15 +61,14 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
                       {hotelReservation.id}
                     </Button>
                   </td>
-                  <td>{hotelReservation.reservationId}</td>
                   <td>{hotelReservation.numberOfPeople}</td>
-                  <td>{hotelReservation.onlinePaymentChoosen ? 'true' : 'false'}</td>
                   <td>
-                    <TextFormat type="date" value={hotelReservation.checkinDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={hotelReservation.checkinDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={hotelReservation.checkoutDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={hotelReservation.checkoutDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
+                  <td>{hotelReservation.trip ? <Link to={`trip/${hotelReservation.trip.id}`}>{hotelReservation.trip.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${hotelReservation.id}`} color="info" size="sm">

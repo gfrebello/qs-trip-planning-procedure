@@ -25,17 +25,10 @@ export class HotelReservationDetail extends React.Component<IHotelReservationDet
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="tripPlanningApp.hotelReservation.detail.title">HotelReservation</Translate> [<b>
-              {hotelReservationEntity.id}
-            </b>]
+            <Translate contentKey="tripPlanningApp.hotelReservation.detail.title">HotelReservation</Translate> [
+            <b>{hotelReservationEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
-            <dt>
-              <span id="reservationId">
-                <Translate contentKey="tripPlanningApp.hotelReservation.reservationId">Reservation Id</Translate>
-              </span>
-            </dt>
-            <dd>{hotelReservationEntity.reservationId}</dd>
             <dt>
               <span id="numberOfPeople">
                 <Translate contentKey="tripPlanningApp.hotelReservation.numberOfPeople">Number Of People</Translate>
@@ -43,18 +36,12 @@ export class HotelReservationDetail extends React.Component<IHotelReservationDet
             </dt>
             <dd>{hotelReservationEntity.numberOfPeople}</dd>
             <dt>
-              <span id="onlinePaymentChoosen">
-                <Translate contentKey="tripPlanningApp.hotelReservation.onlinePaymentChoosen">Online Payment Choosen</Translate>
-              </span>
-            </dt>
-            <dd>{hotelReservationEntity.onlinePaymentChoosen ? 'true' : 'false'}</dd>
-            <dt>
               <span id="checkinDate">
                 <Translate contentKey="tripPlanningApp.hotelReservation.checkinDate">Checkin Date</Translate>
               </span>
             </dt>
             <dd>
-              <TextFormat value={hotelReservationEntity.checkinDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={hotelReservationEntity.checkinDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="checkoutDate">
@@ -62,15 +49,20 @@ export class HotelReservationDetail extends React.Component<IHotelReservationDet
               </span>
             </dt>
             <dd>
-              <TextFormat value={hotelReservationEntity.checkoutDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={hotelReservationEntity.checkoutDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.hotelReservation.trip">Trip</Translate>
+            </dt>
+            <dd>{hotelReservationEntity.trip ? hotelReservationEntity.trip.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/hotel-reservation" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/hotel-reservation/${hotelReservationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

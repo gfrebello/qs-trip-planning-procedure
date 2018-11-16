@@ -22,8 +22,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 
@@ -42,20 +42,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TripPlanningApp.class)
 public class HotelReservationResourceIntTest {
 
-    private static final String DEFAULT_RESERVATION_ID = "AAAAAAAAAA";
-    private static final String UPDATED_RESERVATION_ID = "BBBBBBBBBB";
-
     private static final Integer DEFAULT_NUMBER_OF_PEOPLE = 1;
     private static final Integer UPDATED_NUMBER_OF_PEOPLE = 2;
 
-    private static final Boolean DEFAULT_ONLINE_PAYMENT_CHOOSEN = false;
-    private static final Boolean UPDATED_ONLINE_PAYMENT_CHOOSEN = true;
+    private static final LocalDate DEFAULT_CHECKIN_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_CHECKIN_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Instant DEFAULT_CHECKIN_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CHECKIN_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Instant DEFAULT_CHECKOUT_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CHECKOUT_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_CHECKOUT_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_CHECKOUT_DATE = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private HotelReservationRepository hotelReservationRepository;
@@ -95,9 +89,7 @@ public class HotelReservationResourceIntTest {
      */
     public static HotelReservation createEntity(EntityManager em) {
         HotelReservation hotelReservation = new HotelReservation()
-            .reservationId(DEFAULT_RESERVATION_ID)
             .numberOfPeople(DEFAULT_NUMBER_OF_PEOPLE)
-            .onlinePaymentChoosen(DEFAULT_ONLINE_PAYMENT_CHOOSEN)
             .checkinDate(DEFAULT_CHECKIN_DATE)
             .checkoutDate(DEFAULT_CHECKOUT_DATE);
         // Add required entity
@@ -128,9 +120,7 @@ public class HotelReservationResourceIntTest {
         List<HotelReservation> hotelReservationList = hotelReservationRepository.findAll();
         assertThat(hotelReservationList).hasSize(databaseSizeBeforeCreate + 1);
         HotelReservation testHotelReservation = hotelReservationList.get(hotelReservationList.size() - 1);
-        assertThat(testHotelReservation.getReservationId()).isEqualTo(DEFAULT_RESERVATION_ID);
         assertThat(testHotelReservation.getNumberOfPeople()).isEqualTo(DEFAULT_NUMBER_OF_PEOPLE);
-        assertThat(testHotelReservation.isOnlinePaymentChoosen()).isEqualTo(DEFAULT_ONLINE_PAYMENT_CHOOSEN);
         assertThat(testHotelReservation.getCheckinDate()).isEqualTo(DEFAULT_CHECKIN_DATE);
         assertThat(testHotelReservation.getCheckoutDate()).isEqualTo(DEFAULT_CHECKOUT_DATE);
     }
@@ -165,9 +155,7 @@ public class HotelReservationResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hotelReservation.getId().intValue())))
-            .andExpect(jsonPath("$.[*].reservationId").value(hasItem(DEFAULT_RESERVATION_ID.toString())))
             .andExpect(jsonPath("$.[*].numberOfPeople").value(hasItem(DEFAULT_NUMBER_OF_PEOPLE)))
-            .andExpect(jsonPath("$.[*].onlinePaymentChoosen").value(hasItem(DEFAULT_ONLINE_PAYMENT_CHOOSEN.booleanValue())))
             .andExpect(jsonPath("$.[*].checkinDate").value(hasItem(DEFAULT_CHECKIN_DATE.toString())))
             .andExpect(jsonPath("$.[*].checkoutDate").value(hasItem(DEFAULT_CHECKOUT_DATE.toString())));
     }
@@ -183,9 +171,7 @@ public class HotelReservationResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(hotelReservation.getId().intValue()))
-            .andExpect(jsonPath("$.reservationId").value(DEFAULT_RESERVATION_ID.toString()))
             .andExpect(jsonPath("$.numberOfPeople").value(DEFAULT_NUMBER_OF_PEOPLE))
-            .andExpect(jsonPath("$.onlinePaymentChoosen").value(DEFAULT_ONLINE_PAYMENT_CHOOSEN.booleanValue()))
             .andExpect(jsonPath("$.checkinDate").value(DEFAULT_CHECKIN_DATE.toString()))
             .andExpect(jsonPath("$.checkoutDate").value(DEFAULT_CHECKOUT_DATE.toString()));
     }
@@ -211,9 +197,7 @@ public class HotelReservationResourceIntTest {
         // Disconnect from session so that the updates on updatedHotelReservation are not directly saved in db
         em.detach(updatedHotelReservation);
         updatedHotelReservation
-            .reservationId(UPDATED_RESERVATION_ID)
             .numberOfPeople(UPDATED_NUMBER_OF_PEOPLE)
-            .onlinePaymentChoosen(UPDATED_ONLINE_PAYMENT_CHOOSEN)
             .checkinDate(UPDATED_CHECKIN_DATE)
             .checkoutDate(UPDATED_CHECKOUT_DATE);
 
@@ -226,9 +210,7 @@ public class HotelReservationResourceIntTest {
         List<HotelReservation> hotelReservationList = hotelReservationRepository.findAll();
         assertThat(hotelReservationList).hasSize(databaseSizeBeforeUpdate);
         HotelReservation testHotelReservation = hotelReservationList.get(hotelReservationList.size() - 1);
-        assertThat(testHotelReservation.getReservationId()).isEqualTo(UPDATED_RESERVATION_ID);
         assertThat(testHotelReservation.getNumberOfPeople()).isEqualTo(UPDATED_NUMBER_OF_PEOPLE);
-        assertThat(testHotelReservation.isOnlinePaymentChoosen()).isEqualTo(UPDATED_ONLINE_PAYMENT_CHOOSEN);
         assertThat(testHotelReservation.getCheckinDate()).isEqualTo(UPDATED_CHECKIN_DATE);
         assertThat(testHotelReservation.getCheckoutDate()).isEqualTo(UPDATED_CHECKOUT_DATE);
     }

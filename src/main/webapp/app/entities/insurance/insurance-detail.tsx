@@ -52,7 +52,7 @@ export class InsuranceDetail extends React.Component<IInsuranceDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={insuranceEntity.startDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={insuranceEntity.startDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="endDate">
@@ -60,15 +60,20 @@ export class InsuranceDetail extends React.Component<IInsuranceDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={insuranceEntity.endDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={insuranceEntity.endDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.insurance.trip">Trip</Translate>
+            </dt>
+            <dd>{insuranceEntity.trip ? insuranceEntity.trip.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/insurance" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/insurance/${insuranceEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

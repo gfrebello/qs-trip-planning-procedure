@@ -29,18 +29,6 @@ export class TripDetail extends React.Component<ITripDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="tripId">
-                <Translate contentKey="tripPlanningApp.trip.tripId">Trip Id</Translate>
-              </span>
-            </dt>
-            <dd>{tripEntity.tripId}</dd>
-            <dt>
-              <span id="paymentDone">
-                <Translate contentKey="tripPlanningApp.trip.paymentDone">Payment Done</Translate>
-              </span>
-            </dt>
-            <dd>{tripEntity.paymentDone ? 'true' : 'false'}</dd>
-            <dt>
               <span id="numberOfPeople">
                 <Translate contentKey="tripPlanningApp.trip.numberOfPeople">Number Of People</Translate>
               </span>
@@ -52,7 +40,7 @@ export class TripDetail extends React.Component<ITripDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={tripEntity.departureDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={tripEntity.departureDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="returnDate">
@@ -60,7 +48,7 @@ export class TripDetail extends React.Component<ITripDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={tripEntity.returnDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={tripEntity.returnDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="origin">
@@ -75,18 +63,6 @@ export class TripDetail extends React.Component<ITripDetailProps> {
             </dt>
             <dd>{tripEntity.destination}</dd>
             <dt>
-              <Translate contentKey="tripPlanningApp.trip.hotelReservation">Hotel Reservation</Translate>
-            </dt>
-            <dd>{tripEntity.hotelReservation ? tripEntity.hotelReservation.id : ''}</dd>
-            <dt>
-              <Translate contentKey="tripPlanningApp.trip.insurance">Insurance</Translate>
-            </dt>
-            <dd>{tripEntity.insurance ? tripEntity.insurance.id : ''}</dd>
-            <dt>
-              <Translate contentKey="tripPlanningApp.trip.carRental">Car Rental</Translate>
-            </dt>
-            <dd>{tripEntity.carRental ? tripEntity.carRental.id : ''}</dd>
-            <dt>
               <Translate contentKey="tripPlanningApp.trip.user">User</Translate>
             </dt>
             <dd>{tripEntity.user ? tripEntity.user.login : ''}</dd>
@@ -96,7 +72,8 @@ export class TripDetail extends React.Component<ITripDetailProps> {
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/trip/${tripEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

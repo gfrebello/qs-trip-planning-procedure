@@ -21,23 +21,15 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="trip_id" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-
-            <column name="payment_done" type="boolean">
-                <constraints nullable="true" />
-            </column>
-
             <column name="number_of_people" type="integer">
                 <constraints nullable="true" />
             </column>
 
-            <column name="departure_date" type="datetime">
+            <column name="departure_date" type="date">
                 <constraints nullable="true" />
             </column>
 
-            <column name="return_date" type="datetime">
+            <column name="return_date" type="date">
                 <constraints nullable="true" />
             </column>
 
@@ -48,21 +40,13 @@
             <column name="destination" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="hotel_reservation_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_trip_hotel_reservation_id" />
-            </column>            <column name="insurance_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_trip_insurance_id" />
-            </column>            <column name="car_rental_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_trip_car_rental_id" />
-            </column>
+
             <column name="user_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="trip" columnName="departure_date" columnDataType="datetime"/>
-        <dropDefaultValue tableName="trip" columnName="return_date" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

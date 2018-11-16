@@ -26,7 +26,8 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
         <h2 id="hotel-room-heading">
           <Translate contentKey="tripPlanningApp.hotelRoom.home.title">Hotel Rooms</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="tripPlanningApp.hotelRoom.home.createLabel">Create new Hotel Room</Translate>
           </Link>
         </h2>
@@ -41,7 +42,7 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                   <Translate contentKey="tripPlanningApp.hotelRoom.maxCapacity">Max Capacity</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.hotelRoom.available">Available</Translate>
+                  <Translate contentKey="tripPlanningApp.hotelRoom.isReserved">Is Reserved</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.hotelRoom.roomType">Room Type</Translate>
@@ -67,7 +68,7 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                     </Button>
                   </td>
                   <td>{hotelRoom.maxCapacity}</td>
-                  <td>{hotelRoom.available ? 'true' : 'false'}</td>
+                  <td>{hotelRoom.isReserved ? 'true' : 'false'}</td>
                   <td>{hotelRoom.roomType}</td>
                   <td>{hotelRoom.price}</td>
                   <td>

@@ -30,8 +30,8 @@ public class Seat implements Serializable {
     @Column(name = "jhi_row")
     private String row;
 
-    @Column(name = "customer_class")
-    private String customerClass;
+    @Column(name = "is_executive")
+    private Boolean isExecutive;
 
     @Column(name = "is_reserved")
     private Boolean isReserved;
@@ -79,17 +79,17 @@ public class Seat implements Serializable {
         this.row = row;
     }
 
-    public String getCustomerClass() {
-        return customerClass;
+    public Boolean isIsExecutive() {
+        return isExecutive;
     }
 
-    public Seat customerClass(String customerClass) {
-        this.customerClass = customerClass;
+    public Seat isExecutive(Boolean isExecutive) {
+        this.isExecutive = isExecutive;
         return this;
     }
 
-    public void setCustomerClass(String customerClass) {
-        this.customerClass = customerClass;
+    public void setIsExecutive(Boolean isExecutive) {
+        this.isExecutive = isExecutive;
     }
 
     public Boolean isIsReserved() {
@@ -158,7 +158,7 @@ public class Seat implements Serializable {
             "id=" + getId() +
             ", number='" + getNumber() + "'" +
             ", row='" + getRow() + "'" +
-            ", customerClass='" + getCustomerClass() + "'" +
+            ", isExecutive='" + isIsExecutive() + "'" +
             ", isReserved='" + isIsReserved() + "'" +
             "}";
     }

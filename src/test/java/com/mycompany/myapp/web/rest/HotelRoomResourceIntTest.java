@@ -43,8 +43,8 @@ public class HotelRoomResourceIntTest {
     private static final Integer DEFAULT_MAX_CAPACITY = 1;
     private static final Integer UPDATED_MAX_CAPACITY = 2;
 
-    private static final Boolean DEFAULT_AVAILABLE = false;
-    private static final Boolean UPDATED_AVAILABLE = true;
+    private static final Boolean DEFAULT_IS_RESERVED = false;
+    private static final Boolean UPDATED_IS_RESERVED = true;
 
     private static final String DEFAULT_ROOM_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_ROOM_TYPE = "BBBBBBBBBB";
@@ -91,7 +91,7 @@ public class HotelRoomResourceIntTest {
     public static HotelRoom createEntity(EntityManager em) {
         HotelRoom hotelRoom = new HotelRoom()
             .maxCapacity(DEFAULT_MAX_CAPACITY)
-            .available(DEFAULT_AVAILABLE)
+            .isReserved(DEFAULT_IS_RESERVED)
             .roomType(DEFAULT_ROOM_TYPE)
             .price(DEFAULT_PRICE);
         // Add required entity
@@ -123,7 +123,7 @@ public class HotelRoomResourceIntTest {
         assertThat(hotelRoomList).hasSize(databaseSizeBeforeCreate + 1);
         HotelRoom testHotelRoom = hotelRoomList.get(hotelRoomList.size() - 1);
         assertThat(testHotelRoom.getMaxCapacity()).isEqualTo(DEFAULT_MAX_CAPACITY);
-        assertThat(testHotelRoom.isAvailable()).isEqualTo(DEFAULT_AVAILABLE);
+        assertThat(testHotelRoom.isIsReserved()).isEqualTo(DEFAULT_IS_RESERVED);
         assertThat(testHotelRoom.getRoomType()).isEqualTo(DEFAULT_ROOM_TYPE);
         assertThat(testHotelRoom.getPrice()).isEqualTo(DEFAULT_PRICE);
     }
@@ -159,7 +159,7 @@ public class HotelRoomResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hotelRoom.getId().intValue())))
             .andExpect(jsonPath("$.[*].maxCapacity").value(hasItem(DEFAULT_MAX_CAPACITY)))
-            .andExpect(jsonPath("$.[*].available").value(hasItem(DEFAULT_AVAILABLE.booleanValue())))
+            .andExpect(jsonPath("$.[*].isReserved").value(hasItem(DEFAULT_IS_RESERVED.booleanValue())))
             .andExpect(jsonPath("$.[*].roomType").value(hasItem(DEFAULT_ROOM_TYPE.toString())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())));
     }
@@ -176,7 +176,7 @@ public class HotelRoomResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(hotelRoom.getId().intValue()))
             .andExpect(jsonPath("$.maxCapacity").value(DEFAULT_MAX_CAPACITY))
-            .andExpect(jsonPath("$.available").value(DEFAULT_AVAILABLE.booleanValue()))
+            .andExpect(jsonPath("$.isReserved").value(DEFAULT_IS_RESERVED.booleanValue()))
             .andExpect(jsonPath("$.roomType").value(DEFAULT_ROOM_TYPE.toString()))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()));
     }
@@ -203,7 +203,7 @@ public class HotelRoomResourceIntTest {
         em.detach(updatedHotelRoom);
         updatedHotelRoom
             .maxCapacity(UPDATED_MAX_CAPACITY)
-            .available(UPDATED_AVAILABLE)
+            .isReserved(UPDATED_IS_RESERVED)
             .roomType(UPDATED_ROOM_TYPE)
             .price(UPDATED_PRICE);
 
@@ -217,7 +217,7 @@ public class HotelRoomResourceIntTest {
         assertThat(hotelRoomList).hasSize(databaseSizeBeforeUpdate);
         HotelRoom testHotelRoom = hotelRoomList.get(hotelRoomList.size() - 1);
         assertThat(testHotelRoom.getMaxCapacity()).isEqualTo(UPDATED_MAX_CAPACITY);
-        assertThat(testHotelRoom.isAvailable()).isEqualTo(UPDATED_AVAILABLE);
+        assertThat(testHotelRoom.isIsReserved()).isEqualTo(UPDATED_IS_RESERVED);
         assertThat(testHotelRoom.getRoomType()).isEqualTo(UPDATED_ROOM_TYPE);
         assertThat(testHotelRoom.getPrice()).isEqualTo(UPDATED_PRICE);
     }

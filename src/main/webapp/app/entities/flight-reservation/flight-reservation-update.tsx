@@ -98,29 +98,34 @@ export class FlightReservationUpdate extends React.Component<IFlightReservationU
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="reservationIdLabel" for="reservationId">
-                    <Translate contentKey="tripPlanningApp.flightReservation.reservationId">Reservation Id</Translate>
+                  <Label id="numberOfExecutiveLabel" for="numberOfExecutive">
+                    <Translate contentKey="tripPlanningApp.flightReservation.numberOfExecutive">Number Of Executive</Translate>
                   </Label>
-                  <AvField id="flight-reservation-reservationId" type="text" name="reservationId" />
+                  <AvField id="flight-reservation-numberOfExecutive" type="number" className="form-control" name="numberOfExecutive" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="numberOfPeopleLabel" for="numberOfPeople">
-                    <Translate contentKey="tripPlanningApp.flightReservation.numberOfPeople">Number Of People</Translate>
+                  <Label id="numberOfEconomicLabel" for="numberOfEconomic">
+                    <Translate contentKey="tripPlanningApp.flightReservation.numberOfEconomic">Number Of Economic</Translate>
                   </Label>
-                  <AvField id="flight-reservation-numberOfPeople" type="number" className="form-control" name="numberOfPeople" />
+                  <AvField id="flight-reservation-numberOfEconomic" type="number" className="form-control" name="numberOfEconomic" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="customerClassLabel" for="customerClass">
-                    <Translate contentKey="tripPlanningApp.flightReservation.customerClass">Customer Class</Translate>
+                  <Label id="totalPriceLabel" for="totalPrice">
+                    <Translate contentKey="tripPlanningApp.flightReservation.totalPrice">Total Price</Translate>
                   </Label>
-                  <AvField id="flight-reservation-customerClass" type="text" name="customerClass" />
+                  <AvField id="flight-reservation-totalPrice" type="number" className="form-control" name="totalPrice" />
                 </AvGroup>
                 <AvGroup>
                   <Label for="flight.flightCode">
                     <Translate contentKey="tripPlanningApp.flightReservation.flight">Flight</Translate>
                   </Label>
-                  <AvInput id="flight-reservation-flight" type="select" className="form-control" name="flight.id">
-                    <option value="" key="0" />
+                  <AvInput
+                    id="flight-reservation-flight"
+                    type="select"
+                    className="form-control"
+                    name="flight.id"
+                    value={isNew ? flights[0] && flights[0].id : flightReservationEntity.flight.id}
+                  >
                     {flights
                       ? flights.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -146,14 +151,16 @@ export class FlightReservationUpdate extends React.Component<IFlightReservationU
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/flight-reservation" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>

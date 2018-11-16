@@ -108,10 +108,10 @@ export class SeatUpdate extends React.Component<ISeatUpdateProps, ISeatUpdateSta
                   <AvField id="seat-row" type="text" name="row" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="customerClassLabel" for="customerClass">
-                    <Translate contentKey="tripPlanningApp.seat.customerClass">Customer Class</Translate>
+                  <Label id="isExecutiveLabel" check>
+                    <AvInput id="seat-isExecutive" type="checkbox" className="form-control" name="isExecutive" />
+                    <Translate contentKey="tripPlanningApp.seat.isExecutive">Is Executive</Translate>
                   </Label>
-                  <AvField id="seat-customerClass" type="text" name="customerClass" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="isReservedLabel" check>
@@ -150,14 +150,16 @@ export class SeatUpdate extends React.Component<ISeatUpdateProps, ISeatUpdateSta
                   </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/seat" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>
