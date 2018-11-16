@@ -16,19 +16,17 @@
             "detail": {
                 "title": "Trip"
             },
-            "tripId": "Trip Id",
-            "paymentDone": "Payment Done",
             "numberOfPeople": "Number Of People",
             "departureDate": "Departure Date",
             "returnDate": "Return Date",
             "origin": "Origin",
             "destination": "Destination",
-            "hotelReservation": "Hotel Reservation",
-            "insurance": "Insurance",
-            "carRental": "Car Rental",
             "flightReservation": "Flight Reservation",
             "attractionReservation": "Attraction Reservation",
             "passenger": "Passenger",
+            "hotelReservation": "Hotel Reservation",
+            "insurance": "Insurance",
+            "carRental": "Car Rental",
             "user": "User"
         }
     }

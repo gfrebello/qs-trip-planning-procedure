@@ -43,8 +43,6 @@ export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICar
   }
 
   saveEntity = (event, errors, values) => {
-    values.startDate = new Date(values.startDate);
-
     if (errors.length === 0) {
       const { carRentalEntity } = this.props;
       const entity = {
@@ -108,13 +106,7 @@ export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICar
                   <Label id="startDateLabel" for="startDate">
                     <Translate contentKey="tripPlanningApp.carRental.startDate">Start Date</Translate>
                   </Label>
-                  <AvInput
-                    id="car-rental-startDate"
-                    type="datetime-local"
-                    className="form-control"
-                    name="startDate"
-                    value={isNew ? null : convertDateTimeFromServer(this.props.carRentalEntity.startDate)}
-                  />
+                  <AvField id="car-rental-startDate" type="date" className="form-control" name="startDate" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="priceLabel" for="price">
@@ -140,15 +132,32 @@ export class CarRentalUpdate extends React.Component<ICarRentalUpdateProps, ICar
                   </Label>
                   <AvField id="car-rental-color" type="text" name="color" />
                 </AvGroup>
+                <AvGroup>
+                  <Label for="trip.id">
+                    <Translate contentKey="tripPlanningApp.carRental.trip">Trip</Translate>
+                  </Label>
+                  <AvInput id="car-rental-trip" type="select" className="form-control" name="trip.id">
+                    <option value="" key="0" />
+                    {trips
+                      ? trips.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/car-rental" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>

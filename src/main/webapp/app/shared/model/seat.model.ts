@@ -5,12 +5,13 @@ export interface ISeat {
   id?: number;
   number?: string;
   row?: string;
-  customerClass?: string;
+  isExecutive?: boolean;
   isReserved?: boolean;
   flight?: IFlight;
   flightReservation?: IFlightReservation;
 }
 
 export const defaultValue: Readonly<ISeat> = {
+  isExecutive: false,
   isReserved: false
 };

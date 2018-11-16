@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -29,38 +29,20 @@ public class Trip implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "trip_id")
-    private String tripId;
-
-    @Column(name = "payment_done")
-    private Boolean paymentDone;
-
     @Column(name = "number_of_people")
     private Integer numberOfPeople;
 
     @Column(name = "departure_date")
-    private Instant departureDate;
+    private LocalDate departureDate;
 
     @Column(name = "return_date")
-    private Instant returnDate;
+    private LocalDate returnDate;
 
     @Column(name = "origin")
     private String origin;
 
     @Column(name = "destination")
     private String destination;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private HotelReservation hotelReservation;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private Insurance insurance;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private CarRental carRental;
 
     @OneToMany(mappedBy = "trip")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -73,6 +55,18 @@ public class Trip implements Serializable {
     @OneToMany(mappedBy = "trip")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Passenger> passengers = new HashSet<>();
+
+    @OneToMany(mappedBy = "trip")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<HotelReservation> hotelReservations = new HashSet<>();
+
+    @OneToMany(mappedBy = "trip")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Insurance> insurances = new HashSet<>();
+
+    @OneToMany(mappedBy = "trip")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<CarRental> carRentals = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -88,32 +82,6 @@ public class Trip implements Serializable {
         this.id = id;
     }
 
-    public String getTripId() {
-        return tripId;
-    }
-
-    public Trip tripId(String tripId) {
-        this.tripId = tripId;
-        return this;
-    }
-
-    public void setTripId(String tripId) {
-        this.tripId = tripId;
-    }
-
-    public Boolean isPaymentDone() {
-        return paymentDone;
-    }
-
-    public Trip paymentDone(Boolean paymentDone) {
-        this.paymentDone = paymentDone;
-        return this;
-    }
-
-    public void setPaymentDone(Boolean paymentDone) {
-        this.paymentDone = paymentDone;
-    }
-
     public Integer getNumberOfPeople() {
         return numberOfPeople;
     }
@@ -127,29 +95,29 @@ public class Trip implements Serializable {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public Instant getDepartureDate() {
+    public LocalDate getDepartureDate() {
         return departureDate;
     }
 
-    public Trip departureDate(Instant departureDate) {
+    public Trip departureDate(LocalDate departureDate) {
         this.departureDate = departureDate;
         return this;
     }
 
-    public void setDepartureDate(Instant departureDate) {
+    public void setDepartureDate(LocalDate departureDate) {
         this.departureDate = departureDate;
     }
 
-    public Instant getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public Trip returnDate(Instant returnDate) {
+    public Trip returnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
         return this;
     }
 
-    public void setReturnDate(Instant returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -177,45 +145,6 @@ public class Trip implements Serializable {
 
     public void setDestination(String destination) {
         this.destination = destination;
-    }
-
-    public HotelReservation getHotelReservation() {
-        return hotelReservation;
-    }
-
-    public Trip hotelReservation(HotelReservation hotelReservation) {
-        this.hotelReservation = hotelReservation;
-        return this;
-    }
-
-    public void setHotelReservation(HotelReservation hotelReservation) {
-        this.hotelReservation = hotelReservation;
-    }
-
-    public Insurance getInsurance() {
-        return insurance;
-    }
-
-    public Trip insurance(Insurance insurance) {
-        this.insurance = insurance;
-        return this;
-    }
-
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
-    }
-
-    public CarRental getCarRental() {
-        return carRental;
-    }
-
-    public Trip carRental(CarRental carRental) {
-        this.carRental = carRental;
-        return this;
-    }
-
-    public void setCarRental(CarRental carRental) {
-        this.carRental = carRental;
     }
 
     public Set<FlightReservation> getFlightReservations() {
@@ -293,6 +222,81 @@ public class Trip implements Serializable {
         this.passengers = passengers;
     }
 
+    public Set<HotelReservation> getHotelReservations() {
+        return hotelReservations;
+    }
+
+    public Trip hotelReservations(Set<HotelReservation> hotelReservations) {
+        this.hotelReservations = hotelReservations;
+        return this;
+    }
+
+    public Trip addHotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservations.add(hotelReservation);
+        hotelReservation.setTrip(this);
+        return this;
+    }
+
+    public Trip removeHotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservations.remove(hotelReservation);
+        hotelReservation.setTrip(null);
+        return this;
+    }
+
+    public void setHotelReservations(Set<HotelReservation> hotelReservations) {
+        this.hotelReservations = hotelReservations;
+    }
+
+    public Set<Insurance> getInsurances() {
+        return insurances;
+    }
+
+    public Trip insurances(Set<Insurance> insurances) {
+        this.insurances = insurances;
+        return this;
+    }
+
+    public Trip addInsurance(Insurance insurance) {
+        this.insurances.add(insurance);
+        insurance.setTrip(this);
+        return this;
+    }
+
+    public Trip removeInsurance(Insurance insurance) {
+        this.insurances.remove(insurance);
+        insurance.setTrip(null);
+        return this;
+    }
+
+    public void setInsurances(Set<Insurance> insurances) {
+        this.insurances = insurances;
+    }
+
+    public Set<CarRental> getCarRentals() {
+        return carRentals;
+    }
+
+    public Trip carRentals(Set<CarRental> carRentals) {
+        this.carRentals = carRentals;
+        return this;
+    }
+
+    public Trip addCarRental(CarRental carRental) {
+        this.carRentals.add(carRental);
+        carRental.setTrip(this);
+        return this;
+    }
+
+    public Trip removeCarRental(CarRental carRental) {
+        this.carRentals.remove(carRental);
+        carRental.setTrip(null);
+        return this;
+    }
+
+    public void setCarRentals(Set<CarRental> carRentals) {
+        this.carRentals = carRentals;
+    }
+
     public User getUser() {
         return user;
     }
@@ -331,8 +335,6 @@ public class Trip implements Serializable {
     public String toString() {
         return "Trip{" +
             "id=" + getId() +
-            ", tripId='" + getTripId() + "'" +
-            ", paymentDone='" + isPaymentDone() + "'" +
             ", numberOfPeople=" + getNumberOfPeople() +
             ", departureDate='" + getDepartureDate() + "'" +
             ", returnDate='" + getReturnDate() + "'" +

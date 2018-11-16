@@ -32,9 +32,9 @@ public class AttractionReservation implements Serializable {
     @Column(name = "reservation_date")
     private Instant reservationDate;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @NotNull
-    @JoinColumn(unique = true)
+    @JsonIgnoreProperties("")
     private Attraction attraction;
 
     @ManyToOne

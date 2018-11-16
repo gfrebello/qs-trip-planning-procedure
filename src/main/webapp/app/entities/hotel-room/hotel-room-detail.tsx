@@ -35,11 +35,11 @@ export class HotelRoomDetail extends React.Component<IHotelRoomDetailProps> {
             </dt>
             <dd>{hotelRoomEntity.maxCapacity}</dd>
             <dt>
-              <span id="available">
-                <Translate contentKey="tripPlanningApp.hotelRoom.available">Available</Translate>
+              <span id="isReserved">
+                <Translate contentKey="tripPlanningApp.hotelRoom.isReserved">Is Reserved</Translate>
               </span>
             </dt>
-            <dd>{hotelRoomEntity.available ? 'true' : 'false'}</dd>
+            <dd>{hotelRoomEntity.isReserved ? 'true' : 'false'}</dd>
             <dt>
               <span id="roomType">
                 <Translate contentKey="tripPlanningApp.hotelRoom.roomType">Room Type</Translate>
@@ -66,7 +66,8 @@ export class HotelRoomDetail extends React.Component<IHotelRoomDetailProps> {
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/hotel-room/${hotelRoomEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

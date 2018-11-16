@@ -2,33 +2,31 @@
     "name": "FlightReservation",
     "fields": [
         {
-            "fieldName": "reservationId",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "numberOfPeople",
+            "fieldName": "numberOfExecutive",
             "fieldType": "Integer"
         },
         {
-            "fieldName": "customerClass",
-            "fieldType": "String"
+            "fieldName": "numberOfEconomic",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "totalPrice",
+            "fieldType": "Float"
         }
     ],
     "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "relationshipValidateRules": "required",
-            "relationshipName": "flight",
-            "otherEntityName": "flight",
-            "otherEntityField": "flightCode",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "flightReservation"
-        },
         {
             "relationshipType": "one-to-many",
             "relationshipName": "seat",
             "otherEntityName": "seat",
             "otherEntityRelationshipName": "flightReservation"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "flight",
+            "otherEntityName": "flight",
+            "otherEntityField": "flightCode"
         },
         {
             "relationshipType": "many-to-one",

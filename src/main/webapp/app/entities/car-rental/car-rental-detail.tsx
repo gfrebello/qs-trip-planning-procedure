@@ -46,7 +46,7 @@ export class CarRentalDetail extends React.Component<ICarRentalDetailProps> {
               </span>
             </dt>
             <dd>
-              <TextFormat value={carRentalEntity.startDate} type="date" format={APP_DATE_FORMAT} />
+              <TextFormat value={carRentalEntity.startDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
               <span id="price">
@@ -72,13 +72,18 @@ export class CarRentalDetail extends React.Component<ICarRentalDetailProps> {
               </span>
             </dt>
             <dd>{carRentalEntity.color}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.carRental.trip">Trip</Translate>
+            </dt>
+            <dd>{carRentalEntity.trip ? carRentalEntity.trip.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/car-rental" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/car-rental/${carRentalEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

@@ -2,24 +2,16 @@
     "name": "HotelReservation",
     "fields": [
         {
-            "fieldName": "reservationId",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "numberOfPeople",
             "fieldType": "Integer"
         },
         {
-            "fieldName": "onlinePaymentChoosen",
-            "fieldType": "Boolean"
-        },
-        {
             "fieldName": "checkinDate",
-            "fieldType": "Instant"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "checkoutDate",
-            "fieldType": "Instant"
+            "fieldType": "LocalDate"
         }
     ],
     "relationships": [
@@ -31,11 +23,10 @@
             "otherEntityRelationshipName": "hotelReservation"
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "trip",
             "otherEntityName": "trip",
-            "ownerSide": false,
-            "otherEntityRelationshipName": "hotelReservation"
+            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20181027014012",

@@ -26,7 +26,8 @@ export class CarRental extends React.Component<ICarRentalProps> {
         <h2 id="car-rental-heading">
           <Translate contentKey="tripPlanningApp.carRental.home.title">Car Rentals</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="tripPlanningApp.carRental.home.createLabel">Create new Car Rental</Translate>
           </Link>
         </h2>
@@ -58,6 +59,9 @@ export class CarRental extends React.Component<ICarRentalProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.carRental.color">Color</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.carRental.trip">Trip</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -72,12 +76,13 @@ export class CarRental extends React.Component<ICarRentalProps> {
                   <td>{carRental.carType}</td>
                   <td>{carRental.rentalDays}</td>
                   <td>
-                    <TextFormat type="date" value={carRental.startDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={carRental.startDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{carRental.price}</td>
                   <td>{carRental.pickupAddress}</td>
                   <td>{carRental.dropoffAddress}</td>
                   <td>{carRental.color}</td>
+                  <td>{carRental.trip ? <Link to={`trip/${carRental.trip.id}`}>{carRental.trip.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${carRental.id}`} color="info" size="sm">

@@ -45,8 +45,8 @@ public class SeatResourceIntTest {
     private static final String DEFAULT_ROW = "AAAAAAAAAA";
     private static final String UPDATED_ROW = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CUSTOMER_CLASS = "AAAAAAAAAA";
-    private static final String UPDATED_CUSTOMER_CLASS = "BBBBBBBBBB";
+    private static final Boolean DEFAULT_IS_EXECUTIVE = false;
+    private static final Boolean UPDATED_IS_EXECUTIVE = true;
 
     private static final Boolean DEFAULT_IS_RESERVED = false;
     private static final Boolean UPDATED_IS_RESERVED = true;
@@ -91,7 +91,7 @@ public class SeatResourceIntTest {
         Seat seat = new Seat()
             .number(DEFAULT_NUMBER)
             .row(DEFAULT_ROW)
-            .customerClass(DEFAULT_CUSTOMER_CLASS)
+            .isExecutive(DEFAULT_IS_EXECUTIVE)
             .isReserved(DEFAULT_IS_RESERVED);
         return seat;
     }
@@ -118,7 +118,7 @@ public class SeatResourceIntTest {
         Seat testSeat = seatList.get(seatList.size() - 1);
         assertThat(testSeat.getNumber()).isEqualTo(DEFAULT_NUMBER);
         assertThat(testSeat.getRow()).isEqualTo(DEFAULT_ROW);
-        assertThat(testSeat.getCustomerClass()).isEqualTo(DEFAULT_CUSTOMER_CLASS);
+        assertThat(testSeat.isIsExecutive()).isEqualTo(DEFAULT_IS_EXECUTIVE);
         assertThat(testSeat.isIsReserved()).isEqualTo(DEFAULT_IS_RESERVED);
     }
 
@@ -154,7 +154,7 @@ public class SeatResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(seat.getId().intValue())))
             .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].row").value(hasItem(DEFAULT_ROW.toString())))
-            .andExpect(jsonPath("$.[*].customerClass").value(hasItem(DEFAULT_CUSTOMER_CLASS.toString())))
+            .andExpect(jsonPath("$.[*].isExecutive").value(hasItem(DEFAULT_IS_EXECUTIVE.booleanValue())))
             .andExpect(jsonPath("$.[*].isReserved").value(hasItem(DEFAULT_IS_RESERVED.booleanValue())));
     }
     
@@ -171,7 +171,7 @@ public class SeatResourceIntTest {
             .andExpect(jsonPath("$.id").value(seat.getId().intValue()))
             .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.toString()))
             .andExpect(jsonPath("$.row").value(DEFAULT_ROW.toString()))
-            .andExpect(jsonPath("$.customerClass").value(DEFAULT_CUSTOMER_CLASS.toString()))
+            .andExpect(jsonPath("$.isExecutive").value(DEFAULT_IS_EXECUTIVE.booleanValue()))
             .andExpect(jsonPath("$.isReserved").value(DEFAULT_IS_RESERVED.booleanValue()));
     }
 
@@ -198,7 +198,7 @@ public class SeatResourceIntTest {
         updatedSeat
             .number(UPDATED_NUMBER)
             .row(UPDATED_ROW)
-            .customerClass(UPDATED_CUSTOMER_CLASS)
+            .isExecutive(UPDATED_IS_EXECUTIVE)
             .isReserved(UPDATED_IS_RESERVED);
 
         restSeatMockMvc.perform(put("/api/seats")
@@ -212,7 +212,7 @@ public class SeatResourceIntTest {
         Seat testSeat = seatList.get(seatList.size() - 1);
         assertThat(testSeat.getNumber()).isEqualTo(UPDATED_NUMBER);
         assertThat(testSeat.getRow()).isEqualTo(UPDATED_ROW);
-        assertThat(testSeat.getCustomerClass()).isEqualTo(UPDATED_CUSTOMER_CLASS);
+        assertThat(testSeat.isIsExecutive()).isEqualTo(UPDATED_IS_EXECUTIVE);
         assertThat(testSeat.isIsReserved()).isEqualTo(UPDATED_IS_RESERVED);
     }
 

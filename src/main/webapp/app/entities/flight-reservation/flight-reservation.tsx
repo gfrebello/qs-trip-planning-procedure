@@ -26,7 +26,8 @@ export class FlightReservation extends React.Component<IFlightReservationProps> 
         <h2 id="flight-reservation-heading">
           <Translate contentKey="tripPlanningApp.flightReservation.home.title">Flight Reservations</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="tripPlanningApp.flightReservation.home.createLabel">Create new Flight Reservation</Translate>
           </Link>
         </h2>
@@ -38,13 +39,13 @@ export class FlightReservation extends React.Component<IFlightReservationProps> 
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.flightReservation.reservationId">Reservation Id</Translate>
+                  <Translate contentKey="tripPlanningApp.flightReservation.numberOfExecutive">Number Of Executive</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.flightReservation.numberOfPeople">Number Of People</Translate>
+                  <Translate contentKey="tripPlanningApp.flightReservation.numberOfEconomic">Number Of Economic</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.flightReservation.customerClass">Customer Class</Translate>
+                  <Translate contentKey="tripPlanningApp.flightReservation.totalPrice">Total Price</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.flightReservation.flight">Flight</Translate>
@@ -63,9 +64,9 @@ export class FlightReservation extends React.Component<IFlightReservationProps> 
                       {flightReservation.id}
                     </Button>
                   </td>
-                  <td>{flightReservation.reservationId}</td>
-                  <td>{flightReservation.numberOfPeople}</td>
-                  <td>{flightReservation.customerClass}</td>
+                  <td>{flightReservation.numberOfExecutive}</td>
+                  <td>{flightReservation.numberOfEconomic}</td>
+                  <td>{flightReservation.totalPrice}</td>
                   <td>
                     {flightReservation.flight ? (
                       <Link to={`flight/${flightReservation.flight.id}`}>{flightReservation.flight.flightCode}</Link>

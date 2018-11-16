@@ -22,8 +22,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 
@@ -42,20 +42,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TripPlanningApp.class)
 public class TripResourceIntTest {
 
-    private static final String DEFAULT_TRIP_ID = "AAAAAAAAAA";
-    private static final String UPDATED_TRIP_ID = "BBBBBBBBBB";
-
-    private static final Boolean DEFAULT_PAYMENT_DONE = false;
-    private static final Boolean UPDATED_PAYMENT_DONE = true;
-
     private static final Integer DEFAULT_NUMBER_OF_PEOPLE = 1;
     private static final Integer UPDATED_NUMBER_OF_PEOPLE = 2;
 
-    private static final Instant DEFAULT_DEPARTURE_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_DEPARTURE_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_DEPARTURE_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DEPARTURE_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Instant DEFAULT_RETURN_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_RETURN_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_RETURN_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_RETURN_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_ORIGIN = "AAAAAAAAAA";
     private static final String UPDATED_ORIGIN = "BBBBBBBBBB";
@@ -101,8 +95,6 @@ public class TripResourceIntTest {
      */
     public static Trip createEntity(EntityManager em) {
         Trip trip = new Trip()
-            .tripId(DEFAULT_TRIP_ID)
-            .paymentDone(DEFAULT_PAYMENT_DONE)
             .numberOfPeople(DEFAULT_NUMBER_OF_PEOPLE)
             .departureDate(DEFAULT_DEPARTURE_DATE)
             .returnDate(DEFAULT_RETURN_DATE)
@@ -136,8 +128,6 @@ public class TripResourceIntTest {
         List<Trip> tripList = tripRepository.findAll();
         assertThat(tripList).hasSize(databaseSizeBeforeCreate + 1);
         Trip testTrip = tripList.get(tripList.size() - 1);
-        assertThat(testTrip.getTripId()).isEqualTo(DEFAULT_TRIP_ID);
-        assertThat(testTrip.isPaymentDone()).isEqualTo(DEFAULT_PAYMENT_DONE);
         assertThat(testTrip.getNumberOfPeople()).isEqualTo(DEFAULT_NUMBER_OF_PEOPLE);
         assertThat(testTrip.getDepartureDate()).isEqualTo(DEFAULT_DEPARTURE_DATE);
         assertThat(testTrip.getReturnDate()).isEqualTo(DEFAULT_RETURN_DATE);
@@ -175,8 +165,6 @@ public class TripResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(trip.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tripId").value(hasItem(DEFAULT_TRIP_ID.toString())))
-            .andExpect(jsonPath("$.[*].paymentDone").value(hasItem(DEFAULT_PAYMENT_DONE.booleanValue())))
             .andExpect(jsonPath("$.[*].numberOfPeople").value(hasItem(DEFAULT_NUMBER_OF_PEOPLE)))
             .andExpect(jsonPath("$.[*].departureDate").value(hasItem(DEFAULT_DEPARTURE_DATE.toString())))
             .andExpect(jsonPath("$.[*].returnDate").value(hasItem(DEFAULT_RETURN_DATE.toString())))
@@ -195,8 +183,6 @@ public class TripResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(trip.getId().intValue()))
-            .andExpect(jsonPath("$.tripId").value(DEFAULT_TRIP_ID.toString()))
-            .andExpect(jsonPath("$.paymentDone").value(DEFAULT_PAYMENT_DONE.booleanValue()))
             .andExpect(jsonPath("$.numberOfPeople").value(DEFAULT_NUMBER_OF_PEOPLE))
             .andExpect(jsonPath("$.departureDate").value(DEFAULT_DEPARTURE_DATE.toString()))
             .andExpect(jsonPath("$.returnDate").value(DEFAULT_RETURN_DATE.toString()))
@@ -225,8 +211,6 @@ public class TripResourceIntTest {
         // Disconnect from session so that the updates on updatedTrip are not directly saved in db
         em.detach(updatedTrip);
         updatedTrip
-            .tripId(UPDATED_TRIP_ID)
-            .paymentDone(UPDATED_PAYMENT_DONE)
             .numberOfPeople(UPDATED_NUMBER_OF_PEOPLE)
             .departureDate(UPDATED_DEPARTURE_DATE)
             .returnDate(UPDATED_RETURN_DATE)
@@ -242,8 +226,6 @@ public class TripResourceIntTest {
         List<Trip> tripList = tripRepository.findAll();
         assertThat(tripList).hasSize(databaseSizeBeforeUpdate);
         Trip testTrip = tripList.get(tripList.size() - 1);
-        assertThat(testTrip.getTripId()).isEqualTo(UPDATED_TRIP_ID);
-        assertThat(testTrip.isPaymentDone()).isEqualTo(UPDATED_PAYMENT_DONE);
         assertThat(testTrip.getNumberOfPeople()).isEqualTo(UPDATED_NUMBER_OF_PEOPLE);
         assertThat(testTrip.getDepartureDate()).isEqualTo(UPDATED_DEPARTURE_DATE);
         assertThat(testTrip.getReturnDate()).isEqualTo(UPDATED_RETURN_DATE);

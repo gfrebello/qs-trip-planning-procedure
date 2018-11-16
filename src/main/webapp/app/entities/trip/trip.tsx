@@ -26,7 +26,8 @@ export class Trip extends React.Component<ITripProps> {
         <h2 id="trip-heading">
           <Translate contentKey="tripPlanningApp.trip.home.title">Trips</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="tripPlanningApp.trip.home.createLabel">Create new Trip</Translate>
           </Link>
         </h2>
@@ -36,12 +37,6 @@ export class Trip extends React.Component<ITripProps> {
               <tr>
                 <th>
                   <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.trip.tripId">Trip Id</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.trip.paymentDone">Payment Done</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.trip.numberOfPeople">Number Of People</Translate>
@@ -59,15 +54,6 @@ export class Trip extends React.Component<ITripProps> {
                   <Translate contentKey="tripPlanningApp.trip.destination">Destination</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.trip.hotelReservation">Hotel Reservation</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.trip.insurance">Insurance</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="tripPlanningApp.trip.carRental">Car Rental</Translate>
-                </th>
-                <th>
                   <Translate contentKey="tripPlanningApp.trip.user">User</Translate>
                 </th>
                 <th />
@@ -81,26 +67,15 @@ export class Trip extends React.Component<ITripProps> {
                       {trip.id}
                     </Button>
                   </td>
-                  <td>{trip.tripId}</td>
-                  <td>{trip.paymentDone ? 'true' : 'false'}</td>
                   <td>{trip.numberOfPeople}</td>
                   <td>
-                    <TextFormat type="date" value={trip.departureDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={trip.departureDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={trip.returnDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={trip.returnDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{trip.origin}</td>
                   <td>{trip.destination}</td>
-                  <td>
-                    {trip.hotelReservation ? (
-                      <Link to={`hotel-reservation/${trip.hotelReservation.id}`}>{trip.hotelReservation.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>{trip.insurance ? <Link to={`insurance/${trip.insurance.id}`}>{trip.insurance.id}</Link> : ''}</td>
-                  <td>{trip.carRental ? <Link to={`car-rental/${trip.carRental.id}`}>{trip.carRental.id}</Link> : ''}</td>
                   <td>{trip.user ? trip.user.login : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

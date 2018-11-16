@@ -17,8 +17,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing HotelReservation.
@@ -82,19 +80,11 @@ public class HotelReservationResource {
     /**
      * GET  /hotel-reservations : get all the hotelReservations.
      *
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of hotelReservations in body
      */
     @GetMapping("/hotel-reservations")
     @Timed
-    public List<HotelReservation> getAllHotelReservations(@RequestParam(required = false) String filter) {
-        if ("trip-is-null".equals(filter)) {
-            log.debug("REST request to get all HotelReservations where trip is null");
-            return StreamSupport
-                .stream(hotelReservationRepository.findAll().spliterator(), false)
-                .filter(hotelReservation -> hotelReservation.getTrip() == null)
-                .collect(Collectors.toList());
-        }
+    public List<HotelReservation> getAllHotelReservations() {
         log.debug("REST request to get all HotelReservations");
         return hotelReservationRepository.findAll();
     }

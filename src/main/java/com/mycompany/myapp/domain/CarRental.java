@@ -1,13 +1,13 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -32,7 +32,7 @@ public class CarRental implements Serializable {
     private Integer rentalDays;
 
     @Column(name = "start_date")
-    private Instant startDate;
+    private LocalDate startDate;
 
     @Column(name = "price")
     private Float price;
@@ -46,8 +46,8 @@ public class CarRental implements Serializable {
     @Column(name = "color")
     private String color;
 
-    @OneToOne(mappedBy = "carRental")
-    @JsonIgnore
+    @ManyToOne
+    @JsonIgnoreProperties("carRentals")
     private Trip trip;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -85,16 +85,16 @@ public class CarRental implements Serializable {
         this.rentalDays = rentalDays;
     }
 
-    public Instant getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public CarRental startDate(Instant startDate) {
+    public CarRental startDate(LocalDate startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public void setStartDate(Instant startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 

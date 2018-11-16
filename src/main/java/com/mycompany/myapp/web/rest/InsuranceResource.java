@@ -16,8 +16,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing Insurance.
@@ -81,19 +79,11 @@ public class InsuranceResource {
     /**
      * GET  /insurances : get all the insurances.
      *
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of insurances in body
      */
     @GetMapping("/insurances")
     @Timed
-    public List<Insurance> getAllInsurances(@RequestParam(required = false) String filter) {
-        if ("trip-is-null".equals(filter)) {
-            log.debug("REST request to get all Insurances where trip is null");
-            return StreamSupport
-                .stream(insuranceRepository.findAll().spliterator(), false)
-                .filter(insurance -> insurance.getTrip() == null)
-                .collect(Collectors.toList());
-        }
+    public List<Insurance> getAllInsurances() {
         log.debug("REST request to get all Insurances");
         return insuranceRepository.findAll();
     }
