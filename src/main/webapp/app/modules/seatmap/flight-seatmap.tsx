@@ -95,7 +95,7 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
       if (seat.isReserved) {
         currentSeat['isReserved'] = true;
       }
-      if (seat.customerClass === 'Executive') {
+      if (seat.isExecutive) {
         currentSeat['isExecutive'] = true;
       }
       currentRow.push(currentSeat);
