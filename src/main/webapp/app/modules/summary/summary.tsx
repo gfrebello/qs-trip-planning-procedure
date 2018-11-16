@@ -142,6 +142,9 @@ export class SummaryPage extends React.Component<ISummaryProps> {
         <Button tag={Link} to="/planner" color="primary">
           Go back to Trip Planning page
         </Button>
+        <Button tag={Link} to="/passengerinfo" color="primary">
+          Go to user info page
+        </Button>
       </div>
     );
   }

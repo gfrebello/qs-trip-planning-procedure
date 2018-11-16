@@ -15,6 +15,9 @@ import ErrorBoundaryRoute from 'app/shared/error/error-boundary-route';
 import { AUTHORITIES } from 'app/config/constants';
 import Planner from 'app/modules/planner/planner';
 import Summary from 'app/modules/summary/summary';
+import PassengerInfo from 'app/modules/passenger-info/passenger-info';
+import Payment from 'app/modules/payment/payment';
+import Confirmation from 'app/modules/confirmation/confirmation';
 
 // tslint:disable:space-in-parens
 const Account = Loadable({
@@ -39,6 +42,9 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/reset/finish/:key?" component={PasswordResetFinish} />
       <ErrorBoundaryRoute path="/planner" component={Planner} />
       <ErrorBoundaryRoute path="/summary" component={Summary} />
+      <ErrorBoundaryRoute path="/passengerinfo" component={PassengerInfo} />
+      <ErrorBoundaryRoute path="/payment" component={Payment} />
+      <ErrorBoundaryRoute path="/confirmation" component={Confirmation} />
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
