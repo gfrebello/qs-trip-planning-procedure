@@ -271,7 +271,7 @@ export class Home extends React.Component<IHomeProp> {
               />
               <CardBody>
                 <CardTitle>Dubai</CardTitle>
-                <CardText>With a new year coming, why not try something exotic?</CardText>
+                <CardText>With a new year coming, why not try something exotic????</CardText>
               </CardBody>
             </Card>
           </Col>
