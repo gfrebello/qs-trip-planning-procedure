@@ -25,8 +25,7 @@ export class SummaryPage extends React.Component<ISummaryProps> {
     let total = 0;
     const { reservedFlights, reservedHotels, chosenAttractions, rentedCars, boughtInsurances } = this.props;
     for (const reservation of reservedFlights) {
-      const { price } = reservation.flight;
-      total += price;
+      total += reservation.price;
     }
     this.setState({
       totalPrice: total
