@@ -5,6 +5,7 @@ import { Row, Col, Button, Card, CardHeader, CardBody, CardText, ListGroup, List
 import { getSession } from 'app/shared/reducers/authentication';
 import { Link } from 'react-router-dom';
 import { createTrip } from './confirmation.reducer';
+import { number } from 'prop-types';
 
 export interface IConfirmationProps extends StateProps, DispatchProps {}
 
@@ -14,7 +15,16 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
     // Needs to get user info (from account?)
     // Also needs to get seat IDs
     // First thing is to ensure a trip is being created
-    // this.props.createTrip();
+    const tripEntity = {
+      numberOfPeople: this.props.numberOfPeople,
+      departureDate: this.props.departureDate,
+      returnDate: this.props.returnDate,
+      origin: this.props.origin,
+      destination: this.props.destination,
+      user: { id: this.props.account.id }
+    };
+    const flightReservationEntities = {};
+    this.props.createTrip(tripEntity, flightReservationEntities);
   }
 
   render() {
@@ -31,7 +41,12 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
   isAuthenticated: storeState.authentication.isAuthenticated,
-  flightReservations: storeState.reservations.reservedFlights
+  flightReservations: storeState.reservations.reservedFlights,
+  numberOfPeople: storeState.home.nPassengers,
+  departureDate: storeState.home.departDate,
+  returnDate: storeState.home.returnDate,
+  origin: storeState.home.origin,
+  destination: storeState.home.destination
 });
 
 const mapDispatchToProps = {

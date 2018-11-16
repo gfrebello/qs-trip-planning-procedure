@@ -36,6 +36,10 @@ export class FlightReservationCard extends React.Component<IFlightReservationCar
         const arrival = new Date(arrivalDate);
         const dateOfArrival = arrival.toLocaleDateString();
         const timeOfArrival = arrival.toLocaleTimeString();
+        const seats = [];
+        for (const resSeat of reservation.reservedSeats) {
+          seats.push(String(resSeat.row) + String(resSeat.number));
+        }
         output.push(
           <CardText>
             <ListGroupItem>
@@ -64,7 +68,7 @@ export class FlightReservationCard extends React.Component<IFlightReservationCar
                     <Col>{`${dateOfArrival} - ${timeOfArrival}`}</Col>
                   </Row>
                 </Col>
-                <Col>{`${reservation.reservedSeats}`}</Col>
+                <Col>{`${seats}`}</Col>
               </Row>
             </ListGroupItem>
           </CardText>

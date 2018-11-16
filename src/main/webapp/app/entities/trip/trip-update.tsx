@@ -43,13 +43,14 @@ export class TripUpdate extends React.Component<ITripUpdateProps, ITripUpdateSta
   }
 
   saveEntity = (event, errors, values) => {
+    console.log('Salvando?');
     if (errors.length === 0) {
       const { tripEntity } = this.props;
       const entity = {
         ...tripEntity,
         ...values
       };
-
+      console.log(entity);
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {

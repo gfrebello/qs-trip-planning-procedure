@@ -1,5 +1,6 @@
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { cleanEntity } from 'app/shared/util/entity-utils';
+import { cleanEntity as cleanTrip } from 'app/shared/util/entity-utils';
+import { cleanEntity as cleanFlightReservation } from 'app/shared/util/entity-utils';
 import axios from 'axios';
 
 export const ACTION_TYPES = {
@@ -18,10 +19,10 @@ const initialState = {
   entity: []
 };
 
-export type ReservationsState = Readonly<typeof initialState>;
+export type ConfirmationState = Readonly<typeof initialState>;
 
 // Reducer
-export default (state: ReservationsState = initialState, action): ReservationsState => {
+export default (state: ConfirmationState = initialState, action): ConfirmationState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.CREATE_TRIP):
       return {
@@ -54,17 +55,30 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
   }
 };
 
-const apiUrl = 'api/trip';
+const apiUrl = 'api/trips';
 
 // Actions
-export const createTrip = (tripEntity, flightReservationEntities, passengersEntity, seatEntities) => async dispatch => {
+export const createTrip = (tripEntity, flightReservations) => async dispatch => {
+  /* const result = await dispatch({
+    type: ACTION_TYPES.CREATE_TRIP,
+    payload: axios.post('api/trips', cleanTrip(tripEntity))
+  });
   const postResult = axios
-    .post(apiUrl, cleanEntity(tripEntity))
+    .post('api/trips', cleanTrip(tripEntity))
     .then(response => {
-      console.log('TripCreationResponse', response);
-      return axios.post(apiUrl, cleanEntity(flightReservationEntity));
+      for (let fRes of flightReservations) {
+        let fResEntity = {
+          numberOfExecutive:
+          numberOfEconomic:
+          totalPrice:
+          flight: { id: }
+          trip: { id: }
+        }
+        axios.post('api/flight-reservations', cleanFlightReservation())
+      }
+      return axios.post(apiUrl, cleanFlightReservation(flightReservationEntity));
     })
-    .then(response => {
+  /*  .then(response => {
       console.log('FlightReservationCreationResponse', response);
       return axios.post(apiUrl, cleanEntity(passengersEntity));
     })
@@ -73,7 +87,7 @@ export const createTrip = (tripEntity, flightReservationEntities, passengersEnti
       return axios.put();
     })
     .then(response => {});
-  console.log('Post Result', postResult);
+  console.log('Post Result', postResult);*/
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_TRIP,
     payload: postResult

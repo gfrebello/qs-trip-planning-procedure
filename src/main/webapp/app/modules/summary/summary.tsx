@@ -64,6 +64,10 @@ export class SummaryPage extends React.Component<ISummaryProps> {
         const arrival = new Date(arrivalDate);
         const dateOfArrival = arrival.toLocaleDateString();
         const timeOfArrival = arrival.toLocaleTimeString();
+        const seats = [];
+        for (const resSeat of reservation.reservedSeats) {
+          seats.push(String(resSeat.row) + String(resSeat.number));
+        }
         output.push(
           <CardText>
             <Row>
@@ -94,7 +98,7 @@ export class SummaryPage extends React.Component<ISummaryProps> {
                         <Col>{`${dateOfArrival} - ${timeOfArrival}`}</Col>
                       </Row>
                     </Col>
-                    <Col>{`${reservation.reservedSeats}`}</Col>
+                    <Col>{`${seats}`}</Col>
                   </Row>
                 </ListGroupItem>
               </Col>

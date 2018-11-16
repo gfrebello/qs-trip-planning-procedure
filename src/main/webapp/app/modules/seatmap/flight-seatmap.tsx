@@ -244,7 +244,7 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
 
   handleAddFlight = () => {
     // Also check for number of seats
-    const { rSelected, flightList, nPassengersExecutive, nPassengersEconomic } = this.props;
+    const { rSelected, flightList, nPassengersExecutive, nPassengersEconomic, seatList } = this.props;
     const { selectedSeats } = this.state;
     if (rSelected !== -1) {
       const selectedFlight = flightList[rSelected];
@@ -253,8 +253,11 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
       for (const rowLetter in selectedSeats) {
         // tslint:disable-next-line:forin
         for (const rowNumber in selectedSeats[rowLetter]) {
-          const seatLetterNumber = String(rowLetter) + String(rowNumber);
-          reservedSeats.push(seatLetterNumber);
+          for (const seat of seatList) {
+            if (seat.row === rowLetter && seat.number === rowNumber) {
+              reservedSeats.push(seat);
+            }
+          }
         }
       }
       const totalNumberPassengers = Number(nPassengersEconomic) + Number(nPassengersExecutive);
