@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +103,29 @@ public class FlightResource {
         Optional<Flight> flight = flightRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(flight);
     }
+
+        /**
+     * GET  /flights/:departureDate/:origin/:destination : get flights by departureDate, origin and destination.
+     *
+     * @param departureDate the departure date of the flight to retrieve
+     * @param origin the origin city of the flight to retrieve
+     * @param destination the destination city of the flight to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of flights in body
+     */
+    @GetMapping("/flights/{departureDate}/{origin}/{destination}")
+    @Timed
+    public List<Flight> getFlightByDepartureDateAndOriginAndDestination(@PathVariable String departureDate,@PathVariable String origin,@PathVariable String destination) {
+        Instant startOfDay = Instant.parse(departureDate).truncatedTo(ChronoUnit.DAYS);
+        Instant endOfDay = startOfDay.plus(Duration.ofDays(1));
+        return flightRepository.findByDepartureDateAfterAndDepartureDateBeforeAndOriginAndDestination(startOfDay, endOfDay, origin, destination);
+    }
+
+    // public List<SaleOrder> findByDate(String date) {
+    //     Instant startOfDay = Instant.parse(date).truncatedTo(ChronoUnit.DAYS);
+    //     Instant endOfDay = startOfDay.plus(Duration.ofDays(1));
+    
+    //     return saleOrderRepository.findBySaleTimeAfterAndSaleTimeBefore(startOfDay, endOfDay);
+    // }
 
     /**
      * DELETE  /flights/:id : delete the "id" flight.
