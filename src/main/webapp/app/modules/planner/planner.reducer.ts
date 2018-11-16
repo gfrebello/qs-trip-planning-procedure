@@ -1,9 +1,3 @@
-import { IChosenAttraction } from 'app/shared/model/chosen-attraction.model';
-import { IFlightReservation } from 'app/shared/model/flight-reservation.model';
-import { IHotelReservation } from 'app/shared/model/hotel-reservation.model';
-import { ICarRental } from 'app/shared/model/car-rental.model';
-import { IInsurance } from 'app/shared/model/insurance.model';
-
 export const ACTION_TYPES = {
   RESET_FLIGHT_RESERVATIONS: 'reservations/RESET_FLIGHT_RESERVATIONS',
   RESET_HOTEL_RESERVATIONS: 'reservations/RESET_HOTEL_RESERVATIONS',
