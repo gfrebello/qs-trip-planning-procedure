@@ -1,6 +1,7 @@
 package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -28,27 +29,21 @@ public class HotelReservation implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "reservation_id")
-    private String reservationId;
-
     @Column(name = "number_of_people")
     private Integer numberOfPeople;
 
-    @Column(name = "online_payment_choosen")
-    private Boolean onlinePaymentChoosen;
-
     @Column(name = "checkin_date")
-    private Instant checkinDate;
+    private LocalDate checkinDate;
 
     @Column(name = "checkout_date")
-    private Instant checkoutDate;
+    private LocalDate checkoutDate;
 
     @OneToMany(mappedBy = "hotelReservation")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<HotelRoom> hotelRooms = new HashSet<>();
 
-    @OneToOne(mappedBy = "hotelReservation")
-    @JsonIgnore
+    @ManyToOne
+    @JsonIgnoreProperties("hotelReservations")
     private Trip trip;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -58,19 +53,6 @@ public class HotelReservation implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getReservationId() {
-        return reservationId;
-    }
-
-    public HotelReservation reservationId(String reservationId) {
-        this.reservationId = reservationId;
-        return this;
-    }
-
-    public void setReservationId(String reservationId) {
-        this.reservationId = reservationId;
     }
 
     public Integer getNumberOfPeople() {
@@ -86,42 +68,29 @@ public class HotelReservation implements Serializable {
         this.numberOfPeople = numberOfPeople;
     }
 
-    public Boolean isOnlinePaymentChoosen() {
-        return onlinePaymentChoosen;
-    }
-
-    public HotelReservation onlinePaymentChoosen(Boolean onlinePaymentChoosen) {
-        this.onlinePaymentChoosen = onlinePaymentChoosen;
-        return this;
-    }
-
-    public void setOnlinePaymentChoosen(Boolean onlinePaymentChoosen) {
-        this.onlinePaymentChoosen = onlinePaymentChoosen;
-    }
-
-    public Instant getCheckinDate() {
+    public LocalDate getCheckinDate() {
         return checkinDate;
     }
 
-    public HotelReservation checkinDate(Instant checkinDate) {
+    public HotelReservation checkinDate(LocalDate checkinDate) {
         this.checkinDate = checkinDate;
         return this;
     }
 
-    public void setCheckinDate(Instant checkinDate) {
+    public void setCheckinDate(LocalDate checkinDate) {
         this.checkinDate = checkinDate;
     }
 
-    public Instant getCheckoutDate() {
+    public LocalDate getCheckoutDate() {
         return checkoutDate;
     }
 
-    public HotelReservation checkoutDate(Instant checkoutDate) {
+    public HotelReservation checkoutDate(LocalDate checkoutDate) {
         this.checkoutDate = checkoutDate;
         return this;
     }
 
-    public void setCheckoutDate(Instant checkoutDate) {
+    public void setCheckoutDate(LocalDate checkoutDate) {
         this.checkoutDate = checkoutDate;
     }
 
@@ -188,9 +157,7 @@ public class HotelReservation implements Serializable {
     public String toString() {
         return "HotelReservation{" +
             "id=" + getId() +
-            ", reservationId='" + getReservationId() + "'" +
             ", numberOfPeople=" + getNumberOfPeople() +
-            ", onlinePaymentChoosen='" + isOnlinePaymentChoosen() + "'" +
             ", checkinDate='" + getCheckinDate() + "'" +
             ", checkoutDate='" + getCheckoutDate() + "'" +
             "}";

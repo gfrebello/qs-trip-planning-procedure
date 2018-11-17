@@ -26,7 +26,8 @@ export class Seat extends React.Component<ISeatProps> {
         <h2 id="seat-heading">
           <Translate contentKey="tripPlanningApp.seat.home.title">Seats</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="tripPlanningApp.seat.home.createLabel">Create new Seat</Translate>
           </Link>
         </h2>
@@ -44,7 +45,7 @@ export class Seat extends React.Component<ISeatProps> {
                   <Translate contentKey="tripPlanningApp.seat.row">Row</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.seat.customerClass">Customer Class</Translate>
+                  <Translate contentKey="tripPlanningApp.seat.isExecutive">Is Executive</Translate>
                 </th>
                 <th>
                   <Translate contentKey="tripPlanningApp.seat.isReserved">Is Reserved</Translate>
@@ -68,7 +69,7 @@ export class Seat extends React.Component<ISeatProps> {
                   </td>
                   <td>{seat.number}</td>
                   <td>{seat.row}</td>
-                  <td>{seat.customerClass}</td>
+                  <td>{seat.isExecutive ? 'true' : 'false'}</td>
                   <td>{seat.isReserved ? 'true' : 'false'}</td>
                   <td>{seat.flight ? <Link to={`flight/${seat.flight.id}`}>{seat.flight.id}</Link> : ''}</td>
                   <td>

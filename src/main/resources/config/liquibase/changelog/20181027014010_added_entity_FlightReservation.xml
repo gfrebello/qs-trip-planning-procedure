@@ -21,20 +21,22 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="reservation_id" type="varchar(255)">
+            <column name="number_of_executive" type="integer">
                 <constraints nullable="true" />
             </column>
 
-            <column name="number_of_people" type="integer">
+            <column name="number_of_economic" type="integer">
                 <constraints nullable="true" />
             </column>
 
-            <column name="customer_class" type="varchar(255)">
+            <column name="total_price" type="${floatType}">
                 <constraints nullable="true" />
             </column>
+
             <column name="flight_id" type="bigint">
-                <constraints unique="true" nullable="false" uniqueConstraintName="ux_flight_reservation_flight_id" />
+                <constraints nullable="false" />
             </column>
+
             <column name="trip_id" type="bigint">
                 <constraints nullable="true" />
             </column>

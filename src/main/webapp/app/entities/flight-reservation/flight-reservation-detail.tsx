@@ -25,29 +25,28 @@ export class FlightReservationDetail extends React.Component<IFlightReservationD
       <Row>
         <Col md="8">
           <h2>
-            <Translate contentKey="tripPlanningApp.flightReservation.detail.title">FlightReservation</Translate> [<b>
-              {flightReservationEntity.id}
-            </b>]
+            <Translate contentKey="tripPlanningApp.flightReservation.detail.title">FlightReservation</Translate> [
+            <b>{flightReservationEntity.id}</b>]
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="reservationId">
-                <Translate contentKey="tripPlanningApp.flightReservation.reservationId">Reservation Id</Translate>
+              <span id="numberOfExecutive">
+                <Translate contentKey="tripPlanningApp.flightReservation.numberOfExecutive">Number Of Executive</Translate>
               </span>
             </dt>
-            <dd>{flightReservationEntity.reservationId}</dd>
+            <dd>{flightReservationEntity.numberOfExecutive}</dd>
             <dt>
-              <span id="numberOfPeople">
-                <Translate contentKey="tripPlanningApp.flightReservation.numberOfPeople">Number Of People</Translate>
+              <span id="numberOfEconomic">
+                <Translate contentKey="tripPlanningApp.flightReservation.numberOfEconomic">Number Of Economic</Translate>
               </span>
             </dt>
-            <dd>{flightReservationEntity.numberOfPeople}</dd>
+            <dd>{flightReservationEntity.numberOfEconomic}</dd>
             <dt>
-              <span id="customerClass">
-                <Translate contentKey="tripPlanningApp.flightReservation.customerClass">Customer Class</Translate>
+              <span id="totalPrice">
+                <Translate contentKey="tripPlanningApp.flightReservation.totalPrice">Total Price</Translate>
               </span>
             </dt>
-            <dd>{flightReservationEntity.customerClass}</dd>
+            <dd>{flightReservationEntity.totalPrice}</dd>
             <dt>
               <Translate contentKey="tripPlanningApp.flightReservation.flight">Flight</Translate>
             </dt>
@@ -62,7 +61,8 @@ export class FlightReservationDetail extends React.Component<IFlightReservationD
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/flight-reservation/${flightReservationEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

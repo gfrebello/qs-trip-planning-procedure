@@ -78,6 +78,13 @@ export class FlightList extends React.Component<IFlightListProps> {
     this.props.updatePassengersExecutive(nExecutive);
   };
 
+  calculateTotalPrice = flight => {
+    const { nPassengersEconomic, nPassengersExecutive } = this.props;
+    const basePrice = flight.price;
+    const totalPrice = Number(nPassengersEconomic) * Number(basePrice) + 2 * basePrice * Number(nPassengersExecutive);
+    return totalPrice;
+  };
+
   createFlightList = () => {
     const { flightList } = this.props;
     const list = [];
@@ -120,7 +127,7 @@ export class FlightList extends React.Component<IFlightListProps> {
                 <Col>{`${arrivalDate} - ${arrivalTime}`}</Col>
               </Row>
             </Col>
-            <Col>{`R$${flightList[j].price}`}</Col>
+            <Col>{`R$${this.calculateTotalPrice(flightList[j])}`}</Col>
           </Row>
         </ListGroupItem>
       );

@@ -59,7 +59,10 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
     case ACTION_TYPES.ADD_SELECTED_FLIGHT:
       return {
         ...state,
-        reservedFlights: [...state.reservedFlights, { flight: action.payload.selectedFlight, reservedSeats: action.payload.reservedSeats }]
+        reservedFlights: [
+          ...state.reservedFlights,
+          { flight: action.payload.selectedFlight, reservedSeats: action.payload.reservedSeats, price: action.payload.price }
+        ]
       };
     case ACTION_TYPES.UPDATE_PASSENGERS_ECONOMIC:
       return {
@@ -102,9 +105,9 @@ export const resetInsuranceReservations = () => ({
   type: ACTION_TYPES.RESET_INSURANCE_RESERVATIONS
 });
 
-export const addSelectedFlight = (selectedFlight, reservedSeats) => ({
+export const addSelectedFlight = (selectedFlight, reservedSeats, price) => ({
   type: ACTION_TYPES.ADD_SELECTED_FLIGHT,
-  payload: { selectedFlight, reservedSeats }
+  payload: { selectedFlight, reservedSeats, price }
 });
 
 export const updatePassengersEconomic = nPassengersEconomic => ({

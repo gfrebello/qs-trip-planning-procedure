@@ -26,7 +26,8 @@ export class Insurance extends React.Component<IInsuranceProps> {
         <h2 id="insurance-heading">
           <Translate contentKey="tripPlanningApp.insurance.home.title">Insurances</Translate>
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp;
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
             <Translate contentKey="tripPlanningApp.insurance.home.createLabel">Create new Insurance</Translate>
           </Link>
         </h2>
@@ -52,6 +53,9 @@ export class Insurance extends React.Component<IInsuranceProps> {
                 <th>
                   <Translate contentKey="tripPlanningApp.insurance.endDate">End Date</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.insurance.trip">Trip</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -67,11 +71,12 @@ export class Insurance extends React.Component<IInsuranceProps> {
                   <td>{insurance.price}</td>
                   <td>{insurance.personName}</td>
                   <td>
-                    <TextFormat type="date" value={insurance.startDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={insurance.startDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>
-                    <TextFormat type="date" value={insurance.endDate} format={APP_DATE_FORMAT} />
+                    <TextFormat type="date" value={insurance.endDate} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
+                  <td>{insurance.trip ? <Link to={`trip/${insurance.trip.id}`}>{insurance.trip.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${insurance.id}`} color="info" size="sm">

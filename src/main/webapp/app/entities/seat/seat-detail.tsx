@@ -41,11 +41,11 @@ export class SeatDetail extends React.Component<ISeatDetailProps> {
             </dt>
             <dd>{seatEntity.row}</dd>
             <dt>
-              <span id="customerClass">
-                <Translate contentKey="tripPlanningApp.seat.customerClass">Customer Class</Translate>
+              <span id="isExecutive">
+                <Translate contentKey="tripPlanningApp.seat.isExecutive">Is Executive</Translate>
               </span>
             </dt>
-            <dd>{seatEntity.customerClass}</dd>
+            <dd>{seatEntity.isExecutive ? 'true' : 'false'}</dd>
             <dt>
               <span id="isReserved">
                 <Translate contentKey="tripPlanningApp.seat.isReserved">Is Reserved</Translate>
@@ -66,7 +66,8 @@ export class SeatDetail extends React.Component<ISeatDetailProps> {
             <span className="d-none d-md-inline">
               <Translate contentKey="entity.action.back">Back</Translate>
             </span>
-          </Button>&nbsp;
+          </Button>
+          &nbsp;
           <Button tag={Link} to={`/entity/seat/${seatEntity.id}/edit`} replace color="primary">
             <FontAwesomeIcon icon="pencil-alt" />{' '}
             <span className="d-none d-md-inline">

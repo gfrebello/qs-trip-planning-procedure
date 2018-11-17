@@ -4,15 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <!--
-        Added the constraints for entity Trip.
+        Added the constraints for entity CarRental.
     -->
-    <changeSet id="20181027014009-2" author="jhipster">
+    <changeSet id="20181027014018-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="trip"
-                                 constraintName="fk_trip_user_id"
+        <addForeignKeyConstraint baseColumnNames="trip_id"
+                                 baseTableName="car_rental"
+                                 constraintName="fk_car_rental_trip_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="trip"/>
 
     </changeSet>
 </databaseChangeLog>

@@ -16,11 +16,11 @@
             "detail": {
                 "title": "Flight Reservation"
             },
-            "reservationId": "Reservation Id",
-            "numberOfPeople": "Number Of People",
-            "customerClass": "Customer Class",
-            "flight": "Flight",
+            "numberOfExecutive": "Number Of Executive",
+            "numberOfEconomic": "Number Of Economic",
+            "totalPrice": "Total Price",
             "seat": "Seat",
+            "flight": "Flight",
             "trip": "Trip"
         }
     }

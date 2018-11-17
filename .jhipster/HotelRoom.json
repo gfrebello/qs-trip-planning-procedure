@@ -6,7 +6,7 @@
             "fieldType": "Integer"
         },
         {
-            "fieldName": "available",
+            "fieldName": "isReserved",
             "fieldType": "Boolean"
         },
         {
@@ -26,13 +26,11 @@
             "otherEntityField": "id"
         },
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
             "relationshipName": "hotel",
             "otherEntityName": "hotel",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "hotelRoom"
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20181027014014",

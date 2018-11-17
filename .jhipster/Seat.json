@@ -10,8 +10,8 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "customerClass",
-            "fieldType": "String"
+            "fieldName": "isExecutive",
+            "fieldType": "Boolean"
         },
         {
             "fieldName": "isReserved",

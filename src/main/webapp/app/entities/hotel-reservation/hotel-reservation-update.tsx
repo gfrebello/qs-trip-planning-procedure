@@ -43,9 +43,6 @@ export class HotelReservationUpdate extends React.Component<IHotelReservationUpd
   }
 
   saveEntity = (event, errors, values) => {
-    values.checkinDate = new Date(values.checkinDate);
-    values.checkoutDate = new Date(values.checkoutDate);
-
     if (errors.length === 0) {
       const { hotelReservationEntity } = this.props;
       const entity = {
@@ -94,61 +91,49 @@ export class HotelReservationUpdate extends React.Component<IHotelReservationUpd
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="reservationIdLabel" for="reservationId">
-                    <Translate contentKey="tripPlanningApp.hotelReservation.reservationId">Reservation Id</Translate>
-                  </Label>
-                  <AvField id="hotel-reservation-reservationId" type="text" name="reservationId" />
-                </AvGroup>
-                <AvGroup>
                   <Label id="numberOfPeopleLabel" for="numberOfPeople">
                     <Translate contentKey="tripPlanningApp.hotelReservation.numberOfPeople">Number Of People</Translate>
                   </Label>
                   <AvField id="hotel-reservation-numberOfPeople" type="number" className="form-control" name="numberOfPeople" />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="onlinePaymentChoosenLabel" check>
-                    <AvInput
-                      id="hotel-reservation-onlinePaymentChoosen"
-                      type="checkbox"
-                      className="form-control"
-                      name="onlinePaymentChoosen"
-                    />
-                    <Translate contentKey="tripPlanningApp.hotelReservation.onlinePaymentChoosen">Online Payment Choosen</Translate>
-                  </Label>
-                </AvGroup>
-                <AvGroup>
                   <Label id="checkinDateLabel" for="checkinDate">
                     <Translate contentKey="tripPlanningApp.hotelReservation.checkinDate">Checkin Date</Translate>
                   </Label>
-                  <AvInput
-                    id="hotel-reservation-checkinDate"
-                    type="datetime-local"
-                    className="form-control"
-                    name="checkinDate"
-                    value={isNew ? null : convertDateTimeFromServer(this.props.hotelReservationEntity.checkinDate)}
-                  />
+                  <AvField id="hotel-reservation-checkinDate" type="date" className="form-control" name="checkinDate" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="checkoutDateLabel" for="checkoutDate">
                     <Translate contentKey="tripPlanningApp.hotelReservation.checkoutDate">Checkout Date</Translate>
                   </Label>
-                  <AvInput
-                    id="hotel-reservation-checkoutDate"
-                    type="datetime-local"
-                    className="form-control"
-                    name="checkoutDate"
-                    value={isNew ? null : convertDateTimeFromServer(this.props.hotelReservationEntity.checkoutDate)}
-                  />
+                  <AvField id="hotel-reservation-checkoutDate" type="date" className="form-control" name="checkoutDate" />
+                </AvGroup>
+                <AvGroup>
+                  <Label for="trip.id">
+                    <Translate contentKey="tripPlanningApp.hotelReservation.trip">Trip</Translate>
+                  </Label>
+                  <AvInput id="hotel-reservation-trip" type="select" className="form-control" name="trip.id">
+                    <option value="" key="0" />
+                    {trips
+                      ? trips.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/hotel-reservation" replace color="info">
-                  <FontAwesomeIcon icon="arrow-left" />&nbsp;
+                  <FontAwesomeIcon icon="arrow-left" />
+                  &nbsp;
                   <span className="d-none d-md-inline">
                     <Translate contentKey="entity.action.back">Back</Translate>
                   </span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp;
+                  <FontAwesomeIcon icon="save" />
+                  &nbsp;
                   <Translate contentKey="entity.action.save">Save</Translate>
                 </Button>
               </AvForm>

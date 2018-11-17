@@ -28,23 +28,23 @@ public class FlightReservation implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "reservation_id")
-    private String reservationId;
+    @Column(name = "number_of_executive")
+    private Integer numberOfExecutive;
 
-    @Column(name = "number_of_people")
-    private Integer numberOfPeople;
+    @Column(name = "number_of_economic")
+    private Integer numberOfEconomic;
 
-    @Column(name = "customer_class")
-    private String customerClass;
-
-    @OneToOne(optional = false)
-    @NotNull
-    @JoinColumn(unique = true)
-    private Flight flight;
+    @Column(name = "total_price")
+    private Float totalPrice;
 
     @OneToMany(mappedBy = "flightReservation")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Seat> seats = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("")
+    private Flight flight;
 
     @ManyToOne
     @JsonIgnoreProperties("flightReservations")
@@ -59,56 +59,43 @@ public class FlightReservation implements Serializable {
         this.id = id;
     }
 
-    public String getReservationId() {
-        return reservationId;
+    public Integer getNumberOfExecutive() {
+        return numberOfExecutive;
     }
 
-    public FlightReservation reservationId(String reservationId) {
-        this.reservationId = reservationId;
+    public FlightReservation numberOfExecutive(Integer numberOfExecutive) {
+        this.numberOfExecutive = numberOfExecutive;
         return this;
     }
 
-    public void setReservationId(String reservationId) {
-        this.reservationId = reservationId;
+    public void setNumberOfExecutive(Integer numberOfExecutive) {
+        this.numberOfExecutive = numberOfExecutive;
     }
 
-    public Integer getNumberOfPeople() {
-        return numberOfPeople;
+    public Integer getNumberOfEconomic() {
+        return numberOfEconomic;
     }
 
-    public FlightReservation numberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
+    public FlightReservation numberOfEconomic(Integer numberOfEconomic) {
+        this.numberOfEconomic = numberOfEconomic;
         return this;
     }
 
-    public void setNumberOfPeople(Integer numberOfPeople) {
-        this.numberOfPeople = numberOfPeople;
+    public void setNumberOfEconomic(Integer numberOfEconomic) {
+        this.numberOfEconomic = numberOfEconomic;
     }
 
-    public String getCustomerClass() {
-        return customerClass;
+    public Float getTotalPrice() {
+        return totalPrice;
     }
 
-    public FlightReservation customerClass(String customerClass) {
-        this.customerClass = customerClass;
+    public FlightReservation totalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
         return this;
     }
 
-    public void setCustomerClass(String customerClass) {
-        this.customerClass = customerClass;
-    }
-
-    public Flight getFlight() {
-        return flight;
-    }
-
-    public FlightReservation flight(Flight flight) {
-        this.flight = flight;
-        return this;
-    }
-
-    public void setFlight(Flight flight) {
-        this.flight = flight;
+    public void setTotalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Set<Seat> getSeats() {
@@ -134,6 +121,19 @@ public class FlightReservation implements Serializable {
 
     public void setSeats(Set<Seat> seats) {
         this.seats = seats;
+    }
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public FlightReservation flight(Flight flight) {
+        this.flight = flight;
+        return this;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
     public Trip getTrip() {
@@ -174,9 +174,9 @@ public class FlightReservation implements Serializable {
     public String toString() {
         return "FlightReservation{" +
             "id=" + getId() +
-            ", reservationId='" + getReservationId() + "'" +
-            ", numberOfPeople=" + getNumberOfPeople() +
-            ", customerClass='" + getCustomerClass() + "'" +
+            ", numberOfExecutive=" + getNumberOfExecutive() +
+            ", numberOfEconomic=" + getNumberOfEconomic() +
+            ", totalPrice=" + getTotalPrice() +
             "}";
     }
 }

@@ -28,8 +28,8 @@ public class HotelRoom implements Serializable {
     @Column(name = "max_capacity")
     private Integer maxCapacity;
 
-    @Column(name = "available")
-    private Boolean available;
+    @Column(name = "is_reserved")
+    private Boolean isReserved;
 
     @Column(name = "room_type")
     private String roomType;
@@ -41,9 +41,9 @@ public class HotelRoom implements Serializable {
     @JsonIgnoreProperties("hotelRooms")
     private HotelReservation hotelReservation;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     @NotNull
-    @JoinColumn(unique = true)
+    @JsonIgnoreProperties("")
     private Hotel hotel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -68,17 +68,17 @@ public class HotelRoom implements Serializable {
         this.maxCapacity = maxCapacity;
     }
 
-    public Boolean isAvailable() {
-        return available;
+    public Boolean isIsReserved() {
+        return isReserved;
     }
 
-    public HotelRoom available(Boolean available) {
-        this.available = available;
+    public HotelRoom isReserved(Boolean isReserved) {
+        this.isReserved = isReserved;
         return this;
     }
 
-    public void setAvailable(Boolean available) {
-        this.available = available;
+    public void setIsReserved(Boolean isReserved) {
+        this.isReserved = isReserved;
     }
 
     public String getRoomType() {
@@ -159,7 +159,7 @@ public class HotelRoom implements Serializable {
         return "HotelRoom{" +
             "id=" + getId() +
             ", maxCapacity=" + getMaxCapacity() +
-            ", available='" + isAvailable() + "'" +
+            ", isReserved='" + isIsReserved() + "'" +
             ", roomType='" + getRoomType() + "'" +
             ", price=" + getPrice() +
             "}";

@@ -2,24 +2,16 @@
     "name": "Trip",
     "fields": [
         {
-            "fieldName": "tripId",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "paymentDone",
-            "fieldType": "Boolean"
-        },
-        {
             "fieldName": "numberOfPeople",
             "fieldType": "Integer"
         },
         {
             "fieldName": "departureDate",
-            "fieldType": "Instant"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "returnDate",
-            "fieldType": "Instant"
+            "fieldType": "LocalDate"
         },
         {
             "fieldName": "origin",
@@ -31,30 +23,6 @@
         }
     ],
     "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "hotelReservation",
-            "otherEntityName": "hotelReservation",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "trip"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "insurance",
-            "otherEntityName": "insurance",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "trip"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "carRental",
-            "otherEntityName": "carRental",
-            "otherEntityField": "id",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "trip"
-        },
         {
             "relationshipType": "one-to-many",
             "relationshipName": "flightReservation",
@@ -71,6 +39,24 @@
             "relationshipType": "one-to-many",
             "relationshipName": "passenger",
             "otherEntityName": "passenger",
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "hotelReservation",
+            "otherEntityName": "hotelReservation",
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "insurance",
+            "otherEntityName": "insurance",
+            "otherEntityRelationshipName": "trip"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "carRental",
+            "otherEntityName": "carRental",
             "otherEntityRelationshipName": "trip"
         },
         {

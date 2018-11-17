@@ -104,7 +104,7 @@ public class FlightResource {
         return ResponseUtil.wrapOrNotFound(flight);
     }
 
-    /**
+        /**
      * GET  /flights/:departureDate/:origin/:destination : get flights by departureDate, origin and destination.
      *
      * @param departureDate the departure date of the flight to retrieve

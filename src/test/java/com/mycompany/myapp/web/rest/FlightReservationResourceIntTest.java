@@ -40,14 +40,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TripPlanningApp.class)
 public class FlightReservationResourceIntTest {
 
-    private static final String DEFAULT_RESERVATION_ID = "AAAAAAAAAA";
-    private static final String UPDATED_RESERVATION_ID = "BBBBBBBBBB";
+    private static final Integer DEFAULT_NUMBER_OF_EXECUTIVE = 1;
+    private static final Integer UPDATED_NUMBER_OF_EXECUTIVE = 2;
 
-    private static final Integer DEFAULT_NUMBER_OF_PEOPLE = 1;
-    private static final Integer UPDATED_NUMBER_OF_PEOPLE = 2;
+    private static final Integer DEFAULT_NUMBER_OF_ECONOMIC = 1;
+    private static final Integer UPDATED_NUMBER_OF_ECONOMIC = 2;
 
-    private static final String DEFAULT_CUSTOMER_CLASS = "AAAAAAAAAA";
-    private static final String UPDATED_CUSTOMER_CLASS = "BBBBBBBBBB";
+    private static final Float DEFAULT_TOTAL_PRICE = 1F;
+    private static final Float UPDATED_TOTAL_PRICE = 2F;
 
     @Autowired
     private FlightReservationRepository flightReservationRepository;
@@ -87,9 +87,9 @@ public class FlightReservationResourceIntTest {
      */
     public static FlightReservation createEntity(EntityManager em) {
         FlightReservation flightReservation = new FlightReservation()
-            .reservationId(DEFAULT_RESERVATION_ID)
-            .numberOfPeople(DEFAULT_NUMBER_OF_PEOPLE)
-            .customerClass(DEFAULT_CUSTOMER_CLASS);
+            .numberOfExecutive(DEFAULT_NUMBER_OF_EXECUTIVE)
+            .numberOfEconomic(DEFAULT_NUMBER_OF_ECONOMIC)
+            .totalPrice(DEFAULT_TOTAL_PRICE);
         // Add required entity
         Flight flight = FlightResourceIntTest.createEntity(em);
         em.persist(flight);
@@ -118,9 +118,9 @@ public class FlightReservationResourceIntTest {
         List<FlightReservation> flightReservationList = flightReservationRepository.findAll();
         assertThat(flightReservationList).hasSize(databaseSizeBeforeCreate + 1);
         FlightReservation testFlightReservation = flightReservationList.get(flightReservationList.size() - 1);
-        assertThat(testFlightReservation.getReservationId()).isEqualTo(DEFAULT_RESERVATION_ID);
-        assertThat(testFlightReservation.getNumberOfPeople()).isEqualTo(DEFAULT_NUMBER_OF_PEOPLE);
-        assertThat(testFlightReservation.getCustomerClass()).isEqualTo(DEFAULT_CUSTOMER_CLASS);
+        assertThat(testFlightReservation.getNumberOfExecutive()).isEqualTo(DEFAULT_NUMBER_OF_EXECUTIVE);
+        assertThat(testFlightReservation.getNumberOfEconomic()).isEqualTo(DEFAULT_NUMBER_OF_ECONOMIC);
+        assertThat(testFlightReservation.getTotalPrice()).isEqualTo(DEFAULT_TOTAL_PRICE);
     }
 
     @Test
@@ -153,9 +153,9 @@ public class FlightReservationResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(flightReservation.getId().intValue())))
-            .andExpect(jsonPath("$.[*].reservationId").value(hasItem(DEFAULT_RESERVATION_ID.toString())))
-            .andExpect(jsonPath("$.[*].numberOfPeople").value(hasItem(DEFAULT_NUMBER_OF_PEOPLE)))
-            .andExpect(jsonPath("$.[*].customerClass").value(hasItem(DEFAULT_CUSTOMER_CLASS.toString())));
+            .andExpect(jsonPath("$.[*].numberOfExecutive").value(hasItem(DEFAULT_NUMBER_OF_EXECUTIVE)))
+            .andExpect(jsonPath("$.[*].numberOfEconomic").value(hasItem(DEFAULT_NUMBER_OF_ECONOMIC)))
+            .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE.doubleValue())));
     }
     
     @Test
@@ -169,9 +169,9 @@ public class FlightReservationResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(flightReservation.getId().intValue()))
-            .andExpect(jsonPath("$.reservationId").value(DEFAULT_RESERVATION_ID.toString()))
-            .andExpect(jsonPath("$.numberOfPeople").value(DEFAULT_NUMBER_OF_PEOPLE))
-            .andExpect(jsonPath("$.customerClass").value(DEFAULT_CUSTOMER_CLASS.toString()));
+            .andExpect(jsonPath("$.numberOfExecutive").value(DEFAULT_NUMBER_OF_EXECUTIVE))
+            .andExpect(jsonPath("$.numberOfEconomic").value(DEFAULT_NUMBER_OF_ECONOMIC))
+            .andExpect(jsonPath("$.totalPrice").value(DEFAULT_TOTAL_PRICE.doubleValue()));
     }
 
     @Test
@@ -195,9 +195,9 @@ public class FlightReservationResourceIntTest {
         // Disconnect from session so that the updates on updatedFlightReservation are not directly saved in db
         em.detach(updatedFlightReservation);
         updatedFlightReservation
-            .reservationId(UPDATED_RESERVATION_ID)
-            .numberOfPeople(UPDATED_NUMBER_OF_PEOPLE)
-            .customerClass(UPDATED_CUSTOMER_CLASS);
+            .numberOfExecutive(UPDATED_NUMBER_OF_EXECUTIVE)
+            .numberOfEconomic(UPDATED_NUMBER_OF_ECONOMIC)
+            .totalPrice(UPDATED_TOTAL_PRICE);
 
         restFlightReservationMockMvc.perform(put("/api/flight-reservations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -208,9 +208,9 @@ public class FlightReservationResourceIntTest {
         List<FlightReservation> flightReservationList = flightReservationRepository.findAll();
         assertThat(flightReservationList).hasSize(databaseSizeBeforeUpdate);
         FlightReservation testFlightReservation = flightReservationList.get(flightReservationList.size() - 1);
-        assertThat(testFlightReservation.getReservationId()).isEqualTo(UPDATED_RESERVATION_ID);
-        assertThat(testFlightReservation.getNumberOfPeople()).isEqualTo(UPDATED_NUMBER_OF_PEOPLE);
-        assertThat(testFlightReservation.getCustomerClass()).isEqualTo(UPDATED_CUSTOMER_CLASS);
+        assertThat(testFlightReservation.getNumberOfExecutive()).isEqualTo(UPDATED_NUMBER_OF_EXECUTIVE);
+        assertThat(testFlightReservation.getNumberOfEconomic()).isEqualTo(UPDATED_NUMBER_OF_ECONOMIC);
+        assertThat(testFlightReservation.getTotalPrice()).isEqualTo(UPDATED_TOTAL_PRICE);
     }
 
     @Test

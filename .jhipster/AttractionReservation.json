@@ -12,13 +12,11 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
             "relationshipName": "attraction",
             "otherEntityName": "attraction",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "attractionReservation"
+            "otherEntityField": "name"
         },
         {
             "relationshipType": "many-to-one",

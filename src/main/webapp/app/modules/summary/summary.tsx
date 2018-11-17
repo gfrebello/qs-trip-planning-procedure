@@ -25,8 +25,7 @@ export class SummaryPage extends React.Component<ISummaryProps> {
     let total = 0;
     const { reservedFlights, reservedHotels, chosenAttractions, rentedCars, boughtInsurances } = this.props;
     for (const reservation of reservedFlights) {
-      const { price } = reservation.flight;
-      total += price;
+      total += reservation.price;
     }
     this.setState({
       totalPrice: total
@@ -47,23 +46,18 @@ export class SummaryPage extends React.Component<ISummaryProps> {
         </Row>
       );
       for (const reservation of reservedFlights) {
-        const {
-          company,
-          origin,
-          destination,
-          departureDate,
-          arrivalDate,
-          flightCode,
-          departAirport,
-          arrivalAirport,
-          price
-        } = reservation.flight;
+        const { company, origin, destination, departureDate, arrivalDate, flightCode, departAirport, arrivalAirport } = reservation.flight;
+        const price = reservation.price;
         const depart = new Date(departureDate);
         const dateOfDepart = depart.toLocaleDateString();
         const timeOfDepart = depart.toLocaleTimeString();
         const arrival = new Date(arrivalDate);
         const dateOfArrival = arrival.toLocaleDateString();
         const timeOfArrival = arrival.toLocaleTimeString();
+        const seats = [];
+        for (const resSeat of reservation.reservedSeats) {
+          seats.push(String(resSeat.row) + String(resSeat.number));
+        }
         output.push(
           <CardText>
             <Row>
@@ -94,7 +88,7 @@ export class SummaryPage extends React.Component<ISummaryProps> {
                         <Col>{`${dateOfArrival} - ${timeOfArrival}`}</Col>
                       </Row>
                     </Col>
-                    <Col>{`${reservation.reservedSeats}`}</Col>
+                    <Col>{`${seats}`}</Col>
                   </Row>
                 </ListGroupItem>
               </Col>
