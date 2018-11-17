@@ -17,6 +17,7 @@ import { ISeat } from 'app/shared/model/seat.model';
 // tslint:disable-next-line:no-unused-variable
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import seat from './seat';
 
 export interface ISeatUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
 
@@ -50,6 +51,8 @@ export class SeatUpdate extends React.Component<ISeatUpdateProps, ISeatUpdateSta
   saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const { seatEntity } = this.props;
+      console.log('seatEntity', seatEntity);
+      console.log('values', values);
       const entity = {
         ...seatEntity,
         ...values

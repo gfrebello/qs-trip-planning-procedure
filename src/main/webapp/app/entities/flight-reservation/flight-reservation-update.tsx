@@ -54,7 +54,7 @@ export class FlightReservationUpdate extends React.Component<IFlightReservationU
         ...flightReservationEntity,
         ...values
       };
-
+      console.log('values', values);
       if (this.state.isNew) {
         this.props.createEntity(entity);
       } else {

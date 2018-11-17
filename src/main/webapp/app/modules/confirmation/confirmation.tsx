@@ -24,8 +24,25 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
       user: { id: this.props.account.id }
     };
     const flightReservationEntities = [];
-    const seatEntities = [];
     for (const flightRes of this.props.flightReservations) {
+      const seatEntities = [];
+      let nExecutive = 0;
+      let nEconomic = 0;
+      for (const seatRes of flightRes.reservedSeats) {
+        if (seatRes.isExecutive) {
+          nExecutive += 1;
+        } else {
+          nEconomic += 1;
+        }
+        seatEntities.push({ ...seatRes, isReserved: true });
+      }
+      const fResEnt = {
+        numberOfExecutive: nExecutive,
+        numberOfEconomic: nEconomic,
+        totalPrice: flightRes.price,
+        flight: { id: flightRes.flight.id }
+      };
+      flightReservationEntities.push({ flightReservation: fResEnt, reservationSeats: seatEntities });
     }
     this.props.createTrip(tripEntity, flightReservationEntities);
   }

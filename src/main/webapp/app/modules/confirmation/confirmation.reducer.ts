@@ -1,6 +1,5 @@
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
-import { cleanEntity as cleanTrip } from 'app/shared/util/entity-utils';
-import { cleanEntity as cleanFlightReservation } from 'app/shared/util/entity-utils';
+import { cleanEntity } from 'app/shared/util/entity-utils';
 import axios from 'axios';
 
 export const ACTION_TYPES = {
@@ -55,53 +54,35 @@ export default (state: ConfirmationState = initialState, action): ConfirmationSt
   }
 };
 
-const apiUrl = 'api/trips';
-
 // Actions
-export const createTrip = (tripEntity, flightReservations) => async dispatch => {
-  /*const result = await dispatch({
-    type: ACTION_TYPES.CREATE_TRIP,
-    payload: axios.post('api/trips', cleanTrip(tripEntity))
-  });
-  const postResult = axios
-    .post('api/trips', cleanTrip(tripEntity))
-    .then(response => {
-      for (let fRes of flightReservations) {
-        let fResEntity = {
-          numberOfExecutive:
-          numberOfEconomic:
-          totalPrice:
-          flight: { id: }
-          trip: { id: }
-        }
-        axios.post('api/flight-reservations', cleanFlightReservation())
+export const createTrip = (tripEntity, flightReservationEntities) => async dispatch => {
+  axios
+    .post('api/trips', cleanEntity(tripEntity))
+    .then(tripResponse => {
+      const tripID = tripResponse.data.id;
+      for (const fResEnt of flightReservationEntities) {
+        const fRes = fResEnt.flightReservation;
+        const fResEntity = {
+          ...fRes,
+          trip: { id: tripID }
+        };
+        axios.post('api/flight-reservations', cleanEntity(fResEntity)).then(flightReservationResponse => {
+          const flightResID = flightReservationResponse.data.id;
+          for (const seatEnt of fResEnt.reservationSeats) {
+            const seatEntity = {
+              ...seatEnt,
+              flightReservation: { id: flightResID }
+            };
+            console.log(seatEnt);
+            axios.put('api/seats', cleanEntity(seatEnt));
+          }
+        });
       }
-      return axios.post(apiUrl, cleanFlightReservation(flightReservationEntity));
     })
-  /*  .then(response => {
-      console.log('FlightReservationCreationResponse', response);
-      return axios.post(apiUrl, cleanEntity(passengersEntity));
-    })
-    .then(response => {
-      console.log('PassengerEntityCreationResponse', response);
-      return axios.put();
-    })
-    .then(response => {});
-  console.log('Post Result', postResult);*/
-  const result = await dispatch({
-    type: ACTION_TYPES.CREATE_TRIP,
-    payload: postResult
-  });
-  return result;
-};
-
-export const createEntity: ICrudPutAction<ITrip> = entity => async dispatch => {
-  const result = await dispatch({
-    type: ACTION_TYPES.CREATE_TRIP,
-    payload: axios.post(apiUrl, cleanEntity(entity))
-  });
-  dispatch(getEntities());
-  return result;
+    .then(response => ({
+      type: ACTION_TYPES.CREATE_TRIP,
+      payload: response
+    }));
 };
 
 export const reset = () => ({
