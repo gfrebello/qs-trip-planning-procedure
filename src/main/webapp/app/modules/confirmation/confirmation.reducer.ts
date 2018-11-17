@@ -73,8 +73,8 @@ export const createTrip = (tripEntity, flightReservationEntities) => async dispa
               ...seatEnt,
               flightReservation: { id: flightResID }
             };
-            console.log(seatEnt);
-            axios.put('api/seats', cleanEntity(seatEnt));
+            console.log(seatEntity);
+            axios.put('api/seats', cleanEntity(seatEntity));
           }
         });
       }

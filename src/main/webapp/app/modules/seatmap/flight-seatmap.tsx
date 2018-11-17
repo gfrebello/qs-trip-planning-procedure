@@ -18,6 +18,7 @@ export interface ISeatmapProps extends StateProps, DispatchProps {
 export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
   state = {
     selectedSeats: {},
+    flightSeats: [],
     sizeEconomic: 0,
     sizeExecutive: 0,
     seatmapRows: [],
@@ -103,7 +104,8 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
     rows.push(currentRow);
     this.setState({
       seatmapRows: rows,
-      width: seatWidth * (1 + Math.max.apply(null, rows.map(row => row.length)))
+      width: seatWidth * (1 + Math.max.apply(null, rows.map(row => row.length))),
+      flightSeats: filteredSeats
     });
   }
 
@@ -251,8 +253,8 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
 
   handleAddFlight = () => {
     // Also check for number of seats
-    const { rSelected, flightList, nPassengersExecutive, nPassengersEconomic, seatList } = this.props;
-    const { selectedSeats } = this.state;
+    const { rSelected, flightList, nPassengersExecutive, nPassengersEconomic } = this.props;
+    const { selectedSeats, flightSeats } = this.state;
     if (rSelected !== -1) {
       const selectedFlight = flightList[rSelected];
       const reservedSeats = [];
@@ -260,7 +262,7 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
       for (const rowLetter in selectedSeats) {
         // tslint:disable-next-line:forin
         for (const rowNumber in selectedSeats[rowLetter]) {
-          for (const seat of seatList) {
+          for (const seat of flightSeats) {
             if (seat.row === rowLetter && seat.number === rowNumber) {
               reservedSeats.push(seat);
             }
@@ -269,6 +271,7 @@ export class FlightSeatmapPage extends React.Component<ISeatmapProps> {
       }
       const totalNumberPassengers = Number(nPassengersEconomic) + Number(nPassengersExecutive);
       const totalPrice = this.calculateTotalPrice(selectedFlight);
+      console.log(totalNumberPassengers, reservedSeats);
       if (reservedSeats.length !== totalNumberPassengers) {
         alert('Please select seats for all the passengers.');
       } else {
