@@ -1,3 +1,5 @@
+import './confirmation.scss';
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Card, CardHeader, CardBody, CardText, ListGroup, ListGroupItem } from 'reactstrap';
@@ -12,9 +14,7 @@ export interface IConfirmationProps extends StateProps, DispatchProps {}
 export class ConfirmationPage extends React.Component<IConfirmationProps> {
   componentDidMount() {
     this.props.getSession();
-    // Needs to get user info (from account?)
-    // Also needs to get seat IDs
-    // First thing is to ensure a trip is being created
+
     const tripEntity = {
       numberOfPeople: this.props.numberOfPeople,
       departureDate: this.props.departureDate,
@@ -50,9 +50,21 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
   render() {
     return (
       <div>
-        <h1>Confirmation Page</h1>
-        Congratulations! Your payment has been made successfully and your trip has been registered!... Or not, a function needs to be done
-        to "check" this.
+        <Row>
+          <Col className="confirmText">
+            <h1>Thank you!</h1>
+          </Col>
+        </Row>
+        <Row>
+          <img className="centerImg" src={require('../../../static/images/greenok.png')} />
+        </Row>
+        <Row>
+          <Col className="confirmText">
+            Your trip has been successfully planned! To access it, go to the "My Trips" section on the top of the page. <br />
+            <br />
+            Have a good trip! <br />
+          </Col>
+        </Row>
       </div>
     );
   }
