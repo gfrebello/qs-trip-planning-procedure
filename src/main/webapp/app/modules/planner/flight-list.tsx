@@ -27,6 +27,9 @@ export interface IFlightListProps extends StateProps, DispatchProps {
 }
 
 export class FlightList extends React.Component<IFlightListProps> {
+  state = {
+    showFlightsBack: false
+  };
   constructor(props) {
     super(props);
   }
@@ -42,16 +45,21 @@ export class FlightList extends React.Component<IFlightListProps> {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { nPassengers, departDate, returnDate, origin, destination } = nextProps;
+    if (nextProps.nPassengers !== this.props.nPassengers) {
+      this.props.updatePassengersEconomic(Number(nPassengers));
+      this.props.updatePassengersExecutive(Number(0));
+    }
     if (
-      nextProps.nPassengers !== this.props.nPassengers ||
       nextProps.departDate !== this.props.departDate ||
+      nextProps.returnDate !== this.props.returnDate ||
       nextProps.origin !== this.props.origin ||
       nextProps.destination !== this.props.destination
     ) {
-      const { nPassengers, departDate, origin, destination } = nextProps;
-      this.props.updatePassengersEconomic(Number(nPassengers));
-      this.props.updatePassengersExecutive(Number(0));
-      if (departDate) {
+      if (this.state.showFlightsBack && returnDate) {
+        const qDate = returnDate + 'T00:00:00Z';
+        this.props.getEntitiesByDateOriginDestination(qDate, destination, origin);
+      } else if (!this.state.showFlightsBack && departDate) {
         const qDate = departDate + 'T00:00:00Z';
         this.props.getEntitiesByDateOriginDestination(qDate, origin, destination);
       }
@@ -76,6 +84,20 @@ export class FlightList extends React.Component<IFlightListProps> {
     const nEconomic = nPassengers - nExecutive;
     this.props.updatePassengersEconomic(nEconomic);
     this.props.updatePassengersExecutive(nExecutive);
+  };
+
+  handleFlightBack = e => {
+    const { departDate, returnDate, origin, destination } = this.props;
+    this.setState({
+      showFlightsBack: e.target.checked
+    });
+    if (e.target.checked) {
+      const qDate = returnDate + 'T00:00:00Z';
+      this.props.getEntitiesByDateOriginDestination(qDate, destination, origin);
+    } else {
+      const qDate = departDate + 'T00:00:00Z';
+      this.props.getEntitiesByDateOriginDestination(qDate, origin, destination);
+    }
   };
 
   calculateTotalPrice = flight => {
@@ -170,6 +192,22 @@ export class FlightList extends React.Component<IFlightListProps> {
         </CardBody>
         <CardBody>
           <Row>
+            <Col sm="2">
+              <div>See flights back?</div>
+            </Col>
+            <Col sm="1">
+              <Input
+                type="checkbox"
+                name="flightsBack"
+                id="flightsBack"
+                onChange={this.handleFlightBack}
+                checked={this.state.showFlightsBack}
+              />
+            </Col>
+          </Row>
+        </CardBody>
+        <CardBody>
+          <Row>
             <Col sm="12">{this.createFlightList()}</Col>
           </Row>
         </CardBody>
@@ -189,6 +227,7 @@ const mapStateToProps = storeState => ({
   origin: storeState.home.origin,
   destination: storeState.home.destination,
   departDate: storeState.home.departDate,
+  returnDate: storeState.home.returnDate,
   flightList: storeState.flight.entities
 });
 
