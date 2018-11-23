@@ -104,6 +104,19 @@ public class FlightReservationResource {
     }
 
     /**
+     * GET  /flight-reservations/trip/:id : get the flightReservations by trip id.
+     *
+     * @param id the id of the flightReservation's trip to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of flightReservations in body
+     */
+    @GetMapping("/flight-reservations/trip/{id}")
+    @Timed
+    public List<FlightReservation> getFlightReservationsByTrip(@PathVariable Long id) {
+        log.debug("REST request to get FlightReservations by Trip Id");
+        return flightReservationRepository.findByTrip(id);
+    }
+
+    /**
      * DELETE  /flight-reservations/:id : delete the "id" flightReservation.
      *
      * @param id the id of the flightReservation to delete
