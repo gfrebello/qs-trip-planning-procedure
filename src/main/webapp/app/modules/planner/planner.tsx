@@ -153,7 +153,7 @@ export class PlannerPage extends React.Component<IPlannerProps> {
             <li>Number of Passengers: {nPassengers}</li>
           </ul>
 
-          <Button color="primary" onClick={this.handleOpen}>
+          <Button className="trip-button" color="primary" onClick={this.handleOpen}>
             Edit Itinerary
           </Button>
           <br />
@@ -205,7 +205,7 @@ export class PlannerPage extends React.Component<IPlannerProps> {
           </div>
           <Row>
             <Col>
-              <Button tag={Link} to="/summary" color="primary">
+              <Button className="trip-next-button" tag={Link} to="/summary" color="primary">
                 Go to Trip Summary Page
               </Button>
             </Col>

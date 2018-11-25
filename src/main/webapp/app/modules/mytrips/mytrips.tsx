@@ -3,7 +3,7 @@ import './mytrips.scss';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table, Card, CardBody, CardTitle } from 'reactstrap';
+import { Button, Col, Row, Table, Card, CardBody, CardTitle, CardHeader } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
 import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -64,7 +64,7 @@ export class MyTrips extends React.Component<IMyTripsProps> {
             <Card className="trip-card">
               <CardTitle>Trip ID: {trip.id}</CardTitle>
               <CardBody>
-                <Row className="section-title">Trip Information</Row>
+                <CardHeader className="section-title">Trip Information</CardHeader>
                 <Row>
                   <Col>Number Of People: {trip.numberOfPeople}</Col>
                   <Col>
@@ -78,7 +78,7 @@ export class MyTrips extends React.Component<IMyTripsProps> {
                 </Row>
               </CardBody>
               <CardBody>
-                <Row className="section-title">Flight Reservations</Row>
+                <CardHeader className="section-title">Flight Reservations</CardHeader>
                 {flightReservationsList.map((freservation, j) => {
                   if (freservation.trip && freservation.trip.id === trip.id) {
                     const executiveSeats = this.getExecutiveSeats(freservation.id);
@@ -110,7 +110,7 @@ export class MyTrips extends React.Component<IMyTripsProps> {
                 })}
               </CardBody>
               <CardBody>
-                <Row className="section-title">Hotel Reservations</Row>
+                <CardHeader className="section-title">Hotel Reservations</CardHeader>
                 {hotelReservationsList.map((hreservation, k) => {
                   if (hreservation.trip && hreservation.trip.id === trip.id) {
                     const currentHotel = this.getHotel(hreservation);
