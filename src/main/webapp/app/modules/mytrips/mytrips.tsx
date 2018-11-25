@@ -7,7 +7,7 @@ import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getTrips, getFlightReservations, getSeats, reset } from './mytrips.reducer';
+import { getTrips, getFlightReservations, getSeats, getHotelReservations, getHotelRooms, reset } from './mytrips.reducer';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import trip from 'app/entities/trip/trip';
@@ -20,6 +20,8 @@ export class MyTrips extends React.Component<IMyTripsProps> {
     this.props.getTrips();
     this.props.getFlightReservations();
     this.props.getSeats();
+    this.props.getHotelReservations();
+    this.props.getHotelRooms();
   }
 
   getExecutiveSeats = resId => {
@@ -44,8 +46,18 @@ export class MyTrips extends React.Component<IMyTripsProps> {
     return economicSeats;
   };
 
+  getHotel = resId => {
+    const { roomsList } = this.props;
+    for (const room of roomsList) {
+      console.log(room.hotelReservation.id, resId);
+      if (room.hotelReservation.id === resId) {
+        return room.hotel;
+      }
+    }
+  };
+
   render() {
-    const { tripList, flightReservationsList } = this.props;
+    const { tripList, flightReservationsList, hotelReservationsList } = this.props;
     return (
       <div>
         <h2 id="trip-heading">My Trips</h2>
@@ -59,7 +71,7 @@ export class MyTrips extends React.Component<IMyTripsProps> {
               Origin: {trip.origin}
               Destination: {trip.destination}
               {flightReservationsList.map((freservation, j) => {
-                if (freservation.trip.id === trip.id) {
+                if (freservation.trip && freservation.trip.id === trip.id) {
                   const executiveSeats = this.getExecutiveSeats(freservation.id);
                   const economicSeats = this.getEconomicSeats(freservation.id);
                   return (
@@ -75,6 +87,22 @@ export class MyTrips extends React.Component<IMyTripsProps> {
                   );
                 }
               })}
+              {hotelReservationsList.map((hreservation, k) => {
+                if (hreservation.trip && hreservation.trip.id === trip.id) {
+                  console.log(hreservation);
+                  const currentHotel = this.getHotel(hreservation.id);
+                  return (
+                    <div>
+                      HReservation ID: {hreservation.id}
+                      Hotel Name: {currentHotel.name}
+                      Address: {currentHotel.address}
+                      Checkin Date: {hreservation.checkinDate}
+                      Checkout Date: {hreservation.checkoutDate}
+                      Price: {hreservation.totalPrice}
+                    </div>
+                  );
+                }
+              })}
             </div>
           ))}
         </div>
@@ -86,13 +114,17 @@ export class MyTrips extends React.Component<IMyTripsProps> {
 const mapStateToProps = storeState => ({
   tripList: storeState.mytrips.trips,
   flightReservationsList: storeState.mytrips.flightReservations,
-  seatList: storeState.mytrips.seatList
+  hotelReservationsList: storeState.mytrips.hotelReservations,
+  seatList: storeState.mytrips.seatList,
+  roomsList: storeState.mytrips.roomsList
 });
 
 const mapDispatchToProps = {
   getTrips,
   getFlightReservations,
   getSeats,
+  getHotelReservations,
+  getHotelRooms,
   reset
 };
 
