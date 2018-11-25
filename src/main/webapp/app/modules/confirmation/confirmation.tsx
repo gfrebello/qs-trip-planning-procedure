@@ -47,7 +47,7 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
     this.props.createTrip(tripEntity, flightReservationEntities);
   }
 
-  render() {
+  renderSuccess() {
     return (
       <div>
         <Row>
@@ -68,6 +68,37 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
       </div>
     );
   }
+
+  renderError() {
+    return (
+      <div>
+        <Row>
+          <Col className="confirmText">
+            <h1>Sorry!</h1>
+          </Col>
+        </Row>
+        <Row>
+          <img className="centerImg" src={require('../../../static/images/erroricon.png')} />
+        </Row>
+        <Row>
+          <Col className="confirmText">
+            It appears an error occurred and your trip couldn't be saved... We're very sorry for the inconvenience!
+            <br />
+            <br />
+            Please try again later. <br />
+          </Col>
+        </Row>
+      </div>
+    );
+  }
+
+  render() {
+    const successPage = this.renderSuccess();
+    const errorPage = this.renderError();
+    const hasError = this.props.errorMessage === null ? false : true;
+
+    return <div>{hasError ? errorPage : successPage}</div>;
+  }
 }
 
 const mapStateToProps = storeState => ({
@@ -78,7 +109,8 @@ const mapStateToProps = storeState => ({
   departureDate: storeState.home.departDate,
   returnDate: storeState.home.returnDate,
   origin: storeState.home.origin,
-  destination: storeState.home.destination
+  destination: storeState.home.destination,
+  errorMessage: storeState.trip.errorMessage
 });
 
 const mapDispatchToProps = {
