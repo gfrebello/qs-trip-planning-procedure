@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col, ListGroup, ListGroupItem, Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { addSelectedHotel } from '../planner/planner.reducer';
 import { getEntities } from '../../entities/hotel-room/hotel-room.reducer';
+import { getEntities as getHR } from '../../entities/hotel-reservation/hotel-reservation.reducer';
 import { number } from 'prop-types';
 
 export interface IRoomSelectionProps extends StateProps, DispatchProps {
@@ -22,6 +23,7 @@ export class RoomSelectionPage extends React.Component<IRoomSelectionProps> {
 
   componentDidMount() {
     this.props.getEntities();
+    this.props.getHR();
   }
 
   handleAddHotel = () => {
@@ -63,6 +65,23 @@ export class RoomSelectionPage extends React.Component<IRoomSelectionProps> {
     });
   };
 
+  isRoomAvailable = j => {
+    const { roomList, pastHRList, departDate, returnDate } = this.props;
+    const currentRoomID = roomList[j].id;
+    for (const HR of pastHRList) {
+      for (const HRroom of HR.hotelRooms) {
+        if (HRroom.id === currentRoomID) {
+          const HRcheckin = HR.checkinDate;
+          const HRcheckout = HR.checkoutDate;
+          if (!(HRcheckin >= returnDate || HRcheckout <= departDate)) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  };
+
   renderRoomList = () => {
     const { hotelList, roomList, hSelected, departDate, returnDate } = this.props;
     const { selectedRoomsIndexes } = this.state;
@@ -82,8 +101,11 @@ export class RoomSelectionPage extends React.Component<IRoomSelectionProps> {
         </Row>
       );
       items.push(<br />);
+      let hasRoom = false;
       for (let j = 0; j < roomList.length; j++) {
-        if (roomList[j].hotel.id === currentHotel.id) {
+        const roomAvailable = this.isRoomAvailable(j);
+        if (roomList[j].hotel.id === currentHotel.id && roomAvailable) {
+          hasRoom = true;
           const onRadioBtnClick = this.onRadioBtnClick.bind(this, j);
           items.push(
             <ListGroupItem className="list-item" outline onClick={onRadioBtnClick} active={selectedRoomsIndexes[j] === true}>
@@ -96,8 +118,12 @@ export class RoomSelectionPage extends React.Component<IRoomSelectionProps> {
           );
         }
       }
+      if (hasRoom) {
+        list.push(<ListGroup>{items}</ListGroup>);
+      } else {
+        list.push(<Row>It seems there are no rooms available in this hotel for the selected dates! Sorry for the inconvenience...</Row>);
+      }
       // Create the parent and add the children
-      list.push(<ListGroup>{items}</ListGroup>);
       return list;
     }
   };
@@ -126,13 +152,14 @@ export class RoomSelectionPage extends React.Component<IRoomSelectionProps> {
 const mapStateToProps = storeState => ({
   hotelList: storeState.hotel.entities,
   roomList: storeState.hotelRoom.entities,
+  pastHRList: storeState.hotelReservation.entities,
   hSelected: storeState.reservations.hSelected,
   nPassengers: storeState.home.nPassengers,
   departDate: storeState.home.departDate,
   returnDate: storeState.home.returnDate
 });
 
-const mapDispatchToProps = { addSelectedHotel, getEntities };
+const mapDispatchToProps = { addSelectedHotel, getEntities, getHR };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
