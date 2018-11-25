@@ -3,8 +3,8 @@ import {
   ICrudGetAction,
   ICrudGetAllAction,
   ICrudPutAction,
-  ICrudDeleteAction,
-  ICrudGetFlightByDateOriginDestination
+  ICrudDeleteAction
+  // ICrudGetFlightByDateOriginDestination
 } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';

@@ -18,6 +18,7 @@ import Summary from 'app/modules/summary/summary';
 import PassengerInfo from 'app/modules/passenger-info/passenger-info';
 import Payment from 'app/modules/payment/payment';
 import Confirmation from 'app/modules/confirmation/confirmation';
+import MyTrips from 'app/modules/mytrips/mytrips';
 
 // tslint:disable:space-in-parens
 const Account = Loadable({
@@ -45,6 +46,7 @@ const Routes = () => (
       <ErrorBoundaryRoute path="/passengerinfo" component={PassengerInfo} />
       <ErrorBoundaryRoute path="/payment" component={Payment} />
       <ErrorBoundaryRoute path="/confirmation" component={Confirmation} />
+      <ErrorBoundaryRoute path="/mytrips" component={MyTrips} />
       <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
       <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
       <PrivateRoute path="/entity" component={Entities} hasAnyAuthorities={[AUTHORITIES.USER]} />
