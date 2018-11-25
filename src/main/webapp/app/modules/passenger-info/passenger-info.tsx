@@ -11,35 +11,38 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
   state = {
     form: null
   };
-  
+
   componentDidMount() {
     this.props.getSession();
   }
 
   render() {
-    return (
-      <Container>
+    const nPassengers = this.props.nPassengers;
+    const forms = [];
+
+    for (let i = 0; i < nPassengers; i++) {
+      forms.push(
+        <Container>
         <Row>
           <h1>Passenger Info Page</h1>
         </Row>
         <Row>
-          {/* <Card className="tripCard"> */}
-            <AvForm ref={c => (this.state.form = c)} id="passenger-info-form">
+          <AvForm ref={c => (this.state.form = c)} id="passenger-info-form">
             <Row>
               <Col>
-                <AvField 
+                <AvField
                   name="passengerFirstName"
                   label="Passenger First Name"
                   placeholder="Toacy"
                 />
               </Col>
               <Col>
-                <AvField 
+                <AvField
                     name="passengerLastName"
                     label="Passenger Last Name"
                     placeholder="Oliveira"
                 />
-              </Col>  
+              </Col>
             </Row>
             <Row>
               <Col xs="4">
@@ -65,7 +68,7 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
                   <option value="passport">Passport</option>
                   <option value="id">National ID</option>
                 </AvField>
-              </Col>      
+              </Col>
               <Col xs="5">
                 <AvField
                   name="documentNumber"
@@ -79,11 +82,11 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
                 name="birthDate"
                 label="Birth Date"
                 type="date"
-                />                
+                />
               </Col>
               <Col>
                 <AvField
-                    name="passengerGender" 
+                    name="passengerGender"
                     label="Gender"
                     type="select"
                 >
@@ -105,14 +108,14 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
                 <AvField
                   name="address"
                   label="Address"
-                />                
+                />
               </Col>
               <Col xs="3">
                 <AvField
                   name="zipcode"
                   label="Zip Code"
-                />                
-              </Col>              
+                />
+              </Col>
             </Row>
             <Row>
               <Col>
@@ -120,16 +123,16 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
                   name="email"
                   label="E-mail"
                   placeholder="E-mail address"
-                />                
+                />
               </Col>
               <Col>
                 <AvField
                   name="emailConfirmation"
                   label="E-mail Confirmation"
                   placeholder="Please confirm your e-mail."
-                />                
-              </Col>              
-            </Row>   
+                />
+              </Col>
+            </Row>
             <br/>
             <Row>
               <Col>
@@ -142,100 +145,24 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
                 Submit information and go to payment
               </Button>
               </Col>
-            </Row>  
-            </AvForm>
-          {/* </Card> */}
+            </Row>
+          </AvForm>
         </Row>
       </Container>
-
-  // <Col md={{ size: 8, offset: 2 }}>
-  //     <Card className="tripCard">
-  //       <AvForm ref={c => (this.state.form = c)} id="trip-form" onValidSubmit={this.handleValidSubmit}>
-  //         <Row>
-  //           <Col>
-  //             <AvField
-  //               name="origin"
-  //               label="Origin"
-  //               placeholder="Rio de Janeiro"
-  //               type="search"
-  //               validate={{
-  //                 required: { value: true, errorMessage: 'Origin not provided!' },
-  //                 minLength: { value: 3, errorMessage: 'Origin must have more than 3 characters.' },
-  //                 maxLength: { value: 30, errorMessage: 'Origin name is too big!' },
-  //                 myValidation: originDestinationValidation
-  //               }}
-  //               onChange={this.validateDestination}
-  //             />
-  //           </Col>
-  //           <Col>
-  //             <AvField
-  //               name="destination"
-  //               label="Destination"
-  //               placeholder="Paris"
-  //               type="search"
-  //               validate={{
-  //                 required: { value: true, errorMessage: 'Destination not provided!' },
-  //                 minLength: { value: 3, errorMessage: 'Destination must have more than 3 characters.' },
-  //                 maxLength: { value: 30, errorMessage: 'Destination name is too big!' },
-  //                 myValidation: originDestinationValidation
-  //               }}
-  //               onChange={this.validateOrigin}
-  //             />
-  //           </Col>
-  //           <Col>
-  //             <AvField
-  //               name="departDate"
-  //               label="Departure Date"
-  //               placeholder="date placeholder"
-  //               type="date"
-  //               validate={{
-  //                 required: { value: true, errorMessage: 'A departure date is required!' },
-  //                 dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
-  //                 myValidation: returnAfterDepart
-  //               }}
-  //               onChange={this.validateReturn}
-  //             />
-  //           </Col>
-  //           <Col>
-  //             <AvField
-  //               name="returnDate"
-  //               label="Return Date"
-  //               placeholder="date placeholder"
-  //               type="date"
-  //               validate={{
-  //                 required: { value: true, errorMessage: 'A return date is required!' },
-  //                 dateRange: { start: { value: 0, units: 'years' }, end: { value: 1, units: 'years' } },
-  //                 myValidation: returnAfterDepart
-  //               }}
-  //               onChange={this.validateDeparture}
-  //             />
-  //           </Col>
-  //           <Col>
-  //             <AvField
-  //               name="nPassengers"
-  //               label="Number of Passengers"
-  //               type="number"
-  //               validate={{
-  //                 required: { value: true, errorMessage: 'Must provide number of passengers.' }
-  //               }}
-  //             />
-  //           </Col>
-  //         </Row>
-  //         <Button id="trip-submit" color="primary" type="submit">
-  //           Start planning!
-  //         </Button>
-  //       </AvForm>
-  //     </Card>
-  //   </Col>     
-
-
+      );
+    }
+    return (
+      <div>
+        { forms }
+      </div>
     );
   }
 }
 
 const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
-  isAuthenticated: storeState.authentication.isAuthenticated
+  isAuthenticated: storeState.authentication.isAuthenticated,
+  nPassengers: storeState.home.nPassengers
 });
 
 const mapDispatchToProps = {
