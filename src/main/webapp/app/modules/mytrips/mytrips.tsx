@@ -1,7 +1,9 @@
+import './mytrips.scss';
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
+import { Button, Col, Row, Table, Card, CardBody, CardTitle } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
 import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,7 +30,7 @@ export class MyTrips extends React.Component<IMyTripsProps> {
     const { seatList } = this.props;
     const executiveSeats = [];
     for (const seat of seatList) {
-      if (seat.flightReservation.id === resId && seat.isExecutive) {
+      if (seat.flightReservation && seat.flightReservation.id === resId && seat.isExecutive) {
         executiveSeats.push(String(seat.row) + String(seat.number));
       }
     }
@@ -39,7 +41,7 @@ export class MyTrips extends React.Component<IMyTripsProps> {
     const { seatList } = this.props;
     const economicSeats = [];
     for (const seat of seatList) {
-      if (seat.flightReservation.id === resId && !seat.isExecutive) {
+      if (seat.flightReservation && seat.flightReservation.id === resId && !seat.isExecutive) {
         economicSeats.push(String(seat.row) + String(seat.number));
       }
     }
@@ -59,46 +61,75 @@ export class MyTrips extends React.Component<IMyTripsProps> {
         <h2 id="trip-heading">My Trips</h2>
         <div className="table-responsive">
           {tripList.map((trip, i) => (
-            <div>
-              Trip ID: {trip.id}
-              Number Of People: {trip.numberOfPeople}
-              Departure Date: <TextFormat type="date" value={trip.departureDate} format={APP_LOCAL_DATE_FORMAT} />
-              Return Date: <TextFormat type="date" value={trip.returnDate} format={APP_LOCAL_DATE_FORMAT} />
-              Origin: {trip.origin}
-              Destination: {trip.destination}
-              {flightReservationsList.map((freservation, j) => {
-                if (freservation.trip && freservation.trip.id === trip.id) {
-                  const executiveSeats = this.getExecutiveSeats(freservation.id);
-                  const economicSeats = this.getEconomicSeats(freservation.id);
-                  return (
-                    <div>
-                      Reservation ID: {freservation.id}
-                      Executive Seats: {freservation.numberOfExecutive} {executiveSeats}
-                      Economic Seats: {freservation.numberOfEconomic} {economicSeats}
-                      Total Price: {freservation.totalPrice}
-                      Flight: {freservation.flight.company} {freservation.flight.flightCode}
-                      From: {freservation.flight.origin} {freservation.flight.departAirport} {freservation.flight.departureDate}
-                      To: {freservation.flight.destination} {freservation.flight.arrivalAirport} {freservation.flight.arrivalDate}
-                    </div>
-                  );
-                }
-              })}
-              {hotelReservationsList.map((hreservation, k) => {
-                if (hreservation.trip && hreservation.trip.id === trip.id) {
-                  const currentHotel = this.getHotel(hreservation);
-                  return (
-                    <div>
-                      HReservation ID: {hreservation.id}
-                      Hotel Name: {currentHotel.name}
-                      Address: {currentHotel.address}
-                      Checkin Date: {hreservation.checkinDate}
-                      Checkout Date: {hreservation.checkoutDate}
-                      Price: {hreservation.totalPrice}
-                    </div>
-                  );
-                }
-              })}
-            </div>
+            <Card className="trip-card">
+              <CardTitle>Trip ID: {trip.id}</CardTitle>
+              <CardBody>
+                <Row className="section-title">Trip Information</Row>
+                <Row>
+                  <Col>Number Of People: {trip.numberOfPeople}</Col>
+                  <Col>
+                    Departure Date: <TextFormat type="date" value={trip.departureDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </Col>
+                  <Col>
+                    Return Date: <TextFormat type="date" value={trip.returnDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </Col>
+                  <Col>Origin: {trip.origin}</Col>
+                  <Col>Destination: {trip.destination}</Col>
+                </Row>
+              </CardBody>
+              <CardBody>
+                <Row className="section-title">Flight Reservations</Row>
+                {flightReservationsList.map((freservation, j) => {
+                  if (freservation.trip && freservation.trip.id === trip.id) {
+                    const executiveSeats = this.getExecutiveSeats(freservation.id);
+                    const economicSeats = this.getEconomicSeats(freservation.id);
+                    return (
+                      <Card className="reservation-card">
+                        <CardTitle>Reservation ID: {freservation.id}</CardTitle>
+                        <CardBody>
+                          <Col>
+                            Executive Seats: {freservation.numberOfExecutive} {executiveSeats}
+                          </Col>
+                          <Col>
+                            Economic Seats: {freservation.numberOfEconomic} {economicSeats}
+                          </Col>
+                          <Col>Total Price: {freservation.totalPrice}</Col>
+                          <Col>
+                            Flight: {freservation.flight.company} {freservation.flight.flightCode}
+                          </Col>
+                          <Col>
+                            From: {freservation.flight.origin} {freservation.flight.departAirport} {freservation.flight.departureDate}
+                          </Col>
+                          <Col>
+                            To: {freservation.flight.destination} {freservation.flight.arrivalAirport} {freservation.flight.arrivalDate}
+                          </Col>
+                        </CardBody>
+                      </Card>
+                    );
+                  }
+                })}
+              </CardBody>
+              <CardBody>
+                <Row className="section-title">Hotel Reservations</Row>
+                {hotelReservationsList.map((hreservation, k) => {
+                  if (hreservation.trip && hreservation.trip.id === trip.id) {
+                    const currentHotel = this.getHotel(hreservation);
+                    return (
+                      <Card className="reservation-card">
+                        <CardTitle>Reservation ID: {hreservation.id}</CardTitle>
+                        <CardBody>
+                          <Col>Hotel Name: {currentHotel.name}</Col>
+                          <Col>Address: {currentHotel.address}</Col>
+                          <Col>Checkin Date: {hreservation.checkinDate}</Col>
+                          <Col>Checkout Date: {hreservation.checkoutDate}</Col>
+                          <Col>Price: {hreservation.totalPrice}</Col>
+                        </CardBody>
+                      </Card>
+                    );
+                  }
+                })}
+              </CardBody>
+            </Card>
           ))}
         </div>
       </div>
