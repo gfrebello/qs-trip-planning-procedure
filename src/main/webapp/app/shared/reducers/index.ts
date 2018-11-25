@@ -10,6 +10,7 @@ import userManagement, { UserManagementState } from 'app/modules/administration/
 import home, { PlanState } from 'app/modules/home/home.reducer';
 import reservations, { ReservationsState } from 'app/modules/planner/planner.reducer';
 import confirmation, { ConfirmationState } from 'app/modules/confirmation/confirmation.reducer';
+import mytrips, { MyTripsState } from 'app/modules/mytrips/mytrips.reducer';
 import register, { RegisterState } from 'app/modules/account/register/register.reducer';
 import activate, { ActivateState } from 'app/modules/account/activate/activate.reducer';
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
@@ -79,6 +80,7 @@ export interface IRootState {
   readonly home: PlanState;
   readonly reservations: ReservationsState;
   readonly confirmation: ConfirmationState;
+  readonly mytrips: MyTripsState;
   readonly trip: TripState;
   readonly flightReservation: FlightReservationState;
   readonly flight: FlightState;
@@ -109,6 +111,7 @@ const rootReducer = combineReducers<IRootState>({
   home,
   reservations,
   confirmation,
+  mytrips,
   trip,
   flightReservation,
   flight,

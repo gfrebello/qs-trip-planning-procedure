@@ -5,7 +5,9 @@ import { Row, Col, Button, Card, CardHeader, CardBody, CardText, ListGroup, List
 import { getSession } from 'app/shared/reducers/authentication';
 import { Link } from 'react-router-dom';
 import { createTrip } from './confirmation.reducer';
+import { reset } from '../planner/planner.reducer';
 import { number } from 'prop-types';
+import hotel from 'app/entities/hotel/hotel';
 
 export interface IConfirmationProps extends StateProps, DispatchProps {}
 
@@ -44,7 +46,23 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
       };
       flightReservationEntities.push({ flightReservation: fResEnt, reservationSeats: seatEntities });
     }
-    this.props.createTrip(tripEntity, flightReservationEntities);
+    const hotelReservationEntities = [];
+    for (const hotelRes of this.props.hotelReservations) {
+      const roomEntities = [];
+      for (const roomRes of hotelRes.reservedRooms) {
+        roomEntities.push(roomRes);
+      }
+      const hotelResEnt = {
+        numberOfPeople: this.props.numberOfPeople,
+        checkinDate: hotelRes.checkinDate,
+        checkoutDate: hotelRes.checkoutDate,
+        totalPrice: hotelRes.price,
+        hotelRooms: roomEntities
+      };
+      hotelReservationEntities.push({ hotelReservation: hotelResEnt });
+    }
+    this.props.createTrip(tripEntity, flightReservationEntities, hotelReservationEntities);
+    this.props.reset();
   }
 
   render() {
@@ -62,6 +80,7 @@ const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
   isAuthenticated: storeState.authentication.isAuthenticated,
   flightReservations: storeState.reservations.reservedFlights,
+  hotelReservations: storeState.reservations.reservedHotels,
   numberOfPeople: storeState.home.nPassengers,
   departureDate: storeState.home.departDate,
   returnDate: storeState.home.returnDate,
@@ -71,7 +90,8 @@ const mapStateToProps = storeState => ({
 
 const mapDispatchToProps = {
   getSession,
-  createTrip
+  createTrip,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

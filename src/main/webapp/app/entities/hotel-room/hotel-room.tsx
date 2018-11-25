@@ -51,9 +51,6 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                   <Translate contentKey="tripPlanningApp.hotelRoom.price">Price</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="tripPlanningApp.hotelRoom.hotelReservation">Hotel Reservation</Translate>
-                </th>
-                <th>
                   <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
                 </th>
                 <th />
@@ -71,13 +68,6 @@ export class HotelRoom extends React.Component<IHotelRoomProps> {
                   <td>{hotelRoom.isReserved ? 'true' : 'false'}</td>
                   <td>{hotelRoom.roomType}</td>
                   <td>{hotelRoom.price}</td>
-                  <td>
-                    {hotelRoom.hotelReservation ? (
-                      <Link to={`hotel-reservation/${hotelRoom.hotelReservation.id}`}>{hotelRoom.hotelReservation.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
                   <td>{hotelRoom.hotel ? <Link to={`hotel/${hotelRoom.hotel.id}`}>{hotelRoom.hotel.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

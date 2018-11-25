@@ -12,15 +12,20 @@
         {
             "fieldName": "checkoutDate",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "totalPrice",
+            "fieldType": "Float"
         }
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipValidateRules": "required",
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "hotelReservation",
             "relationshipName": "hotelRoom",
             "otherEntityName": "hotelRoom",
-            "otherEntityRelationshipName": "hotelReservation"
+            "otherEntityField": "id",
+            "ownerSide": true
         },
         {
             "relationshipType": "many-to-one",

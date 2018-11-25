@@ -1,3 +1,5 @@
+import './summary.scss';
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Button, Card, CardHeader, CardBody, CardText, ListGroup, ListGroupItem } from 'reactstrap';
@@ -27,6 +29,9 @@ export class SummaryPage extends React.Component<ISummaryProps> {
     for (const reservation of reservedFlights) {
       total += reservation.price;
     }
+    for (const reservation of reservedHotels) {
+      total += reservation.price;
+    }
     this.setState({
       totalPrice: total
     });
@@ -38,11 +43,11 @@ export class SummaryPage extends React.Component<ISummaryProps> {
     if (reservedFlights.length > 0) {
       output.push(
         <Row>
-          <Col xs="2">Flight</Col>
-          <Col xs="2">Departure</Col>
-          <Col xs="2">Arrival</Col>
-          <Col xs="2">Seats</Col>
-          <Col xs="4">Price</Col>
+          <Col>Flight</Col>
+          <Col>Departure</Col>
+          <Col>Arrival</Col>
+          <Col>Seats</Col>
+          <Col>Price</Col>
         </Row>
       );
       for (const reservation of reservedFlights) {
@@ -61,7 +66,7 @@ export class SummaryPage extends React.Component<ISummaryProps> {
         output.push(
           <CardText>
             <Row>
-              <Col xs="8">
+              <Col>
                 <ListGroupItem>
                   <Row>
                     <Col>
@@ -89,10 +94,10 @@ export class SummaryPage extends React.Component<ISummaryProps> {
                       </Row>
                     </Col>
                     <Col>{`${seats}`}</Col>
+                    <Col>{`R$${price}`}</Col>
                   </Row>
                 </ListGroupItem>
               </Col>
-              <Col xs="4">{`R$${price}`}</Col>
             </Row>
           </CardText>
         );
@@ -103,8 +108,52 @@ export class SummaryPage extends React.Component<ISummaryProps> {
     return output;
   };
 
+  renderReservedHotels = () => {
+    const { reservedHotels } = this.props;
+    const output = [];
+    if (reservedHotels.length > 0) {
+      output.push(
+        <Row>
+          <Col>Hotel</Col>
+          <Col>Address</Col>
+          <Col>Check-In Date</Col>
+          <Col>Check-Out Date</Col>
+          <Col>Total Price</Col>
+        </Row>
+      );
+      for (const reservation of reservedHotels) {
+        const { name, city, address } = reservation.hotel;
+        const { checkinDate, checkoutDate, price } = reservation;
+        output.push(
+          <CardText>
+            <ListGroupItem>
+              <Row>
+                <Col>{name}</Col>
+                <Col>
+                  <Row>
+                    <Col>{city}</Col>
+                  </Row>
+                  <Row>
+                    <Col>{address}</Col>
+                  </Row>
+                </Col>
+                <Col>{checkinDate}</Col>
+                <Col>{checkoutDate}</Col>
+                <Col>{price}</Col>
+              </Row>
+            </ListGroupItem>
+          </CardText>
+        );
+      }
+    } else {
+      output.push(<CardText>No hotels reserved</CardText>);
+    }
+    return output;
+  };
+
   render() {
     const flights = this.renderReservedFlights();
+    const hotels = this.renderReservedHotels();
 
     return (
       <div>
@@ -120,23 +169,24 @@ export class SummaryPage extends React.Component<ISummaryProps> {
         </div>
         <Row>
           <Col>
-            <Card>
+            <Card className="trip-card">
               <CardHeader>Flights</CardHeader>
-              <CardBody>{flights}</CardBody>
+              <CardBody className="reservation-card">{flights}</CardBody>
               <CardHeader>Hotels</CardHeader>
+              <CardBody className="reservation-card">{hotels}</CardBody>
             </Card>
           </Col>
         </Row>
         <Row>
-          <Col>
+          <Col className="total-price-text">
             Total trip price: R$
             {this.state.totalPrice}
           </Col>
         </Row>
-        <Button tag={Link} to="/planner" color="primary">
+        <Button className="trip-back-button" tag={Link} to="/planner" color="primary">
           Go back to Trip Planning page
         </Button>
-        <Button tag={Link} to="/passengerinfo" color="primary">
+        <Button className="trip-next-button" tag={Link} to="/passengerinfo" color="primary">
           Go to user info page
         </Button>
       </div>

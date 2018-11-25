@@ -103,6 +103,19 @@ public class SeatResource {
     }
 
     /**
+     * GET  /seats/flight-reservations/:id : get the flightReservations by trip id.
+     *
+     * @param id the id of the flightReservation's seats to retrieve
+     * @return the ResponseEntity with status 200 (OK) and the list of flightReservations in body
+     */
+    @GetMapping("/seats/flight-reservations/{id}")
+    @Timed
+    public List<Seat> getSeatsByFlightReservation(@PathVariable Long id) {
+        log.debug("REST request to get Seats by FlightReservation Id");
+        return seatRepository.findByFlightReservation(id);
+    }
+
+    /**
      * DELETE  /seats/:id : delete the "id" seat.
      *
      * @param id the id of the seat to delete

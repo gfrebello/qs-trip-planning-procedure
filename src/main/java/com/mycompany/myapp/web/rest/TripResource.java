@@ -86,7 +86,7 @@ public class TripResource {
     @Timed
     public List<Trip> getAllTrips() {
         log.debug("REST request to get all Trips");
-        return tripRepository.findAll();
+        return tripRepository.findByUserIsCurrentUser();
     }
 
     /**

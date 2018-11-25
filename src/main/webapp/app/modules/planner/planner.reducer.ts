@@ -5,25 +5,29 @@ export const ACTION_TYPES = {
   RESET_CAR_RENTAL_RESERVATIONS: 'reservations/RESET_CAR_RENTAL_RESERVATIONS',
   RESET_INSURANCE_RESERVATIONS: 'reservations/RESET_INSURANCE_RESERVATIONS',
   ADD_SELECTED_FLIGHT: 'reservations/ADD_SELECTED_FLIGHT',
+  ADD_SELECTED_HOTEL: 'reservations/ADD_SELECTED_HOTEL',
   UPDATE_PASSENGERS_EXECUTIVE: 'reservations/UPDATE_PASSENGERS_EXECUTIVE',
   UPDATE_PASSENGERS_ECONOMIC: 'reservations/UPDATE_PASSENGERS_ECONOMIC',
-  UPDATE_R_SELECTED: 'reservations/UPDATE_R_SELECTED'
+  UPDATE_R_SELECTED: 'reservations/UPDATE_R_SELECTED',
+  UPDATE_H_SELECTED: 'reservations/UPDATE_H_SELECTED',
+  RESET: 'reservations/RESET'
 };
 
 const initialState = {
   // reservedFlights: [] as ReadonlyArray<IFlightReservation>,
   reservedFlights: [],
   // reservedHotels: [] as ReadonlyArray<IHotelReservation>,
-  reservedHotels: ['test'],
+  reservedHotels: [],
   // chosenAttractions: [] as ReadonlyArray<IChosenAttraction>,
-  chosenAttractions: ['test'],
+  chosenAttractions: [],
   // rentedCars: [] as ReadonlyArray<ICarRental>,
-  rentedCars: ['test'],
+  rentedCars: [],
   // insurances: [] as ReadonlyArray<IInsurance>
-  boughtInsurances: ['test'],
+  boughtInsurances: [],
   nPassengersEconomic: 0,
   nPassengersExecutive: 0,
-  rSelected: -1
+  rSelected: -1,
+  hSelected: -1
 };
 
 export type ReservationsState = Readonly<typeof initialState>;
@@ -64,6 +68,20 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
           { flight: action.payload.selectedFlight, reservedSeats: action.payload.reservedSeats, price: action.payload.price }
         ]
       };
+    case ACTION_TYPES.ADD_SELECTED_HOTEL:
+      return {
+        ...state,
+        reservedHotels: [
+          ...state.reservedHotels,
+          {
+            hotel: action.payload.selectedHotel,
+            reservedRooms: action.payload.reservedRooms,
+            price: action.payload.price,
+            checkinDate: action.payload.checkinDate,
+            checkoutDate: action.payload.checkoutDate
+          }
+        ]
+      };
     case ACTION_TYPES.UPDATE_PASSENGERS_ECONOMIC:
       return {
         ...state,
@@ -78,6 +96,15 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
       return {
         ...state,
         rSelected: action.payload.rSelected
+      };
+    case ACTION_TYPES.UPDATE_H_SELECTED:
+      return {
+        ...state,
+        hSelected: action.payload.hSelected
+      };
+    case ACTION_TYPES.RESET:
+      return {
+        ...initialState
       };
     default:
       return state;
@@ -110,6 +137,11 @@ export const addSelectedFlight = (selectedFlight, reservedSeats, price) => ({
   payload: { selectedFlight, reservedSeats, price }
 });
 
+export const addSelectedHotel = (selectedHotel, reservedRooms, price, checkinDate, checkoutDate) => ({
+  type: ACTION_TYPES.ADD_SELECTED_HOTEL,
+  payload: { selectedHotel, reservedRooms, price, checkinDate, checkoutDate }
+});
+
 export const updatePassengersEconomic = nPassengersEconomic => ({
   type: ACTION_TYPES.UPDATE_PASSENGERS_ECONOMIC,
   payload: { nPassengersEconomic }
@@ -123,4 +155,13 @@ export const updatePassengersExecutive = nPassengersExecutive => ({
 export const updateRSelected = rSelected => ({
   type: ACTION_TYPES.UPDATE_R_SELECTED,
   payload: { rSelected }
+});
+
+export const updateHSelected = hSelected => ({
+  type: ACTION_TYPES.UPDATE_H_SELECTED,
+  payload: { hSelected }
+});
+
+export const reset = () => ({
+  type: ACTION_TYPES.RESET
 });

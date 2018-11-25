@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -8,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -37,14 +40,15 @@ public class HotelRoom implements Serializable {
     @Column(name = "price")
     private Float price;
 
-    @ManyToOne
-    @JsonIgnoreProperties("hotelRooms")
-    private HotelReservation hotelReservation;
-
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("")
     private Hotel hotel;
+
+    @ManyToMany(mappedBy = "hotelRooms")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<HotelReservation> hotelReservations = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -107,19 +111,6 @@ public class HotelRoom implements Serializable {
         this.price = price;
     }
 
-    public HotelReservation getHotelReservation() {
-        return hotelReservation;
-    }
-
-    public HotelRoom hotelReservation(HotelReservation hotelReservation) {
-        this.hotelReservation = hotelReservation;
-        return this;
-    }
-
-    public void setHotelReservation(HotelReservation hotelReservation) {
-        this.hotelReservation = hotelReservation;
-    }
-
     public Hotel getHotel() {
         return hotel;
     }
@@ -131,6 +122,31 @@ public class HotelRoom implements Serializable {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public Set<HotelReservation> getHotelReservations() {
+        return hotelReservations;
+    }
+
+    public HotelRoom hotelReservations(Set<HotelReservation> hotelReservations) {
+        this.hotelReservations = hotelReservations;
+        return this;
+    }
+
+    public HotelRoom addHotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservations.add(hotelReservation);
+        hotelReservation.getHotelRooms().add(this);
+        return this;
+    }
+
+    public HotelRoom removeHotelReservation(HotelReservation hotelReservation) {
+        this.hotelReservations.remove(hotelReservation);
+        hotelReservation.getHotelRooms().remove(this);
+        return this;
+    }
+
+    public void setHotelReservations(Set<HotelReservation> hotelReservations) {
+        this.hotelReservations = hotelReservations;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

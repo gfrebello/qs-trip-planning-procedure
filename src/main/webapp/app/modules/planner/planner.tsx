@@ -15,6 +15,9 @@ import CarRentalCard from './car-rental-card';
 import InsuranceCard from './insurance-card';
 import { Link } from 'react-router-dom';
 import Seatmap from '../seatmap/flight-seatmap';
+import RoomSelectionPage from '../roomSelection/roomSelection';
+
+import { reset } from './planner.reducer';
 
 export interface IPlannerProps extends StateProps, DispatchProps {}
 
@@ -22,6 +25,7 @@ export class PlannerPage extends React.Component<IPlannerProps> {
   state = {
     showModal: false,
     showSeatmap: false,
+    showRoomSelection: false,
     showFlightList: true,
     showHotelList: false,
     showAttractionList: false,
@@ -35,6 +39,19 @@ export class PlannerPage extends React.Component<IPlannerProps> {
   componentDidMount() {
     this.props.getSession();
     this.props.resetRedirect();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { origin, destination, departDate, returnDate, nPassengers } = this.props;
+    if (
+      nextProps.origin !== origin ||
+      nextProps.destination !== destination ||
+      nextProps.departDate !== departDate ||
+      nextProps.returnDate !== returnDate ||
+      nextProps.nPassengers !== nPassengers
+    ) {
+      this.props.reset();
+    }
   }
 
   componentDidUpdate(prevProps: IPlannerProps, prevState) {
@@ -55,6 +72,13 @@ export class PlannerPage extends React.Component<IPlannerProps> {
   };
   handleOpenSeatmap = rSelected => {
     this.setState({ showSeatmap: true });
+  };
+
+  handleCloseRoomSelection = () => {
+    this.setState({ showRoomSelection: false });
+  };
+  handleOpenRoomSelection = () => {
+    this.setState({ showRoomSelection: true });
   };
 
   handleShowFlights = () => {
@@ -129,13 +153,14 @@ export class PlannerPage extends React.Component<IPlannerProps> {
             <li>Number of Passengers: {nPassengers}</li>
           </ul>
 
-          <Button color="primary" onClick={this.handleOpen}>
+          <Button className="trip-button" color="primary" onClick={this.handleOpen}>
             Edit Itinerary
           </Button>
           <br />
 
           <PlannerEditModal showModal={this.state.showModal} handleClose={this.handleClose} />
           <Seatmap showSeatmap={this.state.showSeatmap} handleClose={this.handleCloseSeatmap} />
+          <RoomSelectionPage showRoomSelection={this.state.showRoomSelection} handleClose={this.handleCloseRoomSelection} />
 
           <h2>Plan your trip</h2>
           <div>
@@ -171,7 +196,7 @@ export class PlannerPage extends React.Component<IPlannerProps> {
                 {this.state.showFlightList ? (
                   <FlightList handleOpenSeatmap={this.handleOpenSeatmap} />
                 ) : this.state.showHotelList ? (
-                  <HotelList />
+                  <HotelList handleOpenRoomSelection={this.handleOpenRoomSelection} />
                 ) : (
                   'Not implemented yet'
                 )}
@@ -180,7 +205,7 @@ export class PlannerPage extends React.Component<IPlannerProps> {
           </div>
           <Row>
             <Col>
-              <Button tag={Link} to="/summary" color="primary">
+              <Button className="trip-next-button" tag={Link} to="/summary" color="primary">
                 Go to Trip Summary Page
               </Button>
             </Col>
@@ -203,7 +228,8 @@ const mapStateToProps = storeState => ({
 
 const mapDispatchToProps = {
   getSession,
-  resetRedirect
+  resetRedirect,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

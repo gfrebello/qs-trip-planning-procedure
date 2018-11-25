@@ -33,12 +33,27 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="total_price" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
             <column name="trip_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+        
+        <createTable tableName="hotel_reservation_hotel_room">
+            <column name="hotel_rooms_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hotel_reservations_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="hotel_reservations_id, hotel_rooms_id" tableName="hotel_reservation_hotel_room"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

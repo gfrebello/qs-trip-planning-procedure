@@ -20,17 +20,18 @@
     ],
     "relationships": [
         {
-            "relationshipName": "hotelReservation",
-            "otherEntityName": "hotelReservation",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
             "relationshipName": "hotel",
             "otherEntityName": "hotel",
             "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "hotelReservation",
+            "otherEntityName": "hotelReservation",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "hotelRoom"
         }
     ],
     "changelogDate": "20181027014014",

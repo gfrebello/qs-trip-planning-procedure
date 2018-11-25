@@ -53,10 +53,6 @@ export class HotelRoomDetail extends React.Component<IHotelRoomDetailProps> {
             </dt>
             <dd>{hotelRoomEntity.price}</dd>
             <dt>
-              <Translate contentKey="tripPlanningApp.hotelRoom.hotelReservation">Hotel Reservation</Translate>
-            </dt>
-            <dd>{hotelRoomEntity.hotelReservation ? hotelRoomEntity.hotelReservation.id : ''}</dd>
-            <dt>
               <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
             </dt>
             <dd>{hotelRoomEntity.hotel ? hotelRoomEntity.hotel.name : ''}</dd>
