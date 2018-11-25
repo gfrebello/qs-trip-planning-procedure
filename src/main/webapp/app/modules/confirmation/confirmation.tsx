@@ -6,6 +6,7 @@ import { getSession } from 'app/shared/reducers/authentication';
 import { Link } from 'react-router-dom';
 import { createTrip } from './confirmation.reducer';
 import { number } from 'prop-types';
+import hotel from 'app/entities/hotel/hotel';
 
 export interface IConfirmationProps extends StateProps, DispatchProps {}
 
@@ -44,7 +45,21 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
       };
       flightReservationEntities.push({ flightReservation: fResEnt, reservationSeats: seatEntities });
     }
-    this.props.createTrip(tripEntity, flightReservationEntities);
+    const hotelReservationEntities = [];
+    for (const hotelRes of this.props.hotelReservations) {
+      const roomEntities = [];
+      for (const roomRes of hotelRes.reservedRooms) {
+        roomEntities.push({ ...roomRes, isReserved: true });
+      }
+      const hotelResEnt = {
+        numberOfPeople: this.props.numberOfPeople,
+        checkinDate: hotelRes.checkinDate,
+        checkoutDate: hotelRes.checkoutDate
+      };
+      hotelReservationEntities.push({ hotelReservation: hotelResEnt, reservationRooms: roomEntities });
+    }
+
+    this.props.createTrip(tripEntity, flightReservationEntities, hotelReservationEntities);
   }
 
   render() {
@@ -62,6 +77,7 @@ const mapStateToProps = storeState => ({
   account: storeState.authentication.account,
   isAuthenticated: storeState.authentication.isAuthenticated,
   flightReservations: storeState.reservations.reservedFlights,
+  hotelReservations: storeState.reservations.reservedHotels,
   numberOfPeople: storeState.home.nPassengers,
   departureDate: storeState.home.departDate,
   returnDate: storeState.home.returnDate,

@@ -55,7 +55,7 @@ export default (state: ConfirmationState = initialState, action): ConfirmationSt
 };
 
 // Actions
-export const createTrip = (tripEntity, flightReservationEntities) => async dispatch => {
+export const createTrip = (tripEntity, flightReservationEntities, hotelReservationEntities) => async dispatch => {
   axios
     .post('api/trips', cleanEntity(tripEntity))
     .then(tripResponse => {
@@ -73,8 +73,24 @@ export const createTrip = (tripEntity, flightReservationEntities) => async dispa
               ...seatEnt,
               flightReservation: { id: flightResID }
             };
-            console.log(seatEntity);
             axios.put('api/seats', cleanEntity(seatEntity));
+          }
+        });
+      }
+      for (const hResEnt of hotelReservationEntities) {
+        const hRes = hResEnt.hotelReservation;
+        const hResEntity = {
+          ...hRes,
+          trip: { id: tripID }
+        };
+        axios.post('api/hotel-reservations', cleanEntity(hResEntity)).then(hotelReservationResponse => {
+          const hotelResID = hotelReservationResponse.data.id;
+          for (const roomEnt of hResEnt.reservationRooms) {
+            const roomEntity = {
+              ...roomEnt,
+              hotelReservation: { id: hotelResID }
+            };
+            axios.put('api/hotel-rooms', cleanEntity(roomEntity));
           }
         });
       }
