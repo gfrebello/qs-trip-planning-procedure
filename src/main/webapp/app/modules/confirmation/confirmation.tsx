@@ -49,14 +49,16 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
     for (const hotelRes of this.props.hotelReservations) {
       const roomEntities = [];
       for (const roomRes of hotelRes.reservedRooms) {
-        roomEntities.push({ ...roomRes, isReserved: true });
+        roomEntities.push(roomRes);
       }
       const hotelResEnt = {
         numberOfPeople: this.props.numberOfPeople,
         checkinDate: hotelRes.checkinDate,
-        checkoutDate: hotelRes.checkoutDate
+        checkoutDate: hotelRes.checkoutDate,
+        totalPrice: hotelRes.price,
+        hotelRooms: roomEntities
       };
-      hotelReservationEntities.push({ hotelReservation: hotelResEnt, reservationRooms: roomEntities });
+      hotelReservationEntities.push({ hotelReservation: hotelResEnt });
     }
 
     this.props.createTrip(tripEntity, flightReservationEntities, hotelReservationEntities);

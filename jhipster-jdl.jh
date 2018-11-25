@@ -25,7 +25,8 @@ entity Flight {
 entity HotelReservation {
     numberOfPeople Integer,
     checkinDate LocalDate,
-    checkoutDate LocalDate
+    checkoutDate LocalDate,
+	totalPrice Float
 }
 entity Hotel {
     name String,
@@ -85,13 +86,13 @@ relationship OneToMany {
     Trip to Insurance,
     Trip to CarRental,
     Flight to Seat,
-    FlightReservation to Seat,
-    HotelReservation{hotelRoom(roomType) required} to HotelRoom
+    FlightReservation to Seat
 }
 // relationship OneToOne {
 // }
-// relationship ManyToMany {
-// }
+relationship ManyToMany {
+	HotelReservation{hotelRoom} to HotelRoom{hotelReservation}
+}
 relationship ManyToOne {
     Trip{user(login) required} to User
 	FlightReservation{flight(flightCode) required} to Flight,

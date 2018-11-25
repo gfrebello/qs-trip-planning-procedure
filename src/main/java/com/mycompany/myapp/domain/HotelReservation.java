@@ -1,12 +1,10 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -38,8 +36,14 @@ public class HotelReservation implements Serializable {
     @Column(name = "checkout_date")
     private LocalDate checkoutDate;
 
-    @OneToMany(mappedBy = "hotelReservation")
+    @Column(name = "total_price")
+    private Float totalPrice;
+
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "hotel_reservation_hotel_room",
+               joinColumns = @JoinColumn(name = "hotel_reservations_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "hotel_rooms_id", referencedColumnName = "id"))
     private Set<HotelRoom> hotelRooms = new HashSet<>();
 
     @ManyToOne
@@ -94,6 +98,19 @@ public class HotelReservation implements Serializable {
         this.checkoutDate = checkoutDate;
     }
 
+    public Float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public HotelReservation totalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
+        return this;
+    }
+
+    public void setTotalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public Set<HotelRoom> getHotelRooms() {
         return hotelRooms;
     }
@@ -105,13 +122,13 @@ public class HotelReservation implements Serializable {
 
     public HotelReservation addHotelRoom(HotelRoom hotelRoom) {
         this.hotelRooms.add(hotelRoom);
-        hotelRoom.setHotelReservation(this);
+        hotelRoom.getHotelReservations().add(this);
         return this;
     }
 
     public HotelReservation removeHotelRoom(HotelRoom hotelRoom) {
         this.hotelRooms.remove(hotelRoom);
-        hotelRoom.setHotelReservation(null);
+        hotelRoom.getHotelReservations().remove(this);
         return this;
     }
 
@@ -160,6 +177,7 @@ public class HotelReservation implements Serializable {
             ", numberOfPeople=" + getNumberOfPeople() +
             ", checkinDate='" + getCheckinDate() + "'" +
             ", checkoutDate='" + getCheckoutDate() + "'" +
+            ", totalPrice=" + getTotalPrice() +
             "}";
     }
 }

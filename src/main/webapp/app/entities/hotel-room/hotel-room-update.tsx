@@ -8,10 +8,10 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IHotelReservation } from 'app/shared/model/hotel-reservation.model';
-import { getEntities as getHotelReservations } from 'app/entities/hotel-reservation/hotel-reservation.reducer';
 import { IHotel } from 'app/shared/model/hotel.model';
 import { getEntities as getHotels } from 'app/entities/hotel/hotel.reducer';
+import { IHotelReservation } from 'app/shared/model/hotel-reservation.model';
+import { getEntities as getHotelReservations } from 'app/entities/hotel-reservation/hotel-reservation.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './hotel-room.reducer';
 import { IHotelRoom } from 'app/shared/model/hotel-room.model';
 // tslint:disable-next-line:no-unused-variable
@@ -22,16 +22,16 @@ export interface IHotelRoomUpdateProps extends StateProps, DispatchProps, RouteC
 
 export interface IHotelRoomUpdateState {
   isNew: boolean;
-  hotelReservationId: number;
   hotelId: number;
+  hotelReservationId: number;
 }
 
 export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHotelRoomUpdateState> {
   constructor(props) {
     super(props);
     this.state = {
-      hotelReservationId: 0,
       hotelId: 0,
+      hotelReservationId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -43,8 +43,8 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
       this.props.getEntity(this.props.match.params.id);
     }
 
-    this.props.getHotelReservations();
     this.props.getHotels();
+    this.props.getHotelReservations();
   }
 
   saveEntity = (event, errors, values) => {
@@ -69,7 +69,7 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
   };
 
   render() {
-    const { hotelRoomEntity, hotelReservations, hotels, loading, updating } = this.props;
+    const { hotelRoomEntity, hotels, hotelReservations, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -120,21 +120,6 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
                   <AvField id="hotel-room-price" type="number" className="form-control" name="price" />
                 </AvGroup>
                 <AvGroup>
-                  <Label for="hotelReservation.id">
-                    <Translate contentKey="tripPlanningApp.hotelRoom.hotelReservation">Hotel Reservation</Translate>
-                  </Label>
-                  <AvInput id="hotel-room-hotelReservation" type="select" className="form-control" name="hotelReservation.id">
-                    <option value="" key="0" />
-                    {hotelReservations
-                      ? hotelReservations.map(otherEntity => (
-                          <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
-                          </option>
-                        ))
-                      : null}
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label for="hotel.name">
                     <Translate contentKey="tripPlanningApp.hotelRoom.hotel">Hotel</Translate>
                   </Label>
@@ -177,16 +162,16 @@ export class HotelRoomUpdate extends React.Component<IHotelRoomUpdateProps, IHot
 }
 
 const mapStateToProps = (storeState: IRootState) => ({
-  hotelReservations: storeState.hotelReservation.entities,
   hotels: storeState.hotel.entities,
+  hotelReservations: storeState.hotelReservation.entities,
   hotelRoomEntity: storeState.hotelRoom.entity,
   loading: storeState.hotelRoom.loading,
   updating: storeState.hotelRoom.updating
 });
 
 const mapDispatchToProps = {
-  getHotelReservations,
   getHotels,
+  getHotelReservations,
   getEntity,
   updateEntity,
   createEntity,

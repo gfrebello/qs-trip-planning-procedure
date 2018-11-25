@@ -48,6 +48,12 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
                   <Translate contentKey="tripPlanningApp.hotelReservation.checkoutDate">Checkout Date</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="tripPlanningApp.hotelReservation.totalPrice">Total Price</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="tripPlanningApp.hotelReservation.hotelRoom">Hotel Room</Translate>
+                </th>
+                <th>
                   <Translate contentKey="tripPlanningApp.hotelReservation.trip">Trip</Translate>
                 </th>
                 <th />
@@ -67,6 +73,17 @@ export class HotelReservation extends React.Component<IHotelReservationProps> {
                   </td>
                   <td>
                     <TextFormat type="date" value={hotelReservation.checkoutDate} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
+                  <td>{hotelReservation.totalPrice}</td>
+                  <td>
+                    {hotelReservation.hotelRooms
+                      ? hotelReservation.hotelRooms.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`hotel-room/${val.id}`}>{val.id}</Link>
+                            {j === hotelReservation.hotelRooms.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
                   </td>
                   <td>{hotelReservation.trip ? <Link to={`trip/${hotelReservation.trip.id}`}>{hotelReservation.trip.id}</Link> : ''}</td>
                   <td className="text-right">

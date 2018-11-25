@@ -19,6 +19,7 @@
             "numberOfPeople": "Number Of People",
             "checkinDate": "Checkin Date",
             "checkoutDate": "Checkout Date",
+            "totalPrice": "Total Price",
             "hotelRoom": "Hotel Room",
             "trip": "Trip"
         }
