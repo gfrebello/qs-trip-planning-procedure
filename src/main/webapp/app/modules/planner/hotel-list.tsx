@@ -17,7 +17,7 @@ import {
 } from 'reactstrap';
 
 import { updateHSelected } from './planner.reducer';
-import { getEntities } from '../../entities/hotel/hotel.reducer';
+import { getEntitiesByCity } from '../../entities/hotel/hotel.reducer';
 import { getEntities as getRooms } from '../../entities/hotel-room/hotel-room.reducer';
 
 export interface IHotelListProps extends StateProps, DispatchProps {
@@ -30,8 +30,14 @@ export class HotelList extends React.Component<IHotelListProps> {
   }
 
   componentDidMount() {
-    this.props.getEntities();
+    this.props.getEntitiesByCity(this.props.destination);
     this.props.getRooms();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.destination !== this.props.destination) {
+      this.props.getEntitiesByCity(nextProps.destination);
+    }
   }
 
   onRadioBtnClick = hSelected => {
@@ -143,7 +149,7 @@ const mapStateToProps = storeState => ({
 
 const mapDispatchToProps = {
   updateHSelected,
-  getEntities,
+  getEntitiesByCity,
   getRooms
 };
 

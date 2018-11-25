@@ -9,6 +9,7 @@ import { IHotel, defaultValue } from 'app/shared/model/hotel.model';
 export const ACTION_TYPES = {
   FETCH_HOTEL_LIST: 'hotel/FETCH_HOTEL_LIST',
   FETCH_HOTEL: 'hotel/FETCH_HOTEL',
+  FETCH_HOTEL_BY_CITY: 'hotel/FETCH_HOTEL_BY_CITY',
   CREATE_HOTEL: 'hotel/CREATE_HOTEL',
   UPDATE_HOTEL: 'hotel/UPDATE_HOTEL',
   DELETE_HOTEL: 'hotel/DELETE_HOTEL',
@@ -32,6 +33,7 @@ export default (state: HotelState = initialState, action): HotelState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.FETCH_HOTEL_LIST):
     case REQUEST(ACTION_TYPES.FETCH_HOTEL):
+    case REQUEST(ACTION_TYPES.FETCH_HOTEL_BY_CITY):
       return {
         ...state,
         errorMessage: null,
@@ -49,6 +51,7 @@ export default (state: HotelState = initialState, action): HotelState => {
       };
     case FAILURE(ACTION_TYPES.FETCH_HOTEL_LIST):
     case FAILURE(ACTION_TYPES.FETCH_HOTEL):
+    case FAILURE(ACTION_TYPES.FETCH_HOTEL_BY_CITY):
     case FAILURE(ACTION_TYPES.CREATE_HOTEL):
     case FAILURE(ACTION_TYPES.UPDATE_HOTEL):
     case FAILURE(ACTION_TYPES.DELETE_HOTEL):
@@ -60,6 +63,7 @@ export default (state: HotelState = initialState, action): HotelState => {
         errorMessage: action.payload
       };
     case SUCCESS(ACTION_TYPES.FETCH_HOTEL_LIST):
+    case SUCCESS(ACTION_TYPES.FETCH_HOTEL_BY_CITY):
       return {
         ...state,
         loading: false,
@@ -108,6 +112,14 @@ export const getEntity: ICrudGetAction<IHotel> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
     type: ACTION_TYPES.FETCH_HOTEL,
+    payload: axios.get<IHotel>(requestUrl)
+  };
+};
+
+export const getEntitiesByCity = city => {
+  const requestUrl = `${apiUrl}/city/${city}`;
+  return {
+    type: ACTION_TYPES.FETCH_HOTEL_BY_CITY,
     payload: axios.get<IHotel>(requestUrl)
   };
 };

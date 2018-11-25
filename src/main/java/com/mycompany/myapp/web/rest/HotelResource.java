@@ -108,9 +108,9 @@ public class HotelResource {
      * @param city the hotel's city
      * @return the ResponseEntity with status 200 (OK) and the list of flights in body
      */
-    @GetMapping("/hotels/{city}")
+    @GetMapping("/hotels/city/{city}")
     @Timed
-    public List<Hotel> getFlightByDepartureDateAndOriginAndDestination(@PathVariable String city) {
+    public List<Hotel> getHotelByCity(@PathVariable String city) {
         return hotelRepository.findByCity(city);
     }
 
