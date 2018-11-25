@@ -46,13 +46,9 @@ export class MyTrips extends React.Component<IMyTripsProps> {
     return economicSeats;
   };
 
-  getHotel = resId => {
-    const { roomsList } = this.props;
-    for (const room of roomsList) {
-      console.log(room.hotelReservation.id, resId);
-      if (room.hotelReservation.id === resId) {
-        return room.hotel;
-      }
+  getHotel = hr => {
+    for (const room of hr.hotelRooms) {
+      return room.hotel;
     }
   };
 
@@ -89,8 +85,7 @@ export class MyTrips extends React.Component<IMyTripsProps> {
               })}
               {hotelReservationsList.map((hreservation, k) => {
                 if (hreservation.trip && hreservation.trip.id === trip.id) {
-                  console.log(hreservation);
-                  const currentHotel = this.getHotel(hreservation.id);
+                  const currentHotel = this.getHotel(hreservation);
                   return (
                     <div>
                       HReservation ID: {hreservation.id}
