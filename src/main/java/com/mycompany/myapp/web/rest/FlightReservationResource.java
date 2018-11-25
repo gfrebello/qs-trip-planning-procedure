@@ -112,7 +112,7 @@ public class FlightReservationResource {
     @GetMapping("/flight-reservations/trip/{id}")
     @Timed
     public List<FlightReservation> getFlightReservationsByTrip(@PathVariable Long id) {
-        log.debug("REST request to get FlightReservations by Trip Id");
+        log.debug("REST request to get FlightReservations by Trip Id: {}", id);
         return flightReservationRepository.findByTrip(id);
     }
 
