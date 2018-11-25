@@ -1,0 +1,7 @@
+id;jhi_number;jhi_row;is_executive;is_reserved;flight_id;flight_reservation_id
+1;1;A;1;0;6;null
+2;2;A;1;1;6;null
+3;3;A;1;0;6;null
+4;1;B;0;0;6;null
+5;2;B;0;0;6;null
+6;3;B;0;1;6;null
