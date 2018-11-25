@@ -17,6 +17,8 @@ import { Link } from 'react-router-dom';
 import Seatmap from '../seatmap/flight-seatmap';
 import RoomSelectionPage from '../roomSelection/roomSelection';
 
+import { reset } from './planner.reducer';
+
 export interface IPlannerProps extends StateProps, DispatchProps {}
 
 export class PlannerPage extends React.Component<IPlannerProps> {
@@ -37,6 +39,19 @@ export class PlannerPage extends React.Component<IPlannerProps> {
   componentDidMount() {
     this.props.getSession();
     this.props.resetRedirect();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { origin, destination, departDate, returnDate, nPassengers } = this.props;
+    if (
+      nextProps.origin !== origin ||
+      nextProps.destination !== destination ||
+      nextProps.departDate !== departDate ||
+      nextProps.returnDate !== returnDate ||
+      nextProps.nPassengers !== nPassengers
+    ) {
+      this.props.reset();
+    }
   }
 
   componentDidUpdate(prevProps: IPlannerProps, prevState) {
@@ -213,7 +228,8 @@ const mapStateToProps = storeState => ({
 
 const mapDispatchToProps = {
   getSession,
-  resetRedirect
+  resetRedirect,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

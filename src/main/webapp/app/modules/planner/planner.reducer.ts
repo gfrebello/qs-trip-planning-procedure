@@ -9,7 +9,8 @@ export const ACTION_TYPES = {
   UPDATE_PASSENGERS_EXECUTIVE: 'reservations/UPDATE_PASSENGERS_EXECUTIVE',
   UPDATE_PASSENGERS_ECONOMIC: 'reservations/UPDATE_PASSENGERS_ECONOMIC',
   UPDATE_R_SELECTED: 'reservations/UPDATE_R_SELECTED',
-  UPDATE_H_SELECTED: 'reservations/UPDATE_H_SELECTED'
+  UPDATE_H_SELECTED: 'reservations/UPDATE_H_SELECTED',
+  RESET: 'reservations/RESET'
 };
 
 const initialState = {
@@ -18,11 +19,11 @@ const initialState = {
   // reservedHotels: [] as ReadonlyArray<IHotelReservation>,
   reservedHotels: [],
   // chosenAttractions: [] as ReadonlyArray<IChosenAttraction>,
-  chosenAttractions: ['test'],
+  chosenAttractions: [],
   // rentedCars: [] as ReadonlyArray<ICarRental>,
-  rentedCars: ['test'],
+  rentedCars: [],
   // insurances: [] as ReadonlyArray<IInsurance>
-  boughtInsurances: ['test'],
+  boughtInsurances: [],
   nPassengersEconomic: 0,
   nPassengersExecutive: 0,
   rSelected: -1,
@@ -101,6 +102,10 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
         ...state,
         hSelected: action.payload.hSelected
       };
+    case ACTION_TYPES.RESET:
+      return {
+        ...initialState
+      };
     default:
       return state;
   }
@@ -155,4 +160,8 @@ export const updateRSelected = rSelected => ({
 export const updateHSelected = hSelected => ({
   type: ACTION_TYPES.UPDATE_H_SELECTED,
   payload: { hSelected }
+});
+
+export const reset = () => ({
+  type: ACTION_TYPES.RESET
 });

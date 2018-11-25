@@ -5,6 +5,7 @@ import { Row, Col, Button, Card, CardHeader, CardBody, CardText, ListGroup, List
 import { getSession } from 'app/shared/reducers/authentication';
 import { Link } from 'react-router-dom';
 import { createTrip } from './confirmation.reducer';
+import { reset } from '../planner/planner.reducer';
 import { number } from 'prop-types';
 import hotel from 'app/entities/hotel/hotel';
 
@@ -60,8 +61,8 @@ export class ConfirmationPage extends React.Component<IConfirmationProps> {
       };
       hotelReservationEntities.push({ hotelReservation: hotelResEnt });
     }
-
     this.props.createTrip(tripEntity, flightReservationEntities, hotelReservationEntities);
+    this.props.reset();
   }
 
   render() {
@@ -89,7 +90,8 @@ const mapStateToProps = storeState => ({
 
 const mapDispatchToProps = {
   getSession,
-  createTrip
+  createTrip,
+  reset
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
