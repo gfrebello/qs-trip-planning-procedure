@@ -17,9 +17,30 @@ export class HotelReservationCard extends React.Component<IHotelReservationCardP
   };
 
   showReservedHotels = () => {
+    const { reservedHotels } = this.props;
     const output = [];
-    if (this.props.reservedHotels.length > 0) {
-      output.push(<CardText>{'You have a hotel reservation, yay'}</CardText>);
+    if (reservedHotels.length > 0) {
+      output.push(
+        <Row>
+          <Col>Hotel</Col>
+          <Col>City</Col>
+          <Col>Total Price</Col>
+        </Row>
+      );
+      for (const reservation of reservedHotels) {
+        const { name, city } = reservation.hotel;
+        output.push(
+          <CardText>
+            <ListGroupItem>
+              <Row>
+                <Col>{name}</Col>
+                <Col>{city}</Col>
+                <Col>{reservation.price}</Col>
+              </Row>
+            </ListGroupItem>
+          </CardText>
+        );
+      }
       output.push(
         <Row>
           <Col sm={{ size: '4', offset: 0 }}>

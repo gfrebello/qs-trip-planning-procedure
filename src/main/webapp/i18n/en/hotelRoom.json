@@ -20,8 +20,8 @@
             "isReserved": "Is Reserved",
             "roomType": "Room Type",
             "price": "Price",
-            "hotelReservation": "Hotel Reservation",
-            "hotel": "Hotel"
+            "hotel": "Hotel",
+            "hotelReservation": "Hotel Reservation"
         }
     }
 }

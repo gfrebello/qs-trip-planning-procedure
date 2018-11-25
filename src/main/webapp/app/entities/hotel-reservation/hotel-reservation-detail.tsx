@@ -52,6 +52,25 @@ export class HotelReservationDetail extends React.Component<IHotelReservationDet
               <TextFormat value={hotelReservationEntity.checkoutDate} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
+              <span id="totalPrice">
+                <Translate contentKey="tripPlanningApp.hotelReservation.totalPrice">Total Price</Translate>
+              </span>
+            </dt>
+            <dd>{hotelReservationEntity.totalPrice}</dd>
+            <dt>
+              <Translate contentKey="tripPlanningApp.hotelReservation.hotelRoom">Hotel Room</Translate>
+            </dt>
+            <dd>
+              {hotelReservationEntity.hotelRooms
+                ? hotelReservationEntity.hotelRooms.map((val, i) => (
+                    <span key={val.id}>
+                      <a>{val.id}</a>
+                      {i === hotelReservationEntity.hotelRooms.length - 1 ? '' : ', '}
+                    </span>
+                  ))
+                : null}
+            </dd>
+            <dt>
               <Translate contentKey="tripPlanningApp.hotelReservation.trip">Trip</Translate>
             </dt>
             <dd>{hotelReservationEntity.trip ? hotelReservationEntity.trip.id : ''}</dd>

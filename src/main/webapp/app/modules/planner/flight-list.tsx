@@ -46,7 +46,7 @@ export class FlightList extends React.Component<IFlightListProps> {
 
   componentWillReceiveProps(nextProps) {
     const { nPassengers, departDate, returnDate, origin, destination } = nextProps;
-    if (nextProps.nPassengers !== this.props.nPassengers) {
+    if (nextProps.nPassengers !== this.props.nPassengers || nextProps.nPassengersEconomic === 0) {
       this.props.updatePassengersEconomic(Number(nPassengers));
       this.props.updatePassengersExecutive(Number(0));
     }

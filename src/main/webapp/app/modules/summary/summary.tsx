@@ -27,6 +27,9 @@ export class SummaryPage extends React.Component<ISummaryProps> {
     for (const reservation of reservedFlights) {
       total += reservation.price;
     }
+    for (const reservation of reservedHotels) {
+      total += reservation.price;
+    }
     this.setState({
       totalPrice: total
     });
@@ -103,8 +106,52 @@ export class SummaryPage extends React.Component<ISummaryProps> {
     return output;
   };
 
+  renderReservedHotels = () => {
+    const { reservedHotels } = this.props;
+    const output = [];
+    if (reservedHotels.length > 0) {
+      output.push(
+        <Row>
+          <Col>Hotel</Col>
+          <Col>Address</Col>
+          <Col>Check-In Date</Col>
+          <Col>Check-Out Date</Col>
+          <Col>Total Price</Col>
+        </Row>
+      );
+      for (const reservation of reservedHotels) {
+        const { name, city, address } = reservation.hotel;
+        const { checkinDate, checkoutDate, price } = reservation;
+        output.push(
+          <CardText>
+            <ListGroupItem>
+              <Row>
+                <Col>{name}</Col>
+                <Col>
+                  <Row>
+                    <Col>{city}</Col>
+                  </Row>
+                  <Row>
+                    <Col>{address}</Col>
+                  </Row>
+                </Col>
+                <Col>{checkinDate}</Col>
+                <Col>{checkoutDate}</Col>
+                <Col>{price}</Col>
+              </Row>
+            </ListGroupItem>
+          </CardText>
+        );
+      }
+    } else {
+      output.push(<CardText>No hotels reserved</CardText>);
+    }
+    return output;
+  };
+
   render() {
     const flights = this.renderReservedFlights();
+    const hotels = this.renderReservedHotels();
 
     return (
       <div>
@@ -124,6 +171,7 @@ export class SummaryPage extends React.Component<ISummaryProps> {
               <CardHeader>Flights</CardHeader>
               <CardBody>{flights}</CardBody>
               <CardHeader>Hotels</CardHeader>
+              <CardBody>{hotels}</CardBody>
             </Card>
           </Col>
         </Row>

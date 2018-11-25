@@ -8,6 +8,17 @@
     -->
     <changeSet id="20181027014012-2" author="jhipster">
         
+        <addForeignKeyConstraint baseColumnNames="hotel_reservations_id"
+                                 baseTableName="hotel_reservation_hotel_room"
+                                 constraintName="fk_hotel_reservation_hotel_room_hotel_reservations_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hotel_reservation"/>
+        <addForeignKeyConstraint baseColumnNames="hotel_rooms_id"
+                                 baseTableName="hotel_reservation_hotel_room"
+                                 constraintName="fk_hotel_reservation_hotel_room_hotel_rooms_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hotel_room"/>
+        
         <addForeignKeyConstraint baseColumnNames="trip_id"
                                  baseTableName="hotel_reservation"
                                  constraintName="fk_hotel_reservation_trip_id"

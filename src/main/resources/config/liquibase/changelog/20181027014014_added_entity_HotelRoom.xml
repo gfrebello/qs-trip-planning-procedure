@@ -37,10 +37,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="hotel_reservation_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="hotel_id" type="bigint">
                 <constraints nullable="false" />
             </column>

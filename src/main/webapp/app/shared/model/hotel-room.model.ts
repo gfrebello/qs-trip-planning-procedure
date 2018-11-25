@@ -1,5 +1,5 @@
-import { IHotelReservation } from 'app/shared/model//hotel-reservation.model';
 import { IHotel } from 'app/shared/model//hotel.model';
+import { IHotelReservation } from 'app/shared/model//hotel-reservation.model';
 
 export interface IHotelRoom {
   id?: number;
@@ -7,8 +7,8 @@ export interface IHotelRoom {
   isReserved?: boolean;
   roomType?: string;
   price?: number;
-  hotelReservation?: IHotelReservation;
   hotel?: IHotel;
+  hotelReservations?: IHotelReservation[];
 }
 
 export const defaultValue: Readonly<IHotelRoom> = {

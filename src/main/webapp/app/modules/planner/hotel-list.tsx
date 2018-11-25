@@ -1,25 +1,87 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Button, Card, CardHeader, CardBody, CardText, CardFooter, ListGroup, ListGroupItem } from 'reactstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardText,
+  CardFooter,
+  ListGroup,
+  ListGroupItem,
+  InputGroup,
+  InputGroupAddon,
+  Input
+} from 'reactstrap';
 
-export interface IHotelListProps extends StateProps, DispatchProps {}
+import { updateHSelected } from './planner.reducer';
+import { getEntities } from '../../entities/hotel/hotel.reducer';
+import { getEntities as getRooms } from '../../entities/hotel-room/hotel-room.reducer';
+
+export interface IHotelListProps extends StateProps, DispatchProps {
+  handleOpenRoomSelection: Function;
+}
 
 export class HotelList extends React.Component<IHotelListProps> {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.getEntities();
+    this.props.getRooms();
+  }
+
+  onRadioBtnClick = hSelected => {
+    this.props.updateHSelected(hSelected);
+  };
+
+  calculateLowestRoomPrices = () => {
+    const { hotelList, roomList } = this.props;
+    const minPrices = [];
+    for (const hotel of hotelList) {
+      let minPrice = -1;
+      for (const room of roomList) {
+        if (room.hotel.id === hotel.id && (minPrice === -1 || room.price < minPrice)) {
+          minPrice = room.price;
+        }
+      }
+      minPrices.push(minPrice);
+    }
+    return minPrices;
+  };
+
   createHotelList = () => {
+    const { hotelList } = this.props;
     const list = [];
     const items = [];
     // Loop to create children
-    for (let j = 0; j < 3; j++) {
+    items.push(
+      <Row>
+        <Col>Hotel Name</Col>
+        <Col>Address</Col>
+        <Col>Room prices starting at</Col>
+      </Row>
+    );
+    items.push(<br />);
+    const minPrices = this.calculateLowestRoomPrices();
+    for (let j = 0; j < hotelList.length; j++) {
+      const onRadioBtnClick = this.onRadioBtnClick.bind(this, j);
       items.push(
-        <ListGroupItem>
+        <ListGroupItem className="list-item" outline onClick={onRadioBtnClick} active={this.props.hSelected === j}>
           <Row>
-            <Col>{`Hotel ${j + 1} company`}</Col>
-            <Col>{`Hotel ${j + 1} days`}</Col>
-            <Col>{`Hotel ${j + 1} price`}</Col>
+            <Col>{hotelList[j].name}</Col>
+            <Col>
+              <Row>
+                <Col>{hotelList[j].city}</Col>
+              </Row>
+              <Row>
+                <Col>{hotelList[j].address}</Col>
+              </Row>
+            </Col>
+            <Col>{minPrices[j]} per night</Col>
           </Row>
         </ListGroupItem>
       );
@@ -29,30 +91,61 @@ export class HotelList extends React.Component<IHotelListProps> {
     return list;
   };
 
+  handleChooseRoom = () => {
+    if (this.props.hSelected !== -1) {
+      this.props.handleOpenRoomSelection();
+    } else {
+      alert('Please select a hotel first!');
+    }
+  };
+
   render() {
     return (
-      <div>
-        <Card>
-          <CardBody>Choosable filters will go here</CardBody>
-          <CardBody>{this.createHotelList()}</CardBody>
-          <CardFooter>
-            <Button>Add selected hotel</Button>
-          </CardFooter>
-        </Card>
-      </div>
+      <Card>
+        <CardBody>
+          <Row>
+            <Col sm="6">
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">Max Price</InputGroupAddon>
+                <Input name="maxPrice" id="maxPrice" placeholder="-" />
+              </InputGroup>
+            </Col>
+            <Col sm="6">
+              <InputGroup>
+                <InputGroupAddon addonType="prepend">Room Type</InputGroupAddon>
+                <Input name="roomType" id="roomType" placeholder="-" />
+              </InputGroup>
+            </Col>
+          </Row>
+        </CardBody>
+        <CardBody>
+          <Row>
+            <Col>{this.createHotelList()}</Col>
+          </Row>
+        </CardBody>
+        <CardFooter>
+          <Button onClick={this.handleChooseRoom}>Select Room</Button>
+        </CardFooter>
+      </Card>
     );
   }
 }
 
 const mapStateToProps = storeState => ({
-  // origin: storeState.home.origin,
-  // destination: storeState.home.destination,
-  // departDate: storeState.home.departDate,
-  // returnDate: storeState.home.returnDate,
-  // nPassengers: storeState.home.nPassengers
+  destination: storeState.home.destination,
+  departDate: storeState.home.departDate,
+  returnDate: storeState.home.returnDate,
+  nPassengers: storeState.home.nPassengers,
+  hotelList: storeState.hotel.entities,
+  roomList: storeState.hotelRoom.entities,
+  hSelected: storeState.reservations.hSelected
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  updateHSelected,
+  getEntities,
+  getRooms
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

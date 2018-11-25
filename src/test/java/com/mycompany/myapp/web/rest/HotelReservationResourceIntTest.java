@@ -3,16 +3,18 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.TripPlanningApp;
 
 import com.mycompany.myapp.domain.HotelReservation;
-import com.mycompany.myapp.domain.HotelRoom;
 import com.mycompany.myapp.repository.HotelReservationRepository;
 import com.mycompany.myapp.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -24,12 +26,14 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 
 
 import static com.mycompany.myapp.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -51,8 +55,14 @@ public class HotelReservationResourceIntTest {
     private static final LocalDate DEFAULT_CHECKOUT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_CHECKOUT_DATE = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Float DEFAULT_TOTAL_PRICE = 1F;
+    private static final Float UPDATED_TOTAL_PRICE = 2F;
+
     @Autowired
     private HotelReservationRepository hotelReservationRepository;
+
+    @Mock
+    private HotelReservationRepository hotelReservationRepositoryMock;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -91,12 +101,8 @@ public class HotelReservationResourceIntTest {
         HotelReservation hotelReservation = new HotelReservation()
             .numberOfPeople(DEFAULT_NUMBER_OF_PEOPLE)
             .checkinDate(DEFAULT_CHECKIN_DATE)
-            .checkoutDate(DEFAULT_CHECKOUT_DATE);
-        // Add required entity
-        HotelRoom hotelRoom = HotelRoomResourceIntTest.createEntity(em);
-        em.persist(hotelRoom);
-        em.flush();
-        hotelReservation.getHotelRooms().add(hotelRoom);
+            .checkoutDate(DEFAULT_CHECKOUT_DATE)
+            .totalPrice(DEFAULT_TOTAL_PRICE);
         return hotelReservation;
     }
 
@@ -123,6 +129,7 @@ public class HotelReservationResourceIntTest {
         assertThat(testHotelReservation.getNumberOfPeople()).isEqualTo(DEFAULT_NUMBER_OF_PEOPLE);
         assertThat(testHotelReservation.getCheckinDate()).isEqualTo(DEFAULT_CHECKIN_DATE);
         assertThat(testHotelReservation.getCheckoutDate()).isEqualTo(DEFAULT_CHECKOUT_DATE);
+        assertThat(testHotelReservation.getTotalPrice()).isEqualTo(DEFAULT_TOTAL_PRICE);
     }
 
     @Test
@@ -157,9 +164,41 @@ public class HotelReservationResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(hotelReservation.getId().intValue())))
             .andExpect(jsonPath("$.[*].numberOfPeople").value(hasItem(DEFAULT_NUMBER_OF_PEOPLE)))
             .andExpect(jsonPath("$.[*].checkinDate").value(hasItem(DEFAULT_CHECKIN_DATE.toString())))
-            .andExpect(jsonPath("$.[*].checkoutDate").value(hasItem(DEFAULT_CHECKOUT_DATE.toString())));
+            .andExpect(jsonPath("$.[*].checkoutDate").value(hasItem(DEFAULT_CHECKOUT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(DEFAULT_TOTAL_PRICE.doubleValue())));
     }
     
+    public void getAllHotelReservationsWithEagerRelationshipsIsEnabled() throws Exception {
+        HotelReservationResource hotelReservationResource = new HotelReservationResource(hotelReservationRepositoryMock);
+        when(hotelReservationRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        MockMvc restHotelReservationMockMvc = MockMvcBuilders.standaloneSetup(hotelReservationResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restHotelReservationMockMvc.perform(get("/api/hotel-reservations?eagerload=true"))
+        .andExpect(status().isOk());
+
+        verify(hotelReservationRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    public void getAllHotelReservationsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        HotelReservationResource hotelReservationResource = new HotelReservationResource(hotelReservationRepositoryMock);
+            when(hotelReservationRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+            MockMvc restHotelReservationMockMvc = MockMvcBuilders.standaloneSetup(hotelReservationResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .setControllerAdvice(exceptionTranslator)
+            .setConversionService(createFormattingConversionService())
+            .setMessageConverters(jacksonMessageConverter).build();
+
+        restHotelReservationMockMvc.perform(get("/api/hotel-reservations?eagerload=true"))
+        .andExpect(status().isOk());
+
+            verify(hotelReservationRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getHotelReservation() throws Exception {
@@ -173,7 +212,8 @@ public class HotelReservationResourceIntTest {
             .andExpect(jsonPath("$.id").value(hotelReservation.getId().intValue()))
             .andExpect(jsonPath("$.numberOfPeople").value(DEFAULT_NUMBER_OF_PEOPLE))
             .andExpect(jsonPath("$.checkinDate").value(DEFAULT_CHECKIN_DATE.toString()))
-            .andExpect(jsonPath("$.checkoutDate").value(DEFAULT_CHECKOUT_DATE.toString()));
+            .andExpect(jsonPath("$.checkoutDate").value(DEFAULT_CHECKOUT_DATE.toString()))
+            .andExpect(jsonPath("$.totalPrice").value(DEFAULT_TOTAL_PRICE.doubleValue()));
     }
 
     @Test
@@ -199,7 +239,8 @@ public class HotelReservationResourceIntTest {
         updatedHotelReservation
             .numberOfPeople(UPDATED_NUMBER_OF_PEOPLE)
             .checkinDate(UPDATED_CHECKIN_DATE)
-            .checkoutDate(UPDATED_CHECKOUT_DATE);
+            .checkoutDate(UPDATED_CHECKOUT_DATE)
+            .totalPrice(UPDATED_TOTAL_PRICE);
 
         restHotelReservationMockMvc.perform(put("/api/hotel-reservations")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -213,6 +254,7 @@ public class HotelReservationResourceIntTest {
         assertThat(testHotelReservation.getNumberOfPeople()).isEqualTo(UPDATED_NUMBER_OF_PEOPLE);
         assertThat(testHotelReservation.getCheckinDate()).isEqualTo(UPDATED_CHECKIN_DATE);
         assertThat(testHotelReservation.getCheckoutDate()).isEqualTo(UPDATED_CHECKOUT_DATE);
+        assertThat(testHotelReservation.getTotalPrice()).isEqualTo(UPDATED_TOTAL_PRICE);
     }
 
     @Test

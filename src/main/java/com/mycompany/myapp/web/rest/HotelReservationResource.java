@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -44,7 +43,7 @@ public class HotelReservationResource {
      */
     @PostMapping("/hotel-reservations")
     @Timed
-    public ResponseEntity<HotelReservation> createHotelReservation(@Valid @RequestBody HotelReservation hotelReservation) throws URISyntaxException {
+    public ResponseEntity<HotelReservation> createHotelReservation(@RequestBody HotelReservation hotelReservation) throws URISyntaxException {
         log.debug("REST request to save HotelReservation : {}", hotelReservation);
         if (hotelReservation.getId() != null) {
             throw new BadRequestAlertException("A new hotelReservation cannot already have an ID", ENTITY_NAME, "idexists");
@@ -66,7 +65,7 @@ public class HotelReservationResource {
      */
     @PutMapping("/hotel-reservations")
     @Timed
-    public ResponseEntity<HotelReservation> updateHotelReservation(@Valid @RequestBody HotelReservation hotelReservation) throws URISyntaxException {
+    public ResponseEntity<HotelReservation> updateHotelReservation(@RequestBody HotelReservation hotelReservation) throws URISyntaxException {
         log.debug("REST request to update HotelReservation : {}", hotelReservation);
         if (hotelReservation.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -80,13 +79,14 @@ public class HotelReservationResource {
     /**
      * GET  /hotel-reservations : get all the hotelReservations.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many)
      * @return the ResponseEntity with status 200 (OK) and the list of hotelReservations in body
      */
     @GetMapping("/hotel-reservations")
     @Timed
-    public List<HotelReservation> getAllHotelReservations() {
+    public List<HotelReservation> getAllHotelReservations(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all HotelReservations");
-        return hotelReservationRepository.findAll();
+        return hotelReservationRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -99,7 +99,7 @@ public class HotelReservationResource {
     @Timed
     public ResponseEntity<HotelReservation> getHotelReservation(@PathVariable Long id) {
         log.debug("REST request to get HotelReservation : {}", id);
-        Optional<HotelReservation> hotelReservation = hotelReservationRepository.findById(id);
+        Optional<HotelReservation> hotelReservation = hotelReservationRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(hotelReservation);
     }
 

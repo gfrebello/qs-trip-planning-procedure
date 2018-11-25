@@ -7,6 +7,7 @@ export interface IHotelReservation {
   numberOfPeople?: number;
   checkinDate?: Moment;
   checkoutDate?: Moment;
+  totalPrice?: number;
   hotelRooms?: IHotelRoom[];
   trip?: ITrip;
 }
