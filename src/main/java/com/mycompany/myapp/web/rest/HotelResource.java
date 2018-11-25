@@ -103,6 +103,18 @@ public class HotelResource {
     }
 
     /**
+     * GET  /hotels/:city : get hotels by city.
+     *
+     * @param city the hotel's city
+     * @return the ResponseEntity with status 200 (OK) and the list of flights in body
+     */
+    @GetMapping("/hotels/{city}")
+    @Timed
+    public List<Hotel> getFlightByDepartureDateAndOriginAndDestination(@PathVariable String city) {
+        return hotelRepository.findByCity(city);
+    }
+
+    /**
      * DELETE  /hotels/:id : delete the "id" hotel.
      *
      * @param id the id of the hotel to delete
