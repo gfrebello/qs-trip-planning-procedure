@@ -45,7 +45,7 @@ export class RoomSelectionPage extends React.Component<IRoomSelectionProps> {
       if (this.props.nPassengers > totalPeopleRoom) {
         alert('Please select rooms for all the passengers.');
       } else {
-        this.props.addSelectedHotel(selectedHotel, reservedRooms, totalPrice);
+        this.props.addSelectedHotel(selectedHotel, reservedRooms, totalPrice, departDate, returnDate);
         this.props.handleClose();
       }
     } else {

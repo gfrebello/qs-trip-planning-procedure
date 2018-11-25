@@ -72,7 +72,13 @@ export default (state: ReservationsState = initialState, action): ReservationsSt
         ...state,
         reservedHotels: [
           ...state.reservedHotels,
-          { hotel: action.payload.selectedHotel, reservedRooms: action.payload.reservedRooms, price: action.payload.price }
+          {
+            hotel: action.payload.selectedHotel,
+            reservedRooms: action.payload.reservedRooms,
+            price: action.payload.price,
+            checkinDate: action.payload.checkinDate,
+            checkoutDate: action.payload.checkoutDate
+          }
         ]
       };
     case ACTION_TYPES.UPDATE_PASSENGERS_ECONOMIC:
@@ -126,9 +132,9 @@ export const addSelectedFlight = (selectedFlight, reservedSeats, price) => ({
   payload: { selectedFlight, reservedSeats, price }
 });
 
-export const addSelectedHotel = (selectedHotel, reservedRooms, price) => ({
+export const addSelectedHotel = (selectedHotel, reservedRooms, price, checkinDate, checkoutDate) => ({
   type: ACTION_TYPES.ADD_SELECTED_HOTEL,
-  payload: { selectedHotel, reservedRooms, price }
+  payload: { selectedHotel, reservedRooms, price, checkinDate, checkoutDate }
 });
 
 export const updatePassengersEconomic = nPassengersEconomic => ({
