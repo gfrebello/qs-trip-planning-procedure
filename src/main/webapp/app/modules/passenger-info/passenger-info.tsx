@@ -4,6 +4,7 @@ import { Row, Col, Container, Alert, Button, Card, CardHeader, CardBody, CardImg
 import { AvForm, AvField, AvRadio, AvRadioGroup } from 'availity-reactstrap-validation';
 import { getSession } from 'app/shared/reducers/authentication';
 import { Link } from 'react-router-dom';
+import { handleSubmit, handleRedirect } from './passenger-info.reducer';
 
 export interface IPassengerInfoProps extends StateProps, DispatchProps {}
 
@@ -11,10 +12,33 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
   state = {
     form: null
   };
+  constructor(props) {
+    super(props);
+    this.handleValidSubmit = this.handleValidSubmit.bind(this);
+  }
 
   componentDidMount() {
     this.props.getSession();
   }
+
+  handleValidSubmit = (event, values) => {
+    this.props.handleSubmit(
+      values.id,
+      values.firstName,
+      values.lastName,
+      values.nationality,
+      values.documentType,
+      values.documentNumber,
+      values.birthDate,
+      values.gender,
+      values.phoneNumber,
+      values.address,
+      values.zipcode,
+      values.email
+    );
+    this.props.handleRedirect();
+    event.preventDefault();
+  };
 
   render() {
     const nPassengers = this.props.nPassengers;
@@ -24,21 +48,26 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
       forms.push(
         <Container>
         <Row>
-          <h1>Passenger Info Page</h1>
+          <h1>Passenger {i + 1} Info</h1>
         </Row>
         <Row>
-          <AvForm ref={c => (this.state.form = c)} id="passenger-info-form">
+          <AvForm ref={c => (this.state.form = c)} id={'passenger-info-form-' + i} onValidSubmit={this.handleValidSubmit}>
             <Row>
               <Col>
                 <AvField
-                  name="passengerFirstName"
+                  name="id"
+                  type="hidden"
+                  value={i + 1 - 1}
+                />
+                <AvField
+                  name="firstName"
                   label="Passenger First Name"
                   placeholder="Toacy"
                 />
               </Col>
               <Col>
                 <AvField
-                    name="passengerLastName"
+                    name="lastName"
                     label="Passenger Last Name"
                     placeholder="Oliveira"
                 />
@@ -86,7 +115,7 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
               </Col>
               <Col>
                 <AvField
-                    name="passengerGender"
+                    name="gender"
                     label="Gender"
                     type="select"
                 >
@@ -134,18 +163,9 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
               </Col>
             </Row>
             <br/>
-            <Row>
-              <Col>
-              <Button tag={Link} to="/summary" color="primary">
-                Go back to summary page
-              </Button>
-              </Col>
-              <Col>
-              <Button tag={Link} to="/payment" color="primary">
-                Submit information and go to payment
-              </Button>
-              </Col>
-            </Row>
+            <Button id="info-submit" color="primary" type="submit">
+              Save information
+            </Button>
           </AvForm>
         </Row>
       </Container>
@@ -154,6 +174,18 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
     return (
       <div>
         { forms }
+        <Row>
+          <Col>
+          <Button tag={Link} to="/summary" color="primary">
+            Go back to summary page
+          </Button>
+          </Col>
+          <Col>
+          <Button tag={Link} to="/payment" color="primary">
+            Go to payment page
+          </Button>
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -165,9 +197,7 @@ const mapStateToProps = storeState => ({
   nPassengers: storeState.home.nPassengers
 });
 
-const mapDispatchToProps = {
-  getSession
-};
+const mapDispatchToProps = { getSession, handleSubmit, handleRedirect };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
