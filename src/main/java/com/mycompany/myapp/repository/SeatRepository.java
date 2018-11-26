@@ -13,5 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Long> {
 
+  @Query("select s from Seat s where s.flightReservation.id = ?1")
   List<Seat> findByFlightReservation(Long id);
 }

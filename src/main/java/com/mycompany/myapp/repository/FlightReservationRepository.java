@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface FlightReservationRepository extends JpaRepository<FlightReservation, Long> {
-
+    
+    @Query("select fr from FlightReservation fr where fr.trip.id = ?1")
     List<FlightReservation> findByTrip(Long id);
 }
