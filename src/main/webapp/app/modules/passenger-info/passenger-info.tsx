@@ -46,129 +46,129 @@ export class PassengerInfoPage extends React.Component<IPassengerInfoProps> {
 
     for (let i = 0; i < nPassengers; i++) {
       forms.push(
-        <Container>
-        <Row>
-          <h1>Passenger {i + 1} Info</h1>
-        </Row>
-        <Row>
-          <AvForm ref={c => (this.state.form = c)} id={'passenger-info-form-' + i} onValidSubmit={this.handleValidSubmit}>
-            <Row>
-              <Col>
-                <AvField
-                  name="id"
-                  type="hidden"
-                  value={i + 1 - 1}
-                />
-                <AvField
-                  name="firstName"
-                  label="Passenger First Name"
-                  placeholder="Toacy"
-                />
-              </Col>
-              <Col>
-                <AvField
-                    name="lastName"
-                    label="Passenger Last Name"
-                    placeholder="Oliveira"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs="4">
-                <AvField
-                  name="nationality"
-                  label="Nationality"
-                  type="select"
-                >
-                  <option value="Brazil">Brazil</option>
-                  <option value="Argentina">Argentina</option>
-                  <option value="Bolivia">Bolivia</option>
-                  <option value="Peru">Peru</option>
-                  <option value="Venezuela">Venezuela</option>
-                </AvField>
-              </Col>
-              <Col xs="3">
-                <AvField
-                  name="documentType"
-                  label="Document Type"
-                  type="select"
-                >
-                  <option value="cpf">CPF</option>
-                  <option value="passport">Passport</option>
-                  <option value="id">National ID</option>
-                </AvField>
-              </Col>
-              <Col xs="5">
-                <AvField
-                  name="documentNumber"
-                  label="Document Number"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <AvField
-                name="birthDate"
-                label="Birth Date"
-                type="date"
-                />
-              </Col>
-              <Col>
-                <AvField
-                    name="gender"
-                    label="Gender"
+        <Card className="passengerCard">
+          <CardBody>
+            <CardHeader className="section-title"> Passenger {i + 1} Info </CardHeader>
+          <Row>
+            <AvForm ref={c => (this.state.form = c)} id={'passenger-info-form-' + i} onValidSubmit={this.handleValidSubmit}>
+              <Row>
+                <Col>
+                  <AvField
+                    name="id"
+                    type="hidden"
+                    value={i + 1 - 1}
+                  />
+                  <AvField
+                    name="firstName"
+                    label="Passenger First Name"
+                    placeholder="Toacy"
+                  />
+                </Col>
+                <Col>
+                  <AvField
+                      name="lastName"
+                      label="Passenger Last Name"
+                      placeholder="Oliveira"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs="4">
+                  <AvField
+                    name="nationality"
+                    label="Nationality"
                     type="select"
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </AvField>
-              </Col>
-              <Col>
-                <AvField
-                  name="phoneNumber"
-                  label="Phone Number"
-                  placeholder="Numbers only."
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs="9">
-                <AvField
-                  name="address"
-                  label="Address"
-                />
-              </Col>
-              <Col xs="3">
-                <AvField
-                  name="zipcode"
-                  label="Zip Code"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <AvField
-                  name="email"
-                  label="E-mail"
-                  placeholder="E-mail address"
-                />
-              </Col>
-              <Col>
-                <AvField
-                  name="emailConfirmation"
-                  label="E-mail Confirmation"
-                  placeholder="Please confirm your e-mail."
-                />
-              </Col>
-            </Row>
-            <br/>
-            <Button id="info-submit" color="primary" type="submit">
-              Save information
-            </Button>
-          </AvForm>
-        </Row>
-      </Container>
+                  >
+                    <option value="Brazil">Brazil</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Bolivia">Bolivia</option>
+                    <option value="Peru">Peru</option>
+                    <option value="Venezuela">Venezuela</option>
+                  </AvField>
+                </Col>
+                <Col xs="3">
+                  <AvField
+                    name="documentType"
+                    label="Document Type"
+                    type="select"
+                  >
+                    <option value="cpf">CPF</option>
+                    <option value="passport">Passport</option>
+                    <option value="id">National ID</option>
+                  </AvField>
+                </Col>
+                <Col xs="5">
+                  <AvField
+                    name="documentNumber"
+                    label="Document Number"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <AvField
+                  name="birthDate"
+                  label="Birth Date"
+                  type="date"
+                  />
+                </Col>
+                <Col>
+                  <AvField
+                      name="gender"
+                      label="Gender"
+                      type="select"
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </AvField>
+                </Col>
+                <Col>
+                  <AvField
+                    name="phoneNumber"
+                    label="Phone Number"
+                    placeholder="Numbers only."
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs="9">
+                  <AvField
+                    name="address"
+                    label="Address"
+                  />
+                </Col>
+                <Col xs="3">
+                  <AvField
+                    name="zipcode"
+                    label="Zip Code"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <AvField
+                    name="email"
+                    label="E-mail"
+                    placeholder="E-mail address"
+                  />
+                </Col>
+                <Col>
+                  <AvField
+                    name="emailConfirmation"
+                    label="E-mail Confirmation"
+                    placeholder="Please confirm your e-mail."
+                  />
+                </Col>
+              </Row>
+              <br/>
+              <Button id="info-submit" color="primary" type="submit">
+                Save information
+              </Button>
+            </AvForm>
+          </Row>
+        </CardBody>
+      </Card>
       );
     }
     return (
